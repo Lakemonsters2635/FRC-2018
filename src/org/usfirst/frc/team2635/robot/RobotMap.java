@@ -16,4 +16,9 @@ package org.usfirst.frc.team2635.robot;
 public class RobotMap {
 	public static final int RIGHT_JOYSTICK = 1;
 	public static final int LEFT_JOYSTICK = 0;
+	
+	public static double MOTION_MAGIC_P = 5;
+	public static double MOTION_MAGIC_I = 0;
+	public static double MOTION_MAGIC_D = 0;
+	public static double MOTION_MAGIC_F = 1.5;
 }

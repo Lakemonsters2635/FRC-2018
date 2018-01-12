@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team2635.robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -14,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team2635.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team2635.robot.commands.DriveCommand;
 import org.usfirst.frc.team2635.robot.commands.ExampleCommand;
 import org.usfirst.frc.team2635.robot.subsystems.Drive;
@@ -36,9 +38,10 @@ public class Robot extends TimedRobot {
 	Joystick rightStick;
 	
 	DriveCommand driveCommand;
+	AutonomousCommand autoCommand;
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
-
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -53,9 +56,11 @@ public class Robot extends TimedRobot {
 		rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK);
 		
 		driveCommand = new DriveCommand(leftStick, rightStick);
+		autoCommand = new AutonomousCommand();
 		m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
+	
 	}
 
 	/**
@@ -65,6 +70,16 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
+		System.out.println("disabledInit");
+		if (autoCommand != null && autoCommand.isRunning())
+		{
+			autoCommand.cancel();
+		}
+		System.out.println("disabledInit");
+		if (driveCommand != null && driveCommand.isRunning())
+		{
+			driveCommand.cancel();
+		}
 
 	}
 
@@ -99,6 +114,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
+		autoCommand.start();
 	}
 
 	/**
