@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team2635.robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -17,9 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2635.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team2635.robot.commands.DriveCommand;
-import org.usfirst.frc.team2635.robot.commands.ExampleCommand;
 import org.usfirst.frc.team2635.robot.subsystems.Drive;
-import org.usfirst.frc.team2635.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team2635.robot.subsystems.FMS;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,10 +27,9 @@ import org.usfirst.frc.team2635.robot.subsystems.ExampleSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static final ExampleSubsystem kExampleSubsystem
-			= new ExampleSubsystem();
 	public static OI m_oi;
 	public static Drive drive;
+	public static FMS fms;
 	
 	Joystick leftStick;
 	Joystick rightStick;
@@ -49,17 +46,26 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		
 		drive = new Drive();
+		fms = new FMS();
 		
 		leftStick = new Joystick(RobotMap.LEFT_JOYSTICK);
 		rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK);
 		
 		driveCommand = new DriveCommand(leftStick, rightStick);
 		autoCommand = new AutonomousCommand();
-		m_chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		
+		//m_chooser.addObject("My Auto", autoCommand);
 		SmartDashboard.putData("Auto mode", m_chooser);
+		
+		SmartDashboard.putNumber("P:", RobotMap.MOTION_MAGIC_P);
+		SmartDashboard.putNumber("I:", RobotMap.MOTION_MAGIC_I);
+		SmartDashboard.putNumber("D:", RobotMap.MOTION_MAGIC_D);
+		SmartDashboard.putNumber("F:", RobotMap.MOTION_MAGIC_F);
+		
+		SmartDashboard.putNumber("Acceleration:", RobotMap.MOTION_MAGIC_ACCELERATION);
+		SmartDashboard.putNumber("Cruise Velocity:", RobotMap.MOTION_MAGIC_CRUISE_VELOCITY);
+		SmartDashboard.putNumber("Distance:", 0);
 	
 	}
 
@@ -71,11 +77,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledInit() {
 		System.out.println("disabledInit");
+		//Commands are automatically canceled when robot is disabled,
+		//However you can set a command to run while the robot is disabled using
+		//driveCommand.setRunWhenDisabled(true);
 		if (autoCommand != null && autoCommand.isRunning())
 		{
 			autoCommand.cancel();
 		}
-		System.out.println("disabledInit");
 		if (driveCommand != null && driveCommand.isRunning())
 		{
 			driveCommand.cancel();
@@ -110,11 +118,13 @@ public class Robot extends TimedRobot {
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
 
-		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.start();
+		// schedule the autonomous command
+		if (autoCommand != null) {
+			autoCommand.start();
 		}
-		autoCommand.start();
+		
+		
+		
 	}
 
 	/**
@@ -123,18 +133,24 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		RobotMap.MOTION_MAGIC_P = SmartDashboard.getNumber("P:", RobotMap.MOTION_MAGIC_P);
+		RobotMap.MOTION_MAGIC_I = SmartDashboard.getNumber("I:", RobotMap.MOTION_MAGIC_I);   
+		RobotMap.MOTION_MAGIC_D = SmartDashboard.getNumber("D:", RobotMap.MOTION_MAGIC_D);
+		RobotMap.MOTION_MAGIC_F = SmartDashboard.getNumber("F:", RobotMap.MOTION_MAGIC_F);
+		
+		RobotMap.MOTION_MAGIC_ACCELERATION = (int) SmartDashboard.getNumber("Acceleration:", RobotMap.MOTION_MAGIC_ACCELERATION);
+		RobotMap.MOTION_MAGIC_CRUISE_VELOCITY = (int) SmartDashboard.getNumber("Cruise Velocity:", RobotMap.MOTION_MAGIC_CRUISE_VELOCITY);
+		RobotMap.INCHES = SmartDashboard.getNumber("Distance:", RobotMap.MOTION_MAGIC_DISTANCE);
 	}
 
 	@Override
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.cancel();
+		if (autoCommand != null) {
+			autoCommand.cancel();
 		}
-		driveCommand.start();
+		if (driveCommand != null) {
+			driveCommand.start();
+		}
 	}
 
 	/**

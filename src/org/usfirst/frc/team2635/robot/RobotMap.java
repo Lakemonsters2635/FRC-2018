@@ -17,8 +17,19 @@ public class RobotMap {
 	public static final int RIGHT_JOYSTICK = 1;
 	public static final int LEFT_JOYSTICK = 0;
 	
+	//TODO change these vaules
+	public static final double WHEEL_RADIUS_INCHES = 1.5;
+	public static final double WHEEL_SEPARATION_INCHES = 20;
+	
 	public static double MOTION_MAGIC_P = 5;
-	public static double MOTION_MAGIC_I = 0;
-	public static double MOTION_MAGIC_D = 0;
+	public static double MOTION_MAGIC_I = 0.01;
+	public static double MOTION_MAGIC_D = 50;
 	public static double MOTION_MAGIC_F = 1.5;
+	
+	public static int MOTION_MAGIC_ACCELERATION = 250;
+	public static int MOTION_MAGIC_CRUISE_VELOCITY = 250;
+	
+	public static double MOTION_MAGIC_DISTANCE = 3000;
+	public static double WHEEL_DIAMETER = 6;
+	public static double INCHES = 0;
 }
