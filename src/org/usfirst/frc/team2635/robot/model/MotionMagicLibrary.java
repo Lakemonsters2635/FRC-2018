@@ -22,7 +22,7 @@ public class MotionMagicLibrary
 														   double wheelRadiusInches,
 														   double turnRadiusInches, 
 														   double wheelSeparationInches,  
-														   double rpm, 
+														   double velocity, 
 														   boolean Clockwise, 
 														   boolean rotateCenter)
 	{
@@ -57,8 +57,8 @@ public class MotionMagicLibrary
 		
 		double velocityRatio = Math.abs(leftWheelRotations/rightWheelRotations);
 		
-		double rightVelocity = rpm;
-		double leftVelocity = rpm * velocityRatio;
+		double rightVelocity = velocity;
+		double leftVelocity = velocity * velocityRatio;
 		
 		double rightAcceleration =  rightVelocity;
 		double leftAcceleration =  leftVelocity;
@@ -86,22 +86,22 @@ public class MotionMagicLibrary
 		
 		
 		MotionParameters rotationParams = new MotionParameters();
-		rotationParams.rightAcceleration = rightAcceleration;
-		rotationParams.leftAcceleration = leftAcceleration;
-		rotationParams.rightVelocity     = rightVelocity;
-		rotationParams.leftVelocity     = leftVelocity;
-		rotationParams.rightWheelRotations = rightWheelRotations;
-		rotationParams.leftWheelRotations = leftWheelRotations;
+		rotationParams.rightAcceleration = (int) (rightAcceleration * 1000);
+		rotationParams.leftAcceleration = (int) (leftAcceleration * 1000);
+		rotationParams.rightVelocity     = (int) rightVelocity;
+		rotationParams.leftVelocity     = (int) leftVelocity;
+		rotationParams.rightWheelRotations = rightWheelRotations * 1000;
+		rotationParams.leftWheelRotations = leftWheelRotations * 1000;
 
 		return rotationParams;
 
 	}
 	
 	
-	public static MotionParameters getRotationParameters(double targetAngle,    double wheelRadiusInches, double wheelSeparationInches,  double rpm)	
+	public static MotionParameters getRotationParameters(double targetAngle,    double wheelRadiusInches, double wheelSeparationInches,  double velocity)	
 	{
 			double inchesPerRotation = wheelRadiusInches * 2 * Math.PI;
-			
+			System.out.println("Rotation Parameters Called");
 			double arcLengthRight;
 			double archLengthLeft;
 			double rightWheelRotations;
@@ -123,8 +123,8 @@ public class MotionMagicLibrary
 			
 			double velocityRatio = Math.abs(leftWheelRotations/rightWheelRotations);
 			
-			double rightVelocity = rpm;
-			double leftVelocity = rpm * velocityRatio;
+			double rightVelocity = velocity;
+			double leftVelocity = velocity * velocityRatio;
 			
 			double rightAcceleration =  rightVelocity;
 			double leftAcceleration =  leftVelocity;
@@ -132,18 +132,18 @@ public class MotionMagicLibrary
 			
 			
 			MotionParameters rotationParams = new MotionParameters();
-			rotationParams.rightAcceleration = rightAcceleration;
-			rotationParams.leftAcceleration = leftAcceleration;
-			rotationParams.rightVelocity     = rightVelocity;
-			rotationParams.leftVelocity     = leftVelocity;
-			rotationParams.rightWheelRotations = rightWheelRotations;
-			rotationParams.leftWheelRotations = leftWheelRotations;
+			rotationParams.rightAcceleration = (int) (rightAcceleration *1000);
+			rotationParams.leftAcceleration = (int) (leftAcceleration* 1000);
+			rotationParams.rightVelocity     = (int) rightVelocity;
+			rotationParams.leftVelocity     = (int) leftVelocity;
+			rotationParams.rightWheelRotations = rightWheelRotations*1000;
+			rotationParams.leftWheelRotations = leftWheelRotations*1000;
 			
 			return rotationParams;
 			}
 
 	
-	public static MotionParameters getDriveParameters(double wheelRadiusInches, double distanceInches, double rpm, boolean reverse)
+	public static MotionParameters getDriveParameters(double wheelRadiusInches, double distanceInches, double velocity, boolean reverse)
 	{
 		
 
@@ -151,8 +151,8 @@ public class MotionMagicLibrary
 		
 		//double arcLengthInner;
 		//double archLengthOuter;
-		double velocity = rpm;
-		double acceleration = rpm * 1;
+		double velocit = velocity;
+		double acceleration = velocity;
 		
 		//FOR COMPETITION BOT DO THE FOLLOWING
 		double leftWheelRotations = -distanceInches/inchesPerRotation;
@@ -167,12 +167,12 @@ public class MotionMagicLibrary
 		}
 		
 		MotionParameters driveParams = new MotionParameters();
-		driveParams.leftAcceleration = acceleration;
-		driveParams.rightAcceleration = acceleration;
-		driveParams.leftWheelRotations = leftWheelRotations;
-		driveParams.rightWheelRotations = rightWheelRotations;
-		driveParams.leftVelocity     = velocity;
-		driveParams.rightVelocity     = velocity;
+		driveParams.leftAcceleration = (int) (acceleration * 1000);
+		driveParams.rightAcceleration = (int) (acceleration * 1000);
+		driveParams.leftWheelRotations = leftWheelRotations * 1000;
+		driveParams.rightWheelRotations = rightWheelRotations * 1000;
+		driveParams.leftVelocity     = (int) velocit;
+		driveParams.rightVelocity     = (int) velocit;
 		return driveParams;
 
 	}}

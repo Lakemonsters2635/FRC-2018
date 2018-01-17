@@ -2,6 +2,8 @@ package org.usfirst.frc.team2635.robot.commands;
 
 import org.usfirst.frc.team2635.robot.Robot;
 import org.usfirst.frc.team2635.robot.RobotMap;
+import org.usfirst.frc.team2635.robot.model.MotionMagicLibrary;
+import org.usfirst.frc.team2635.robot.model.MotionParameters;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
@@ -11,37 +13,43 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class AutonomousStraightCommand extends Command {
-
-    public AutonomousStraightCommand() {
+	MotionParameters motionParams;
+	double distance;
+    public AutonomousStraightCommand(double distance) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drive);
+        this.distance = distance;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	
+    	motionParams = MotionMagicLibrary.getDriveParameters(3, distance, 150, false);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//Robot.drive.frontLeftMotor.set(ControlMode.MotionMagic, 3000);
     	//Robot.drive.frontRightMotor.set(ControlMode.MotionMagic, -3000);
-    	double distance = Robot.drive.inchesToCounts(RobotMap.INCHES);
-    	Robot.drive.motorControl(ControlMode.MotionMagic, distance, -distance);
+    	
+    	
+    	Robot.drive.motionMagic(motionParams);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//Checks a zone around the position and finishes command if inside both
-    	if(Robot.drive.getFrontLeftPos() <= 3005 && Robot.drive.getFrontLeftPos() >= 2995 && Robot.drive.getFrontRightPos() >= -3005 && Robot.drive.getFrontRightPos() <= -2995){
-    		System.out.println("Auto Finished");
-    		return true;
+    	
+    	boolean isFinished = Robot.drive.motionMagicDone(motionParams, RobotMap.ERRORTOLERANCE);
+    	if(isFinished) {
+    		System.out.println("Drive Straight Finished");
     	}
-        return false;
+    	return isFinished;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.drive.reset();
 
     }
 

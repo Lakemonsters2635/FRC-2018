@@ -30,27 +30,31 @@ public class AutonomousTurnCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drive.SetNavxAngle();
     	
-    	targetAngle = 90;
-	   	rotationParams = MotionMagicLibrary.getRotationParameters(90,
+    	
+	   	rotationParams = MotionMagicLibrary.getRotationParameters(targetAngle,
 				RobotMap.WHEEL_RADIUS_INCHES, RobotMap.WHEEL_SEPARATION_INCHES, rpm);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	
-    	Robot.drive.rotateMotionMagic(rotationParams);  
+    	Robot.drive.motionMagic(rotationParams);  
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+    	boolean isFinished = Robot.drive.motionMagicDone(rotationParams, RobotMap.ERRORTOLERANCE);
+    	if(isFinished) {
+    		System.out.println("Drive Turn Finished");
+    	}
+    	return isFinished;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.drive.reset();
     }
 
     // Called when another command which requires one or more of the same

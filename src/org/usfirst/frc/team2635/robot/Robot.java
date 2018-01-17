@@ -63,8 +63,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("D:", RobotMap.MOTION_MAGIC_D);
 		SmartDashboard.putNumber("F:", RobotMap.MOTION_MAGIC_F);
 		
-		SmartDashboard.putNumber("Acceleration:", RobotMap.MOTION_MAGIC_ACCELERATION);
-		SmartDashboard.putNumber("Cruise Velocity:", RobotMap.MOTION_MAGIC_CRUISE_VELOCITY);
 		SmartDashboard.putNumber("Distance:", 0);
 	
 	}
@@ -119,7 +117,10 @@ public class Robot extends TimedRobot {
 		 */
 
 		// schedule the autonomous command
+		
 		if (autoCommand != null) {
+			drive.autoInit();
+			System.out.println("Trying to Start AutoCommand");
 			autoCommand.start();
 		}
 		
@@ -138,8 +139,6 @@ public class Robot extends TimedRobot {
 		RobotMap.MOTION_MAGIC_D = SmartDashboard.getNumber("D:", RobotMap.MOTION_MAGIC_D);
 		RobotMap.MOTION_MAGIC_F = SmartDashboard.getNumber("F:", RobotMap.MOTION_MAGIC_F);
 		
-		RobotMap.MOTION_MAGIC_ACCELERATION = (int) SmartDashboard.getNumber("Acceleration:", RobotMap.MOTION_MAGIC_ACCELERATION);
-		RobotMap.MOTION_MAGIC_CRUISE_VELOCITY = (int) SmartDashboard.getNumber("Cruise Velocity:", RobotMap.MOTION_MAGIC_CRUISE_VELOCITY);
 		RobotMap.INCHES = SmartDashboard.getNumber("Distance:", RobotMap.MOTION_MAGIC_DISTANCE);
 	}
 
