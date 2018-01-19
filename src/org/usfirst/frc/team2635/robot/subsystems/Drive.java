@@ -24,10 +24,22 @@ public class Drive extends Subsystem {
 	DifferentialDrive drive;
     
 	public Drive(){
-		frontLeftMotor = new WPI_TalonSRX(1);
-		frontRightMotor = new WPI_TalonSRX(3);
-		backLeftMotor = new WPI_TalonSRX(2);
-		backRightMotor = new WPI_TalonSRX(4);
+		//2017 BUNNYBOT
+//		frontLeftMotor = new WPI_TalonSRX(1);
+//		frontRightMotor = new WPI_TalonSRX(3);
+//		backLeftMotor = new WPI_TalonSRX(2);
+//		backRightMotor = new WPI_TalonSRX(4);
+		//2017 BOT
+		frontLeftMotor = new WPI_TalonSRX(3);
+		frontRightMotor = new WPI_TalonSRX(1);
+		backLeftMotor = new WPI_TalonSRX(4);
+		backRightMotor = new WPI_TalonSRX(2);
+		
+		
+		//Polarity of Encoder
+		frontLeftMotor.setSensorPhase(true);
+		frontRightMotor.setSensorPhase(true);
+		//END 2017 BOT
 		
 		//back eg. slaves
 		backLeftMotor.follow(frontLeftMotor);
@@ -116,6 +128,9 @@ public class Drive extends Subsystem {
     public void reset(){
     	frontLeftMotor.setSelectedSensorPosition(0, 0, 0);
     	frontRightMotor.setSelectedSensorPosition(0, 0, 0);
+    	
+    	frontLeftMotor.set(ControlMode.PercentOutput, 0);
+    	frontRightMotor.set(ControlMode.PercentOutput, 0);
     }
 
 	@Override

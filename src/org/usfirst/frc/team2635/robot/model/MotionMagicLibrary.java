@@ -86,8 +86,8 @@ public class MotionMagicLibrary
 		
 		
 		MotionParameters rotationParams = new MotionParameters();
-		rotationParams.rightAcceleration = (int) (rightAcceleration * 1000);
-		rotationParams.leftAcceleration = (int) (leftAcceleration * 1000);
+		rotationParams.rightAcceleration = (int) rightAcceleration;
+		rotationParams.leftAcceleration = (int) leftAcceleration;
 		rotationParams.rightVelocity     = (int) rightVelocity;
 		rotationParams.leftVelocity     = (int) leftVelocity;
 		rotationParams.rightWheelRotations = rightWheelRotations * 1000;
@@ -132,8 +132,8 @@ public class MotionMagicLibrary
 			
 			
 			MotionParameters rotationParams = new MotionParameters();
-			rotationParams.rightAcceleration = (int) (rightAcceleration *1000);
-			rotationParams.leftAcceleration = (int) (leftAcceleration* 1000);
+			rotationParams.rightAcceleration = (int) rightAcceleration;
+			rotationParams.leftAcceleration = (int) leftAcceleration;
 			rotationParams.rightVelocity     = (int) rightVelocity;
 			rotationParams.leftVelocity     = (int) leftVelocity;
 			rotationParams.rightWheelRotations = rightWheelRotations*1000;
@@ -167,8 +167,8 @@ public class MotionMagicLibrary
 		}
 		
 		MotionParameters driveParams = new MotionParameters();
-		driveParams.leftAcceleration = (int) (acceleration * 1000);
-		driveParams.rightAcceleration = (int) (acceleration * 1000);
+		driveParams.leftAcceleration = (int) acceleration;
+		driveParams.rightAcceleration = (int) acceleration;
 		driveParams.leftWheelRotations = leftWheelRotations * 1000;
 		driveParams.rightWheelRotations = rightWheelRotations * 1000;
 		driveParams.leftVelocity     = (int) velocit;

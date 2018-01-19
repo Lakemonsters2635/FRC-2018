@@ -15,16 +15,18 @@ import edu.wpi.first.wpilibj.command.Command;
 public class AutonomousStraightCommand extends Command {
 	MotionParameters motionParams;
 	double distance;
-    public AutonomousStraightCommand(double distance) {
+	double velocity;
+    public AutonomousStraightCommand(double distance, double velocity) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drive);
         this.distance = distance;
+        this.velocity = velocity;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	
-    	motionParams = MotionMagicLibrary.getDriveParameters(3, distance, 150, false);
+    	motionParams = MotionMagicLibrary.getDriveParameters(3, distance, velocity, false);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -49,6 +51,7 @@ public class AutonomousStraightCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.drive.motorControl(ControlMode.PercentOutput, 0.0, 0.0);
     	Robot.drive.reset();
 
     }

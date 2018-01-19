@@ -19,13 +19,21 @@ public class RobotMap {
 	
 	//TODO change these vaules
 	public static final double WHEEL_RADIUS_INCHES = 3;
-	public static final double WHEEL_SEPARATION_INCHES = 24;
 	
+	
+	//2017 BUNNYBOT
+//	public static final double WHEEL_SEPARATION_INCHES = 24;
+//	public static double MOTION_MAGIC_P = 5;
+//	public static double MOTION_MAGIC_I = 0.01;
+//	public static double MOTION_MAGIC_D = 50;
+//	public static double MOTION_MAGIC_F = 1.5;
+	//2017 COMP BOT
 	public static double MOTION_MAGIC_P = 5;
-	public static double MOTION_MAGIC_I = 0.01;
-	public static double MOTION_MAGIC_D = 50;
+	public static double MOTION_MAGIC_I = 0.008;
+	public static double MOTION_MAGIC_D = 0;
 	public static double MOTION_MAGIC_F = 1.5;
 	
+	public static final double WHEEL_SEPARATION_INCHES = 25;
 	public static int MOTION_MAGIC_ACCELERATION = 250;
 	public static int MOTION_MAGIC_CRUISE_VELOCITY = 250;
 	
@@ -33,5 +41,5 @@ public class RobotMap {
 	public static double WHEEL_DIAMETER = 6;
 	public static double INCHES = 0;
 	
-	public static double ERRORTOLERANCE = 5;
+	public static double ERRORTOLERANCE = 10;
 }

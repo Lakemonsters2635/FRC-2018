@@ -27,8 +27,12 @@ public class AutonomousCommand extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new AutonomousStraightCommand(138));
-    	addSequential(new AutonomousTurnCommand(120, 360));
+    	addSequential(new AutonomousStraightCommand(60, 250));
+    	addSequential(new AutonomousTurnCommand(250, 90));
+    	addSequential(new AutonomousStraightCommand(60, 250));
+    	addSequential(new AutonomousTurnCommand(250, -90));
+    	addSequential(new AutonomousStraightCommand(60, 250));
+    	
     	
     }
 }
