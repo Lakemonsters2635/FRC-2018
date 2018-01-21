@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2635.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team2635.robot.commands.DriveCommand;
+import org.usfirst.frc.team2635.robot.model.MotionMagicLibrary;
 import org.usfirst.frc.team2635.robot.subsystems.Drive;
 import org.usfirst.frc.team2635.robot.subsystems.FMS;
 
@@ -124,7 +125,7 @@ public class Robot extends TimedRobot {
 			autoCommand.start();
 		}
 		
-		
+		MotionMagicLibrary.CenterStationToRightSwitch().start();
 		
 	}
 
