@@ -42,4 +42,5 @@ public class RobotMap {
 	public static double INCHES = 0;
 	
 	public static double ERRORTOLERANCE = 10;
+	public static boolean VELOCITYDRIVEMODE = true;
 }

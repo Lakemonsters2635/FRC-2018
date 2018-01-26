@@ -51,7 +51,7 @@ public class AutonomousStraightCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.drive.motorControl(ControlMode.PercentOutput, 0.0, 0.0);
+    	Robot.drive.motorControl(ControlMode.PercentOutput, 0.0, 0.0, false);
     	Robot.drive.reset();
 
     }

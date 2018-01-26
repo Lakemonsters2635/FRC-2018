@@ -9,6 +9,8 @@ package org.usfirst.frc.team2635.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -16,8 +18,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2635.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team2635.robot.commands.DriveCommand;
+import org.usfirst.frc.team2635.robot.commands.ToggleDriveModeCommand;
+import org.usfirst.frc.team2635.robot.commands.VisionLightCommand;
 import org.usfirst.frc.team2635.robot.subsystems.Drive;
 import org.usfirst.frc.team2635.robot.subsystems.FMS;
+import org.usfirst.frc.team2635.robot.subsystems.Vision;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,12 +35,15 @@ public class Robot extends TimedRobot {
 	public static OI m_oi;
 	public static Drive drive;
 	public static FMS fms;
+	public static Vision vision;
 	
 	Joystick leftStick;
 	Joystick rightStick;
 	
 	DriveCommand driveCommand;
 	AutonomousCommand autoCommand;
+	VisionLightCommand visionCommand;
+	ToggleDriveModeCommand toggleDriveModeCommand;
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 	
@@ -48,12 +56,20 @@ public class Robot extends TimedRobot {
 		m_oi = new OI();
 		drive = new Drive();
 		fms = new FMS();
+		vision = new Vision();
 		
 		leftStick = new Joystick(RobotMap.LEFT_JOYSTICK);
 		rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK);
 		
+		Button visionButton = new JoystickButton(leftStick, 2);
+		Button driveMode = new JoystickButton(leftStick, 7);
+		
+		
 		driveCommand = new DriveCommand(leftStick, rightStick);
 		autoCommand = new AutonomousCommand();
+		visionCommand = new VisionLightCommand();
+		toggleDriveModeCommand = new ToggleDriveModeCommand();
+		
 		
 		//m_chooser.addObject("My Auto", autoCommand);
 		SmartDashboard.putData("Auto mode", m_chooser);
@@ -64,7 +80,9 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("F:", RobotMap.MOTION_MAGIC_F);
 		
 		SmartDashboard.putNumber("Distance:", 0);
-	
+		visionButton.toggleWhenPressed(visionCommand);
+		driveMode.toggleWhenPressed(toggleDriveModeCommand);
+		
 	}
 
 	/**
@@ -86,7 +104,7 @@ public class Robot extends TimedRobot {
 		{
 			driveCommand.cancel();
 		}
-
+		vision.ledOff();
 	}
 
 	@Override
@@ -149,6 +167,7 @@ public class Robot extends TimedRobot {
 		}
 		if (driveCommand != null) {
 			driveCommand.start();
+			vision.driveMode();
 		}
 	}
 
