@@ -27,8 +27,16 @@ public class RobotMap {
 	public static final int INTAKE_TOGGLE_BUTTON = 5;
 	public static final int CLIMB_UP_BUTTON = 3;
 	public static final int CLIMB_DOWN_BUTTON = 2;
-	public static final int TILT_TOGGLE_BUTTON = 4;
+	public static final int TILT_BUTTON = 4;
 	
+	//PCM
+	public static final int OPEN_GRABBER = 1;
+	public static final int CLOSE_GRABBER = 2;
+	
+	public static final int UP_LEFT_TILT = 3;
+	public static final int DOWN_LEFT_TILT = 4;
+	public static final int UP_RIGHT_TILT = 5;
+	public static final int DOWN_RIGHT_TILT = 6;
 	
 	
 	//TODO change these vaules

@@ -50,9 +50,15 @@ public class Drive extends Subsystem {
 		double absright = Math.abs(right);
 		//Deadzone
 		if(absleft<0.08) left = 0;
-		else left = (left-0.08)*1.08695652174;
+		else {
+			if(left>0) left = (left-0.08)*1.08695652174;
+			else left = (left+0.08)*1.08695652174;
+		}
 		if(absright<0.08) right = 0;
-		else right = (right-0.08)*1.08695652174;
+		else {
+			if(right>0)right = (right-0.08)*1.08695652174;
+			else right = (right+0.08)*1.08695652174;
+		}
 		
 		if(RobotMap.VELOCITYDRIVEMODE){
 			motorControl(ControlMode.Velocity, -left*1000, right*1000, true);
@@ -117,7 +123,7 @@ public class Drive extends Subsystem {
     	frontRightMotor.configMotionCruiseVelocity(RobotMap.MOTION_MAGIC_CRUISE_VELOCITY, 0);
     	frontLeftMotor.configMotionCruiseVelocity(RobotMap.MOTION_MAGIC_CRUISE_VELOCITY, 0);
     	//End Backup
-    	
+    	Robot.vision.ledOn();
     }
     
     public int getFrontRightPos(){

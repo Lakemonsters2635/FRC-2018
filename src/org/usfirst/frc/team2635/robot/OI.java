@@ -27,10 +27,10 @@ public class OI {
 	public Button driveModeButton = new JoystickButton(leftStick, RobotMap.DRIVE_MODE_CHANGE_BUTTON);
 	public Button climbUpButton = new JoystickButton(leftStick, RobotMap.CLIMB_UP_BUTTON);
 	public Button climbDownButton = new JoystickButton(leftStick, RobotMap.CLIMB_DOWN_BUTTON);
-	public Button tiltToggleButton = new JoystickButton(leftStick, RobotMap.TILT_TOGGLE_BUTTON); 
+	public Button tiltToggleButton = new JoystickButton(leftStick, RobotMap.TILT_BUTTON); 
 	
 	//RIGHT BUTTONS
-	public Button grabberButtonRight = new JoystickButton(rightStick, RobotMap.GRABBER_BUTTON);
+//	public Button grabberButtonRight = new JoystickButton(rightStick, RobotMap.GRABBER_BUTTON);
 	public Button gearShiftButton = new JoystickButton(rightStick, RobotMap.GEAR_SHIFT_BUTTON);
 	public Button elevatorUpButton = new JoystickButton(rightStick, RobotMap.ELEVATOR_UP_BUTTON);
 	public Button elevatorDownButton = new JoystickButton(rightStick, RobotMap.ELEVATOR_DOWN_BUTTON);

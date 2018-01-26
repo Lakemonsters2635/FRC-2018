@@ -14,14 +14,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team2635.robot.commands.AutonomousCommand;
+import org.usfirst.frc.team2635.robot.commands.ClimbDownCommand;
+import org.usfirst.frc.team2635.robot.commands.ClimbUpCommand;
 import org.usfirst.frc.team2635.robot.commands.DriveCommand;
+import org.usfirst.frc.team2635.robot.commands.GearShiftCommand;
 import org.usfirst.frc.team2635.robot.commands.ToggleDriveModeCommand;
 import org.usfirst.frc.team2635.robot.commands.VisionLightCommand;
 
 import org.usfirst.frc.team2635.robot.model.MotionMagicLibrary;
-
+import org.usfirst.frc.team2635.robot.subsystems.Climber;
 import org.usfirst.frc.team2635.robot.subsystems.Drive;
+import org.usfirst.frc.team2635.robot.subsystems.Elevator;
 import org.usfirst.frc.team2635.robot.subsystems.FMS;
+import org.usfirst.frc.team2635.robot.subsystems.Gearbox;
+import org.usfirst.frc.team2635.robot.subsystems.Grabber;
+import org.usfirst.frc.team2635.robot.subsystems.Tilt;
 import org.usfirst.frc.team2635.robot.subsystems.Vision;
 
 /**
@@ -36,12 +43,20 @@ public class Robot extends TimedRobot {
 	public static Drive drive;
 	public static FMS fms;
 	public static Vision vision;
-	
+	public static Climber climber;
+	public static Elevator elevator;
+	public static Gearbox gearbox;
+	public static Grabber grabber;
+	public static Tilt tilter;
 	
 	DriveCommand driveCommand;
 	AutonomousCommand autoCommand;
 	VisionLightCommand visionCommand;
 	ToggleDriveModeCommand toggleDriveModeCommand;
+	ClimbUpCommand climbUpCommand;
+	ClimbDownCommand climbDownCommand;
+	GearShiftCommand gearShiftCommand;
+	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 	
@@ -55,8 +70,10 @@ public class Robot extends TimedRobot {
 		drive = new Drive();
 		fms = new FMS();
 		vision = new Vision();
-		
-		
+		climber = new Climber();
+		elevator = new Elevator();
+		gearbox = new Gearbox();
+		grabber = new Grabber();
 		
 		
 		
@@ -65,6 +82,9 @@ public class Robot extends TimedRobot {
 		autoCommand = new AutonomousCommand();
 		visionCommand = new VisionLightCommand();
 		toggleDriveModeCommand = new ToggleDriveModeCommand();
+		climbUpCommand = new ClimbUpCommand();
+		climbDownCommand = new ClimbDownCommand();
+		gearShiftCommand = new GearShiftCommand();
 		
 		
 		//m_chooser.addObject("My Auto", autoCommand);
@@ -77,6 +97,10 @@ public class Robot extends TimedRobot {
 		
 		oi.visionButton.toggleWhenPressed(visionCommand);
 		oi.driveModeButton.toggleWhenPressed(toggleDriveModeCommand);
+		oi.climbUpButton.whileHeld(climbUpCommand);
+		oi.climbDownButton.whileHeld(climbDownCommand);
+		oi.gearShiftButton.toggleWhenPressed(gearShiftCommand);
+		
 		
 	}
 
