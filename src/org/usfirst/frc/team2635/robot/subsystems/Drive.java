@@ -48,24 +48,13 @@ public class Drive extends Subsystem {
 	public void tankDrive(double left, double right){
 		double absleft = Math.abs(left);
 		double absright = Math.abs(right);
-		if(absleft<0.05) left = 0;
-		if(absright<0.05) right = 0;
+		//Deadzone
+		if(absleft<0.08) left = 0;
+		else left = (left-0.08)*1.08695652174;
+		if(absright<0.08) right = 0;
+		else right = (right-0.08)*1.08695652174;
+		
 		if(RobotMap.VELOCITYDRIVEMODE){
-			frontLeftMotor.setSelectedSensorPosition(0, 0, 0);
-			frontLeftMotor.config_kP(1, RobotMap.MOTION_MAGIC_P, 0);
-			frontLeftMotor.config_kI(1, 0, 0);
-			frontLeftMotor.config_kD(1, RobotMap.MOTION_MAGIC_D, 0);
-			frontLeftMotor.config_kF(1, RobotMap.MOTION_MAGIC_F, 0);
-    	
-			frontRightMotor.setSelectedSensorPosition(0, 0, 0);
-			frontRightMotor.config_kP(1, RobotMap.MOTION_MAGIC_P, 0);
-			frontRightMotor.config_kI(1, 0, 0);
-			frontRightMotor.config_kD(1, RobotMap.MOTION_MAGIC_D, 0);
-			frontRightMotor.config_kF(1, RobotMap.MOTION_MAGIC_F, 0);
-			
-	    	frontRightMotor.selectProfileSlot(1, 0);
-	    	frontLeftMotor.selectProfileSlot(1, 0);
-	    	
 			motorControl(ControlMode.Velocity, -left*1000, right*1000, true);
 		}else {
 			motorControl(ControlMode.PercentOutput, -left, right, false);
@@ -86,6 +75,26 @@ public class Drive extends Subsystem {
 		
 	}
     
+	public void teleInit(){
+		frontLeftMotor.config_kP(1, RobotMap.MOTION_MAGIC_P, 0);
+		frontLeftMotor.config_kI(1, 0, 0);
+		frontLeftMotor.config_kD(1, RobotMap.MOTION_MAGIC_D, 0);
+		frontLeftMotor.config_kF(1, RobotMap.MOTION_MAGIC_F, 0);
+    	
+		frontRightMotor.config_kP(1, RobotMap.MOTION_MAGIC_P, 0);
+		frontRightMotor.config_kI(1, 0, 0);
+		frontRightMotor.config_kD(1, RobotMap.MOTION_MAGIC_D, 0);
+		frontRightMotor.config_kF(1, RobotMap.MOTION_MAGIC_F, 0);
+		
+		frontRightMotor.configMotionAcceleration(400, 0);
+	    frontLeftMotor.configMotionAcceleration(400, 0);
+	    	
+	    frontRightMotor.configMotionCruiseVelocity(400, 0);
+	    frontLeftMotor.configMotionCruiseVelocity(400, 0);
+			
+	    
+	}
+	
     public void autoInit() {
     	
     	frontLeftMotor.setSelectedSensorPosition(0, 0, 0);

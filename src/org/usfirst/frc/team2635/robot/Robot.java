@@ -7,10 +7,7 @@
 
 package org.usfirst.frc.team2635.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -35,13 +32,11 @@ import org.usfirst.frc.team2635.robot.subsystems.Vision;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static OI m_oi;
+	public static OI oi;
 	public static Drive drive;
 	public static FMS fms;
 	public static Vision vision;
 	
-	Joystick leftStick;
-	Joystick rightStick;
 	
 	DriveCommand driveCommand;
 	AutonomousCommand autoCommand;
@@ -56,19 +51,17 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		m_oi = new OI();
+		oi = new OI();
 		drive = new Drive();
 		fms = new FMS();
 		vision = new Vision();
 		
-		leftStick = new Joystick(RobotMap.LEFT_JOYSTICK);
-		rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK);
-		
-		Button visionButton = new JoystickButton(leftStick, 2);
-		Button driveMode = new JoystickButton(leftStick, 7);
 		
 		
-		driveCommand = new DriveCommand(leftStick, rightStick);
+		
+		
+		
+		driveCommand = new DriveCommand();
 		autoCommand = new AutonomousCommand();
 		visionCommand = new VisionLightCommand();
 		toggleDriveModeCommand = new ToggleDriveModeCommand();
@@ -82,9 +75,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("D:", RobotMap.MOTION_MAGIC_D);
 		SmartDashboard.putNumber("F:", RobotMap.MOTION_MAGIC_F);
 		
-		SmartDashboard.putNumber("Distance:", 0);
-		visionButton.toggleWhenPressed(visionCommand);
-		driveMode.toggleWhenPressed(toggleDriveModeCommand);
+		oi.visionButton.toggleWhenPressed(visionCommand);
+		oi.driveModeButton.toggleWhenPressed(toggleDriveModeCommand);
 		
 	}
 
@@ -113,6 +105,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		vision.ledOff();
 	}
 
 	/**
@@ -160,18 +153,22 @@ public class Robot extends TimedRobot {
 		RobotMap.MOTION_MAGIC_D = SmartDashboard.getNumber("D:", RobotMap.MOTION_MAGIC_D);
 		RobotMap.MOTION_MAGIC_F = SmartDashboard.getNumber("F:", RobotMap.MOTION_MAGIC_F);
 		
-		RobotMap.INCHES = SmartDashboard.getNumber("Distance:", RobotMap.MOTION_MAGIC_DISTANCE);
 	}
 
 	@Override
 	public void teleopInit() {
+		
 		if (autoCommand != null) {
 			autoCommand.cancel();
 		}
+		
+		if (drive != null)drive.teleInit();
+		
 		if (driveCommand != null) {
 			driveCommand.start();
 			vision.driveMode();
 		}
+		
 	}
 
 	/**

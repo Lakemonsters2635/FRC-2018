@@ -14,8 +14,22 @@ package org.usfirst.frc.team2635.robot;
  * floating around.
  */
 public class RobotMap {
+	//JOYSTICKS
 	public static final int RIGHT_JOYSTICK = 1;
 	public static final int LEFT_JOYSTICK = 0;
+	//BUTTONS
+	public static final int DRIVE_MODE_CHANGE_BUTTON = 7;
+	public static final int VISION_LIGHT_TOGGLE_BUTTON = 10;
+	public static final int GEAR_SHIFT_BUTTON = 4;
+	public static final int GRABBER_BUTTON = 1;
+	public static final int ELEVATOR_UP_BUTTON = 3;
+	public static final int ELEVATOR_DOWN_BUTTON = 2;
+	public static final int INTAKE_TOGGLE_BUTTON = 5;
+	public static final int CLIMB_UP_BUTTON = 3;
+	public static final int CLIMB_DOWN_BUTTON = 2;
+	public static final int TILT_TOGGLE_BUTTON = 4;
+	
+	
 	
 	//TODO change these vaules
 	public static final double WHEEL_RADIUS_INCHES = 3;
@@ -39,7 +53,6 @@ public class RobotMap {
 	
 	public static double MOTION_MAGIC_DISTANCE = 3000;
 	public static double WHEEL_DIAMETER = 6;
-	public static double INCHES = 0;
 	
 	public static double ERRORTOLERANCE = 10;
 
