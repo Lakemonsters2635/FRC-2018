@@ -20,6 +20,9 @@ import org.usfirst.frc.team2635.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team2635.robot.commands.DriveCommand;
 import org.usfirst.frc.team2635.robot.commands.ToggleDriveModeCommand;
 import org.usfirst.frc.team2635.robot.commands.VisionLightCommand;
+
+import org.usfirst.frc.team2635.robot.model.MotionMagicLibrary;
+
 import org.usfirst.frc.team2635.robot.subsystems.Drive;
 import org.usfirst.frc.team2635.robot.subsystems.FMS;
 import org.usfirst.frc.team2635.robot.subsystems.Vision;
@@ -142,7 +145,7 @@ public class Robot extends TimedRobot {
 			autoCommand.start();
 		}
 		
-		
+		MotionMagicLibrary.CenterStationToRightSwitch().start();
 		
 	}
 

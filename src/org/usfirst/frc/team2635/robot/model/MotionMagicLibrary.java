@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.usfirst.frc.team2635.robot.Robot;
+import org.usfirst.frc.team2635.robot.RobotMap;
+import org.usfirst.frc.team2635.robot.commands.AutonomousStraightCommand;
+import org.usfirst.frc.team2635.robot.commands.AutonomousTurnCommand;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -175,4 +178,83 @@ public class MotionMagicLibrary
 		driveParams.rightVelocity     = (int) velocit;
 		return driveParams;
 
-	}}
+	}
+	
+	public static CommandGroup RightStationToLeftSwitch() {
+		CommandGroup output;
+		output = new CommandGroup();
+		
+		output.addSequential(new AutonomousStraightCommand(60, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
+		output.addSequential(new AutonomousStraightCommand(150, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
+		output.addSequential(new AutonomousStraightCommand(51, RobotMap.AUTO_DRIVE_VELOCITY));
+		
+		return output;
+	}
+	
+	public static CommandGroup RightStationToRightSwitch() {
+		CommandGroup output;
+		output = new CommandGroup();
+		
+		output.addSequential(new AutonomousStraightCommand(60, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
+		output.addSequential(new AutonomousStraightCommand(41.6, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
+		output.addSequential(new AutonomousStraightCommand(51, RobotMap.AUTO_DRIVE_VELOCITY));
+		
+		return output;
+	}
+	
+	public static CommandGroup CenterStationToRightSwitch() {
+		CommandGroup output; 
+		output = new CommandGroup();
+		
+		output.addSequential(new AutonomousStraightCommand(60, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
+		output.addSequential(new AutonomousStraightCommand(40, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
+		output.addSequential(new AutonomousStraightCommand(51, RobotMap.AUTO_DRIVE_VELOCITY));
+		
+		return output;
+	}
+	
+	public static CommandGroup CenterStationToLeftSwitch() {
+		CommandGroup output;
+		output = new CommandGroup();
+		
+		output.addSequential(new AutonomousStraightCommand(60, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
+		output.addSequential(new AutonomousStraightCommand(40, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
+		output.addSequential(new AutonomousStraightCommand(51, RobotMap.AUTO_DRIVE_VELOCITY));
+		
+		return output;
+	}
+	
+	public static CommandGroup LeftStationToLeftSwitch() {
+		CommandGroup output;
+		output = new CommandGroup();
+		
+		output.addSequential(new AutonomousStraightCommand(60, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
+		output.addSequential(new AutonomousStraightCommand(41.6, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
+		output.addSequential(new AutonomousStraightCommand(51, RobotMap.AUTO_DRIVE_VELOCITY));
+		
+		return output;
+	}
+	
+	public static CommandGroup LeftStationToRightSwitch() {
+		CommandGroup output;
+		output = new CommandGroup();
+		
+		output.addSequential(new AutonomousStraightCommand(60, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
+		output.addSequential(new AutonomousStraightCommand(150, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
+		output.addSequential(new AutonomousStraightCommand(51, RobotMap.AUTO_DRIVE_VELOCITY));
+		
+		return output;
+	}
+}
