@@ -101,8 +101,6 @@ public class Drive extends Subsystem {
 		
 		motorControl(ControlMode.MotionMagic, motionParams.leftWheelRotations, motionParams.rightWheelRotations);
 		
-	
-
 	}
     
     public boolean motionMagicDone(MotionParameters motionParams, double errorTolerance) {
