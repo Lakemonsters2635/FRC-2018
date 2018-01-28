@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2635.robot.subsystems;
 
+import org.usfirst.frc.team2635.robot.RobotMap;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -12,8 +14,10 @@ public class Climber extends Subsystem {
 	WPI_TalonSRX climbMotor1;
 	WPI_TalonSRX climbMotor2;
     public Climber(){
-    	climbMotor1 = new WPI_TalonSRX(8);
-    	climbMotor2 = new WPI_TalonSRX(9);
+    	
+    	//FHE:TODO One Encoder
+    	climbMotor1 = new WPI_TalonSRX(RobotMap.CLIMBER1_CHANNEL);
+    	climbMotor2 = new WPI_TalonSRX(RobotMap.CLIMBER2_CHANNEL);
     }
     
     public void climbUp(){

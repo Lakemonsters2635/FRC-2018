@@ -33,11 +33,24 @@ public class RobotMap {
 	public static final int OPEN_GRABBER = 1;
 	public static final int CLOSE_GRABBER = 2;
 	
-	public static final int UP_LEFT_TILT = 3;
-	public static final int DOWN_LEFT_TILT = 4;
-	public static final int UP_RIGHT_TILT = 5;
-	public static final int DOWN_RIGHT_TILT = 6;
+	public static final int UP_LEFT_TILT_PCM_CHANNEL = 3;
+	public static final int DOWN_LEFT_TILT_PCM_CHANNEL= 4;
+	public static final int UP_RIGHT_TILT_PCM_CHANNEL = 5;
+	public static final int DOWN_RIGHT_TILT_PCM_CHANNEL = 6;
 	
+
+	public static final int FRONT_RIGHT_DRIVE_CHANNEL = 1;
+	public static final int BACK_RIGHT_DRIVE_CHANNEL = 2;
+	public static final int FRONT_LEFT_DRIVE_CHANNEL = 3;
+	public static final int BACK_LEFT_DRIVE_CHANNEL = 4;
+	
+	public static final int CLIMBER1_CHANNEL = 8;
+	public static final int CLIMBER2_CHANNEL = 9;
+	
+	public static final int ELEVATOR_UPPER_MOTOR_CHANNEL = 5;
+	public static final int ELEVATOR_LOWER_MOTOR1_CHANNEL = 6;
+	public static final int ELEVATOR_LOWER_MOTOR2_CHANNEL = 7;
+
 	
 	//TODO change these vaules
 	public static final double WHEEL_RADIUS_INCHES = 3;

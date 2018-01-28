@@ -30,10 +30,10 @@ public class Drive extends Subsystem {
 //		backLeftMotor = new WPI_TalonSRX(2);
 //		backRightMotor = new WPI_TalonSRX(4);
 		//2017 BOT
-		frontLeftMotor = new WPI_TalonSRX(3);
-		frontRightMotor = new WPI_TalonSRX(1);
-		backLeftMotor = new WPI_TalonSRX(4);
-		backRightMotor = new WPI_TalonSRX(2);
+		frontLeftMotor = new WPI_TalonSRX(RobotMap.FRONT_LEFT_DRIVE_CHANNEL);
+		frontRightMotor = new WPI_TalonSRX(RobotMap.FRONT_RIGHT_DRIVE_CHANNEL);
+		backLeftMotor = new WPI_TalonSRX(RobotMap.BACK_LEFT_DRIVE_CHANNEL);
+		backRightMotor = new WPI_TalonSRX(RobotMap.BACK_RIGHT_DRIVE_CHANNEL);
 		
 		
 		//Polarity of Encoder

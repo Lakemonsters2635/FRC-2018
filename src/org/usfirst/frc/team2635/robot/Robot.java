@@ -10,6 +10,7 @@ package org.usfirst.frc.team2635.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,9 +19,12 @@ import org.usfirst.frc.team2635.robot.commands.ClimbDownCommand;
 import org.usfirst.frc.team2635.robot.commands.ClimbUpCommand;
 import org.usfirst.frc.team2635.robot.commands.DriveCommand;
 import org.usfirst.frc.team2635.robot.commands.GearShiftCommand;
+import org.usfirst.frc.team2635.robot.commands.GetFMSCommand;
+import org.usfirst.frc.team2635.robot.commands.GrabberCommand;
+import org.usfirst.frc.team2635.robot.commands.TiltCommand;
 import org.usfirst.frc.team2635.robot.commands.ToggleDriveModeCommand;
 import org.usfirst.frc.team2635.robot.commands.VisionLightCommand;
-
+import org.usfirst.frc.team2635.robot.model.FMSInfo;
 import org.usfirst.frc.team2635.robot.model.MotionMagicLibrary;
 import org.usfirst.frc.team2635.robot.subsystems.Climber;
 import org.usfirst.frc.team2635.robot.subsystems.Drive;
@@ -56,9 +60,13 @@ public class Robot extends TimedRobot {
 	ClimbUpCommand climbUpCommand;
 	ClimbDownCommand climbDownCommand;
 	GearShiftCommand gearShiftCommand;
+	GrabberCommand grabberCommand;
+	TiltCommand tiltCommand;
+	Command centerStationToLeftSwitch;
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	//SendableChooser chooser = new SendableChooser();
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -85,10 +93,12 @@ public class Robot extends TimedRobot {
 		climbUpCommand = new ClimbUpCommand();
 		climbDownCommand = new ClimbDownCommand();
 		gearShiftCommand = new GearShiftCommand();
-		
+		//grabberCommand = new GrabberCommand();
+		//tiltCommand = new TiltCommand();
+		InitializeChooser();
 		
 		//m_chooser.addObject("My Auto", autoCommand);
-		SmartDashboard.putData("Auto mode", m_chooser);
+		//SmartDashboard.putData("Auto mode", m_chooser);
 		
 		SmartDashboard.putNumber("P:", RobotMap.MOTION_MAGIC_P);
 		SmartDashboard.putNumber("I:", RobotMap.MOTION_MAGIC_I);
@@ -100,8 +110,8 @@ public class Robot extends TimedRobot {
 		oi.climbUpButton.whileHeld(climbUpCommand);
 		oi.climbDownButton.whileHeld(climbDownCommand);
 		oi.gearShiftButton.toggleWhenPressed(gearShiftCommand);
-		
-		
+		oi.grabberButtonLeft.toggleWhenPressed(grabberCommand);
+		oi.tiltToggleButton.toggleWhenPressed(tiltCommand);
 	}
 
 	/**
@@ -146,7 +156,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		m_autonomousCommand = m_chooser.getSelected();
-
+		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -161,7 +171,9 @@ public class Robot extends TimedRobot {
 			System.out.println("Trying to Start AutoCommand");
 			autoCommand.start();
 		}
-		
+		FMSInfo fmsInfo = new FMSInfo();
+		GetFMSCommand fmsInfoCmd = new GetFMSCommand(fmsInfo);
+		fmsInfoCmd.start();
 		MotionMagicLibrary.CenterStationToRightSwitch().start();
 		
 	}
@@ -208,5 +220,29 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+	}
+	public void InitializeChooser()
+	{
+		//doNothingCmd = MotionProfileLibrary.doNothing();
+		centerStationToLeftSwitch = MotionMagicLibrary.CenterStationToRightSwitch();
+		//SendableBuilder builder = null;
+		//m_chooser.initSendable(builder);;
+		//m_chooser.addDefault("Do Nothing", doNothingCmd);
+		m_chooser.addObject("Center", centerStationToLeftSwitch);
+		m_chooser.addObject("Right", centerStationToLeftSwitch);
+		m_chooser.addObject("Left", centerStationToLeftSwitch);
+		
+		//chooser.addObject("Center", centerStationToLeftSwitch);
+		//chooser.addObject("Right", centerStationToLeftSwitch);
+		//chooser.addObject("Left", centerStationToLeftSwitch);
+		
+//		m_chooser.addObject("Left Gear", center);
+//		m_chooser.addObject("Left Gear Simple", leftGearSimple);
+//		m_chooser.addObject("Right Gear", rightGear);
+//		m_chooser.addObject("Vision Test", visionTest);
+//		m_chooser.addObject("Rotation Test", rotateTest);
+
+		
+		SmartDashboard.putData("Auto Selector", m_chooser);
 	}
 }

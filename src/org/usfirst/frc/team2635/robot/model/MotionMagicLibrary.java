@@ -7,6 +7,7 @@ import org.usfirst.frc.team2635.robot.Robot;
 import org.usfirst.frc.team2635.robot.RobotMap;
 import org.usfirst.frc.team2635.robot.commands.AutonomousStraightCommand;
 import org.usfirst.frc.team2635.robot.commands.AutonomousTurnCommand;
+import org.usfirst.frc.team2635.robot.commands.GetFMSCommand;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -158,10 +159,10 @@ public class MotionMagicLibrary
 		double acceleration = velocity;
 		
 		//FOR COMPETITION BOT DO THE FOLLOWING
-		double leftWheelRotations = -distanceInches/inchesPerRotation;
+		double leftWheelRotations = distanceInches/inchesPerRotation;
 		//END COMPETITION BOT
 		
-		double rightWheelRotations = distanceInches/inchesPerRotation;
+		double rightWheelRotations = -distanceInches/inchesPerRotation;
 		
 		if (reverse)
 		{			
@@ -208,13 +209,14 @@ public class MotionMagicLibrary
 	
 	public static CommandGroup CenterStationToRightSwitch() {
 		CommandGroup output; 
+		//FMSInfo FMSInfo = new FMSInfo();
 		output = new CommandGroup();
-		
-		output.addSequential(new AutonomousStraightCommand(60, RobotMap.AUTO_DRIVE_VELOCITY));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
-		output.addSequential(new AutonomousStraightCommand(40, RobotMap.AUTO_DRIVE_VELOCITY));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
-		output.addSequential(new AutonomousStraightCommand(51, RobotMap.AUTO_DRIVE_VELOCITY));
+		//output.addSequential(new GetFMSCommand(FMSInfo));
+		//output.addSequential(new AutonomousStraightCommand(60, RobotMap.AUTO_DRIVE_VELOCITY));
+		//output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
+		//output.addSequential(new AutonomousStraightCommand(40, RobotMap.AUTO_DRIVE_VELOCITY));
+		//output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
+		//output.addSequential(new AutonomousStraightCommand(51, RobotMap.AUTO_DRIVE_VELOCITY));
 		
 		return output;
 	}

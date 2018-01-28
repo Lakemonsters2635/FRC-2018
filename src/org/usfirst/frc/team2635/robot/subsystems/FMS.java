@@ -9,16 +9,22 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class FMS extends Subsystem {
-	DriverStation ds;
+	DriverStation driveStation;
+	
+	public FMS () {
+		driveStation = DriverStation.getInstance();
+	}
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	
     }
     
     public String getGameMessage() {
+    	
     	try{
-    		String message = ds.getGameSpecificMessage();
+    		String message = driveStation.getGameSpecificMessage();
     		System.out.println(message);
     		return message;
     	} catch(Exception e){
@@ -28,49 +34,56 @@ public class FMS extends Subsystem {
     }
     
     public String getAllianceString() {
-    	Alliance message = ds.getAlliance();
+    	//ds.getLocation()
+    	//ds.getAlliance()
+    	//ds.getGameSpecificMessage();
+    	//ds.waitForData();
+    	
+    	
+    	
+    	Alliance message = driveStation.getAlliance();
     	System.out.println(message);
     	return message.toString();
     }
     
     public Alliance getAlliance() {
-    	Alliance message = ds.getAlliance();
+    	Alliance message = driveStation.getAlliance();
     	System.out.println(message);
     	return message;
     }
     
     public String getEvent() {
-    	String message = ds.getEventName();
+    	String message = driveStation.getEventName();
     	System.out.println(message);
     	return message;
     }
     
     public Integer getMatchNumber() {
-    	Integer message = ds.getMatchNumber();
+    	Integer message = driveStation.getMatchNumber();
     	System.out.println(message);
     	return message;
     }
     
     public Double getMatchTime() {
-    	Double message = ds.getMatchTime();
+    	Double message = driveStation.getMatchTime();
     	System.out.println(message);
     	return message;
     }
     
     public String getMatchTypeString() {
-    	MatchType message = ds.getMatchType();
+    	MatchType message = driveStation.getMatchType();
     	System.out.println(message);
     	return message.toString();
     }
     
     public String getMatchType() {
-    	MatchType message = ds.getMatchType();
+    	MatchType message = driveStation.getMatchType();
     	System.out.println(message);
     	return message.toString();
     }
     
     public int getLocation() {
-    	int message = ds.getLocation();
+    	int message = driveStation.getLocation();
     	System.out.println(message);
     	return message;
     }

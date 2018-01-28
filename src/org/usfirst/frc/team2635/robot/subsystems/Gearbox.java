@@ -4,8 +4,9 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * This robot has a two-speed gearbox. This subsystem controls the speed.
  */
+
 public class Gearbox extends Subsystem {
 
     // Put methods for controlling this subsystem

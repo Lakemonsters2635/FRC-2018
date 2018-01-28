@@ -17,8 +17,8 @@ public class Tilt extends Subsystem {
 	DoubleSolenoid rightSolenoid;
 	
 	public Tilt () {
-		leftSolenoid = new DoubleSolenoid(RobotMap.UP_LEFT_TILT, RobotMap.DOWN_LEFT_TILT);
-    	rightSolenoid = new DoubleSolenoid(RobotMap.UP_RIGHT_TILT, RobotMap.DOWN_RIGHT_TILT);
+		leftSolenoid = new DoubleSolenoid(RobotMap.UP_LEFT_TILT_PCM_CHANNEL, RobotMap.DOWN_LEFT_TILT_PCM_CHANNEL);
+    	rightSolenoid = new DoubleSolenoid(RobotMap.UP_RIGHT_TILT_PCM_CHANNEL, RobotMap.DOWN_RIGHT_TILT_PCM_CHANNEL);
 	}
 	
     public void initDefaultCommand() {

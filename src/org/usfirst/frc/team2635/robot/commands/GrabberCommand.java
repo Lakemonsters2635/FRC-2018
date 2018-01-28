@@ -17,20 +17,12 @@ public class GrabberCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	Robot.grabber.setOpen();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	boolean isOpen = true;
-    	if(isOpen) {
-    		Robot.grabber.setClosed();
-    		isOpen = false;
-    	}
-    	else {
-    		Robot.grabber.setOpen();
-    		isOpen = true;
-    	}
+    	Robot.grabber.setClosed();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -40,10 +32,12 @@ public class GrabberCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.grabber.setOpen();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	Robot.grabber.setOpen();
     }
 }
