@@ -24,6 +24,6 @@ public class Elevator extends Subsystem {
     	lowerMotor1 = new WPI_TalonSRX(RobotMap.ELEVATOR_LOWER_MOTOR1_CHANNEL);
     	lowerMotor2 = new WPI_TalonSRX(RobotMap.ELEVATOR_LOWER_MOTOR2_CHANNEL);
     }
-    //Single Motor Elevator
+    
 }
 
