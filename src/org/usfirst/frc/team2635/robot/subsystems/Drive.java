@@ -163,7 +163,7 @@ public class Drive extends Subsystem {
     	double rightError = Math.abs(rightIntended - rightPos);
     	
     	
-    	System.out.println("Left Error: " + leftError + "    Right Error: " + rightError);
+    	//System.out.println("Left Error: " + leftError + "    Right Error: " + rightError);
     	if(leftError < errorTolerance && rightError < errorTolerance) {
     		
     		return true;

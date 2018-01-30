@@ -62,10 +62,15 @@ public class Robot extends TimedRobot {
 	GearShiftCommand gearShiftCommand;
 	GrabberCommand grabberCommand;
 	TiltCommand tiltCommand;
-	Command centerStationToLeftSwitch;
+	
+	Command doNothingCmd;
+	
+	Command rightStation;
+	Command centerStation;
+	Command leftStation;
 	
 	Command m_autonomousCommand;
-	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	SendableChooser m_chooser; 
 	//SendableChooser chooser = new SendableChooser();
 	
 	/**
@@ -83,7 +88,7 @@ public class Robot extends TimedRobot {
 		gearbox = new Gearbox();
 		grabber = new Grabber();
 		
-		
+		m_chooser = new SendableChooser();
 		
 		
 		driveCommand = new DriveCommand();
@@ -95,7 +100,8 @@ public class Robot extends TimedRobot {
 		gearShiftCommand = new GearShiftCommand();
 		//grabberCommand = new GrabberCommand();
 		//tiltCommand = new TiltCommand();
-		InitializeChooser();
+		
+		
 		
 		//m_chooser.addObject("My Auto", autoCommand);
 		//SmartDashboard.putData("Auto mode", m_chooser);
@@ -155,7 +161,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
+		m_autonomousCommand = (Command) m_chooser.getSelected();
+		m_autonomousCommand.start();
+		
+		InitializeChooser();
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -166,15 +175,16 @@ public class Robot extends TimedRobot {
 
 		// schedule the autonomous command
 		
-		if (autoCommand != null) {
-			drive.autoInit();
-			System.out.println("Trying to Start AutoCommand");
-			autoCommand.start();
-		}
-		FMSInfo fmsInfo = new FMSInfo();
-		GetFMSCommand fmsInfoCmd = new GetFMSCommand(fmsInfo);
-		fmsInfoCmd.start();
-		MotionMagicLibrary.CenterStationToRightSwitch().start();
+		
+//		if (autoCommand != null) {
+//			drive.autoInit();
+//			System.out.println("Trying to Start AutoCommand");
+//			autoCommand.start();
+//		}
+//		FMSInfo fmsInfo = new FMSInfo();
+//		GetFMSCommand fmsInfoCmd = new GetFMSCommand(fmsInfo);
+//		fmsInfoCmd.start();
+		//MotionMagicLibrary.CenterStationToLeftSwitch().start();
 		
 	}
 
@@ -224,17 +234,30 @@ public class Robot extends TimedRobot {
 	public void InitializeChooser()
 	{
 		//doNothingCmd = MotionProfileLibrary.doNothing();
-		centerStationToLeftSwitch = MotionMagicLibrary.CenterStationToRightSwitch();
+		doNothingCmd = MotionMagicLibrary.DoNothingCommand();
+		
+		leftStation = MotionMagicLibrary.LeftStation();
+		centerStation = MotionMagicLibrary.CenterStation();
+		rightStation = MotionMagicLibrary.RightStation();
+		
 		//SendableBuilder builder = null;
 		//m_chooser.initSendable(builder);;
-		//m_chooser.addDefault("Do Nothing", doNothingCmd);
-		m_chooser.addObject("Center", centerStationToLeftSwitch);
-		m_chooser.addObject("Right", centerStationToLeftSwitch);
-		m_chooser.addObject("Left", centerStationToLeftSwitch);
+		m_chooser.addDefault("Do Nothing", doNothingCmd);
+		
+		m_chooser.addObject("Left Station", leftStation);
+		m_chooser.addObject("Center Station", centerStation);
+		m_chooser.addObject("Right Station", rightStation);
+		
 		
 		//chooser.addObject("Center", centerStationToLeftSwitch);
 		//chooser.addObject("Right", centerStationToLeftSwitch);
 		//chooser.addObject("Left", centerStationToLeftSwitch);
+//		
+//		Command centerStationToRightSwitch;
+//		Command rightStationToRightSwitch;
+//		Command rightStationToRightSwitch;
+//		Command leftStationToLeftSwitch;
+//		Command leftStationToRightSwitch;
 		
 //		m_chooser.addObject("Left Gear", center);
 //		m_chooser.addObject("Left Gear Simple", leftGearSimple);

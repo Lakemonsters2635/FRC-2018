@@ -31,15 +31,12 @@ public class GetFMSCommand extends Command {
     protected void execute() {
     	//FHE: What does this do?
     	String gameSpecificMessage = "";
-    	if(driveStation.isFMSAttached()){
+
     		
     		driveStation.waitForData();
         	fmsInfo.alliance = driveStation.getAlliance();
         	gameSpecificMessage = driveStation.getGameSpecificMessage();
-    	}
-    	else {
-    		gameSpecificMessage = RandomMessage();
-    	}
+
     		fmsInfo.switchLocation = String.valueOf(gameSpecificMessage.charAt(0));
         	fmsInfo.scaleLocation = String.valueOf(gameSpecificMessage.charAt(1));
         	fmsInfo.opponentSwitchLocation = String.valueOf(gameSpecificMessage.charAt(2));
@@ -50,23 +47,7 @@ public class GetFMSCommand extends Command {
     		
     	}
     	
-    
-
-    private String RandomMessage() {
-			String randomMessage = "";
-			for(int i = 0; i < 3; i++){
-				if(fmsRandom.nextBoolean()) {
-	    			randomMessage += "L";
-	    		}
-	    		else {
-	    			randomMessage += "R";
-	    		}
-			}
-		return randomMessage;
-		
-	}
-
-	// Make this return true when this Command no longer needs to run execute()
+    	// Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	
         return fmsInfo.isInitalized;

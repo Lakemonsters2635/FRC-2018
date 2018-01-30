@@ -82,4 +82,13 @@ public class RobotMap {
 	
 	public static final double AUTO_DRIVE_VELOCITY = 250;
 	public static final double AUTO_TURN_VELOCITY = 250;
+	
+	
+	public static final int AUTO_FWD1 = 50;
+	public static final int AUTO_FWD2 = 50;
+	public static final int CENTER_AUTO_TRANSLATE_FWD = 50;
+	public static final int OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD = 150;
+	public static final int OUTSIDE_SAME_AUTO_TRANSLATE_FWD = 20;
+	
+	
 }

@@ -181,15 +181,66 @@ public class MotionMagicLibrary
 
 	}
 	
+	public static CommandGroup RightStation()
+	{
+		CommandGroup output;
+		output = new CommandGroup();
+		FMSInfo FMSInfo = new FMSInfo();
+		output.addSequential(new GetFMSCommand(FMSInfo));
+		if (FMSInfo.switchLocation == "R")
+		{
+			output = RightStationToRightSwitch();
+		}
+		else {
+			output = RightStationToLeftSwitch();
+		}
+		return output;
+	}
+	
+	public static CommandGroup CenterStation()
+	{
+		CommandGroup output;
+		output = new CommandGroup();
+		FMSInfo FMSInfo = new FMSInfo();
+		GetFMSCommand getFMS = new GetFMSCommand(FMSInfo);
+		getFMS.start();
+		
+		
+		if (FMSInfo.switchLocation == "R")
+		{
+			output = CenterStationToRightSwitch();
+		}
+		else {
+			output = CenterStationToLeftSwitch();
+
+		}
+		return output;
+	}
+	
+	public static CommandGroup LeftStation()
+	{
+		CommandGroup output;
+		output = new CommandGroup();
+		FMSInfo FMSInfo = new FMSInfo();
+		output.addSequential(new GetFMSCommand(FMSInfo));
+		if (FMSInfo.switchLocation == "R")
+		{
+			output = LeftStationToRightSwitch();
+		}
+		else {
+			output = LeftStationToLeftSwitch();
+		}
+		return output;
+	}
 	public static CommandGroup RightStationToLeftSwitch() {
 		CommandGroup output;
 		output = new CommandGroup();
 		
-		output.addSequential(new AutonomousStraightCommand(60, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
-		output.addSequential(new AutonomousStraightCommand(150, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
-		output.addSequential(new AutonomousStraightCommand(51, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2, RobotMap.AUTO_DRIVE_VELOCITY));
 		
 		return output;
 	}
@@ -198,25 +249,25 @@ public class MotionMagicLibrary
 		CommandGroup output;
 		output = new CommandGroup();
 		
-		output.addSequential(new AutonomousStraightCommand(60, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
-		output.addSequential(new AutonomousStraightCommand(41.6, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_SAME_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
-		output.addSequential(new AutonomousStraightCommand(51, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2, RobotMap.AUTO_DRIVE_VELOCITY));
 		
 		return output;
 	}
 	
+	//TODO put in correct measurements
 	public static CommandGroup CenterStationToRightSwitch() {
-		CommandGroup output; 
-		//FMSInfo FMSInfo = new FMSInfo();
+		CommandGroup output;
 		output = new CommandGroup();
-		//output.addSequential(new GetFMSCommand(FMSInfo));
-		//output.addSequential(new AutonomousStraightCommand(60, RobotMap.AUTO_DRIVE_VELOCITY));
-		//output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
-		//output.addSequential(new AutonomousStraightCommand(40, RobotMap.AUTO_DRIVE_VELOCITY));
-		//output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
-		//output.addSequential(new AutonomousStraightCommand(51, RobotMap.AUTO_DRIVE_VELOCITY));
+		
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.CENTER_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2, RobotMap.AUTO_DRIVE_VELOCITY));
 		
 		return output;
 	}
@@ -225,11 +276,11 @@ public class MotionMagicLibrary
 		CommandGroup output;
 		output = new CommandGroup();
 		
-		output.addSequential(new AutonomousStraightCommand(60, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
-		output.addSequential(new AutonomousStraightCommand(40, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.CENTER_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
-		output.addSequential(new AutonomousStraightCommand(51, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2, RobotMap.AUTO_DRIVE_VELOCITY));
 		
 		return output;
 	}
@@ -238,11 +289,11 @@ public class MotionMagicLibrary
 		CommandGroup output;
 		output = new CommandGroup();
 		
-		output.addSequential(new AutonomousStraightCommand(60, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
-		output.addSequential(new AutonomousStraightCommand(41.6, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_SAME_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
-		output.addSequential(new AutonomousStraightCommand(51, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2, RobotMap.AUTO_DRIVE_VELOCITY));
 		
 		return output;
 	}
@@ -251,11 +302,18 @@ public class MotionMagicLibrary
 		CommandGroup output;
 		output = new CommandGroup();
 		
-		output.addSequential(new AutonomousStraightCommand(60, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
-		output.addSequential(new AutonomousStraightCommand(150, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
-		output.addSequential(new AutonomousStraightCommand(51, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2, RobotMap.AUTO_DRIVE_VELOCITY));
+		
+		return output;
+	}
+	
+	public static CommandGroup DoNothingCommand() {
+		CommandGroup output;
+		output = new CommandGroup();
 		
 		return output;
 	}

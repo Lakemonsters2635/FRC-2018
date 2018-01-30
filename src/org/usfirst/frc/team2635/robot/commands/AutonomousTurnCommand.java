@@ -31,7 +31,7 @@ public class AutonomousTurnCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	
-    	
+    	Robot.drive.reset();
 	   	rotationParams = MotionMagicLibrary.getRotationParameters(targetAngle,
 				RobotMap.WHEEL_RADIUS_INCHES, RobotMap.WHEEL_SEPARATION_INCHES, rpm);
     }

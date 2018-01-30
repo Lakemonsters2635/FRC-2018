@@ -25,7 +25,7 @@ public class AutonomousStraightCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	Robot.drive.reset();
     	motionParams = MotionMagicLibrary.getDriveParameters(3, distance, velocity, false);
     }
 
