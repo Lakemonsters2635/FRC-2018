@@ -33,13 +33,13 @@ public class GetFMSCommand extends Command {
     	String gameSpecificMessage = "";
 
     		
-    		driveStation.waitForData();
+    		//driveStation.waitForData();
         	fmsInfo.alliance = driveStation.getAlliance();
         	gameSpecificMessage = driveStation.getGameSpecificMessage();
 
-    		fmsInfo.switchLocation = String.valueOf(gameSpecificMessage.charAt(0));
-        	fmsInfo.scaleLocation = String.valueOf(gameSpecificMessage.charAt(1));
-        	fmsInfo.opponentSwitchLocation = String.valueOf(gameSpecificMessage.charAt(2));
+    		fmsInfo.switchLocation = gameSpecificMessage.charAt(0);
+        	fmsInfo.scaleLocation = gameSpecificMessage.charAt(1);
+        	fmsInfo.opponentSwitchLocation = gameSpecificMessage.charAt(2);
         	fmsInfo.driveStation = driveStation.getLocation();
         	fmsInfo.isAutonomous = driveStation.isAutonomous();
         	fmsInfo.isInitalized = true;
@@ -57,10 +57,10 @@ public class GetFMSCommand extends Command {
     protected void end() {
     	System.out.println("Fms DriveStation: " + fmsInfo.driveStation);
     	System.out.println("Fms alliance: " + fmsInfo.alliance);
-    	System.out.println("Fms isAutonomous: " + fmsInfo.isAutonomous);
-    	System.out.println("Switch Location: " + fmsInfo.switchLocation);
-    	System.out.println("Scale Location: " + fmsInfo.scaleLocation);
-    	System.out.println("Opponent Scale Location: " + fmsInfo.opponentSwitchLocation);
+    	System.out.println("Fms isAutonomous:" + fmsInfo.isAutonomous + ".");
+    	System.out.println("Switch Location:" + fmsInfo.switchLocation + ".");
+    	System.out.println("Scale Location:" + fmsInfo.scaleLocation + ".");
+    	System.out.println("Opponent Scale Location:" + fmsInfo.opponentSwitchLocation + ".");
     }
 
     // Called when another command which requires one or more of the same

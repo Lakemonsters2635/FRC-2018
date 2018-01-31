@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.lang.reflect.Method;
+
 import org.usfirst.frc.team2635.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team2635.robot.commands.ClimbDownCommand;
 import org.usfirst.frc.team2635.robot.commands.ClimbUpCommand;
@@ -101,7 +103,7 @@ public class Robot extends TimedRobot {
 		//grabberCommand = new GrabberCommand();
 		//tiltCommand = new TiltCommand();
 		
-		
+		InitializeChooser();
 		
 		//m_chooser.addObject("My Auto", autoCommand);
 		//SmartDashboard.putData("Auto mode", m_chooser);
@@ -161,10 +163,30 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = (Command) m_chooser.getSelected();
-		m_autonomousCommand.start();
 		
-		InitializeChooser();
+		
+		
+		m_autonomousCommand = (Command) m_chooser.getSelected();
+		String selectedCommandName = m_autonomousCommand.getName();
+		if (selectedCommandName == "RightStation")
+		{
+			m_autonomousCommand = MotionMagicLibrary.RightStation();
+		}
+		else if (selectedCommandName == "CenterStation")
+		{
+			m_autonomousCommand = MotionMagicLibrary.CenterStation();
+		}
+		else if (selectedCommandName == "LeftStation")
+		{
+			m_autonomousCommand = MotionMagicLibrary.LeftStation();
+		}
+		
+		//Class<?> c = Class.forName("MotionMagicLibrary");
+		//Method method = c.getDeclaredMethod(m_autonomousCommand.getName(), null);
+		//m_autonomousCommand = (Command) method.invoke(null, null);
+		
+		//m_autonomousCommand.getName();
+		m_autonomousCommand.start();
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -233,6 +255,8 @@ public class Robot extends TimedRobot {
 	}
 	public void InitializeChooser()
 	{
+		
+		
 		//doNothingCmd = MotionProfileLibrary.doNothing();
 		doNothingCmd = MotionMagicLibrary.DoNothingCommand();
 		

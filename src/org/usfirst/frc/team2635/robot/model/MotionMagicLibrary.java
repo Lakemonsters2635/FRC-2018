@@ -183,55 +183,66 @@ public class MotionMagicLibrary
 	
 	public static CommandGroup RightStation()
 	{
-		CommandGroup output;
-		output = new CommandGroup();
-		FMSInfo FMSInfo = new FMSInfo();
-		output.addSequential(new GetFMSCommand(FMSInfo));
-		if (FMSInfo.switchLocation == "R")
+		CommandGroup output = new CommandGroup();
+		FMSInfo fmsInfo = getFMSInfo();
+		if (fmsInfo.switchLocation == 'R')
 		{
 			output = RightStationToRightSwitch();
 		}
-		else {
+		else if (fmsInfo.switchLocation == 'L') {
 			output = RightStationToLeftSwitch();
 		}
+		else
+		{
+			output = DoNothingCommand();
+		}
+		output.setName(getMethodName());
+		
 		return output;
 	}
 	
-	public static CommandGroup CenterStation()
+	public  static CommandGroup CenterStation()
 	{
-		CommandGroup output;
-		output = new CommandGroup();
-		FMSInfo FMSInfo = new FMSInfo();
-		GetFMSCommand getFMS = new GetFMSCommand(FMSInfo);
-		getFMS.start();
+		CommandGroup output = new CommandGroup();
 		
-		
-		if (FMSInfo.switchLocation == "R")
+		FMSInfo fmsInfo = getFMSInfo();
+
+		if (fmsInfo.switchLocation == 'R')
 		{
 			output = CenterStationToRightSwitch();
 		}
-		else {
+		else if (fmsInfo.switchLocation == 'L')
+		{
 			output = CenterStationToLeftSwitch();
-
 		}
+		else
+		{
+			output = DoNothingCommand();
+		}
+		output.setName(getMethodName());
 		return output;
 	}
 	
-	public static CommandGroup LeftStation()
+	public  static CommandGroup LeftStation()
 	{
-		CommandGroup output;
-		output = new CommandGroup();
-		FMSInfo FMSInfo = new FMSInfo();
-		output.addSequential(new GetFMSCommand(FMSInfo));
-		if (FMSInfo.switchLocation == "R")
+		CommandGroup output = new CommandGroup();
+		FMSInfo fmsInfo = getFMSInfo();
+		
+		if (fmsInfo.switchLocation == 'R')
 		{
 			output = LeftStationToRightSwitch();
 		}
-		else {
+		else if (fmsInfo.switchLocation == 'L'){
 			output = LeftStationToLeftSwitch();
 		}
+		else
+		{
+			output = DoNothingCommand();
+		}
+		output.setName(getMethodName());
 		return output;
 	}
+	
 	public static CommandGroup RightStationToLeftSwitch() {
 		CommandGroup output;
 		output = new CommandGroup();
@@ -247,7 +258,7 @@ public class MotionMagicLibrary
 	
 	public static CommandGroup RightStationToRightSwitch() {
 		CommandGroup output;
-		output = new CommandGroup();
+		output = new CommandGroup(getMethodName());
 		
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
@@ -261,8 +272,8 @@ public class MotionMagicLibrary
 	//TODO put in correct measurements
 	public static CommandGroup CenterStationToRightSwitch() {
 		CommandGroup output;
-		output = new CommandGroup();
-		
+		output = new CommandGroup(getMethodName());
+		System.out.println("methodName:" + getMethodName());
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
 		output.addSequential(new AutonomousStraightCommand(RobotMap.CENTER_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY));
@@ -272,10 +283,11 @@ public class MotionMagicLibrary
 		return output;
 	}
 	
+	
 	public static CommandGroup CenterStationToLeftSwitch() {
 		CommandGroup output;
-		output = new CommandGroup();
-		
+		output = new CommandGroup(getMethodName());
+		System.out.println("methodName:" + getMethodName());
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
 		output.addSequential(new AutonomousStraightCommand(RobotMap.CENTER_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY));
@@ -287,7 +299,7 @@ public class MotionMagicLibrary
 	
 	public static CommandGroup LeftStationToLeftSwitch() {
 		CommandGroup output;
-		output = new CommandGroup();
+		output = new CommandGroup(getMethodName());
 		
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
@@ -300,7 +312,7 @@ public class MotionMagicLibrary
 	
 	public static CommandGroup LeftStationToRightSwitch() {
 		CommandGroup output;
-		output = new CommandGroup();
+		output = new CommandGroup(getMethodName());
 		
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
@@ -311,10 +323,42 @@ public class MotionMagicLibrary
 		return output;
 	}
 	
+	public static FMSInfo getFMSInfo()
+	{
+		FMSInfo fmsInfo = new FMSInfo();
+		DriverStation driveStation= DriverStation.getInstance();
+		
+		//FHE: How do we test "IsFMSAttached())
+		//if (driveStation.isFMSAttached())
+		//{
+			String gameSpecificMessage = "";
+
+    		
+    		//driveStation.waitForData();
+        	fmsInfo.alliance = driveStation.getAlliance();
+        	gameSpecificMessage = driveStation.getGameSpecificMessage();
+
+    		fmsInfo.switchLocation = gameSpecificMessage.charAt(0);
+        	fmsInfo.scaleLocation = gameSpecificMessage.charAt(1);
+        	fmsInfo.opponentSwitchLocation = gameSpecificMessage.charAt(2);
+        	fmsInfo.driveStation = driveStation.getLocation();
+        	fmsInfo.isAutonomous = driveStation.isAutonomous();
+        	fmsInfo.isInitalized = true;
+		//}
+		
+		return fmsInfo;
+	}
+	
 	public static CommandGroup DoNothingCommand() {
 		CommandGroup output;
-		output = new CommandGroup();
+		output = new CommandGroup(getMethodName());
 		
 		return output;
+	}
+	
+	public static String getMethodName()
+	{
+		String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
+		return methodName;
 	}
 }
