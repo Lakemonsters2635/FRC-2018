@@ -69,8 +69,8 @@ public class RobotMap {
 	public static double MOTION_MAGIC_F = 1.5;
 	
 	public static final double WHEEL_SEPARATION_INCHES = 25;
-	public static int MOTION_MAGIC_ACCELERATION = 250;
-	public static int MOTION_MAGIC_CRUISE_VELOCITY = 250;
+	public static int MOTION_MAGIC_ACCELERATION = 500;
+	public static int MOTION_MAGIC_CRUISE_VELOCITY = 500;
 	
 	public static double MOTION_MAGIC_DISTANCE = 3000;
 	public static double WHEEL_DIAMETER = 6;
@@ -80,8 +80,8 @@ public class RobotMap {
 	public static boolean VELOCITYDRIVEMODE = true;
 
 	
-	public static final double AUTO_DRIVE_VELOCITY = 250;
-	public static final double AUTO_TURN_VELOCITY = 250;
+	public static final double AUTO_DRIVE_VELOCITY = 500;
+	public static final double AUTO_TURN_VELOCITY = 500;
 	
 	
 	public static final int AUTO_FWD1 = 50;

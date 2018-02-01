@@ -166,8 +166,8 @@ public class Robot extends TimedRobot {
 		
 		
 		
-		m_autonomousCommand = (Command) m_chooser.getSelected();
-		String selectedCommandName = m_autonomousCommand.getName();
+		
+		String selectedCommandName = (String) m_chooser.getSelected();
 		if (selectedCommandName == "RightStation")
 		{
 			m_autonomousCommand = MotionMagicLibrary.RightStation();
@@ -180,11 +180,10 @@ public class Robot extends TimedRobot {
 		{
 			m_autonomousCommand = MotionMagicLibrary.LeftStation();
 		}
-		
-		//Class<?> c = Class.forName("MotionMagicLibrary");
-		//Method method = c.getDeclaredMethod(m_autonomousCommand.getName(), null);
-		//m_autonomousCommand = (Command) method.invoke(null, null);
-		
+
+//		Class<?> c = Class.forName("MotionMagicLibrary");
+//		Method method = c.getDeclaredMethod(selectedCommandName, null);
+//		m_autonomousCommand = (Command) method.invoke(c, null);
 		//m_autonomousCommand.getName();
 		m_autonomousCommand.start();
 		
@@ -258,19 +257,14 @@ public class Robot extends TimedRobot {
 		
 		
 		//doNothingCmd = MotionProfileLibrary.doNothing();
-		doNothingCmd = MotionMagicLibrary.DoNothingCommand();
-		
-		leftStation = MotionMagicLibrary.LeftStation();
-		centerStation = MotionMagicLibrary.CenterStation();
-		rightStation = MotionMagicLibrary.RightStation();
-		
+
 		//SendableBuilder builder = null;
 		//m_chooser.initSendable(builder);;
-		m_chooser.addDefault("Do Nothing", doNothingCmd);
+		m_chooser.addDefault("Do Nothing", "DoNothingCommand");
 		
-		m_chooser.addObject("Left Station", leftStation);
-		m_chooser.addObject("Center Station", centerStation);
-		m_chooser.addObject("Right Station", rightStation);
+		m_chooser.addObject("Left Station", "LeftStation");
+		m_chooser.addObject("Center Station", "CenterStation");
+		m_chooser.addObject("Right Station", "RightStation");
 		
 		
 		//chooser.addObject("Center", centerStationToLeftSwitch);

@@ -300,7 +300,7 @@ public class MotionMagicLibrary
 	public static CommandGroup LeftStationToLeftSwitch() {
 		CommandGroup output;
 		output = new CommandGroup(getMethodName());
-		
+		System.out.println("LeftStationToLeftSwitch() Called");
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
 		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_SAME_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY));
@@ -313,7 +313,7 @@ public class MotionMagicLibrary
 	public static CommandGroup LeftStationToRightSwitch() {
 		CommandGroup output;
 		output = new CommandGroup(getMethodName());
-		
+		System.out.println("LeftStationToRightSwitch() Called");
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
 		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY));
@@ -328,9 +328,10 @@ public class MotionMagicLibrary
 		FMSInfo fmsInfo = new FMSInfo();
 		DriverStation driveStation= DriverStation.getInstance();
 		
+		System.out.println("FMS Attached: " + driveStation.isFMSAttached());
+			
 		//FHE: How do we test "IsFMSAttached())
-		//if (driveStation.isFMSAttached())
-		//{
+		
 			String gameSpecificMessage = "";
 
     		
@@ -344,7 +345,7 @@ public class MotionMagicLibrary
         	fmsInfo.driveStation = driveStation.getLocation();
         	fmsInfo.isAutonomous = driveStation.isAutonomous();
         	fmsInfo.isInitalized = true;
-		//}
+		
 		
 		return fmsInfo;
 	}
