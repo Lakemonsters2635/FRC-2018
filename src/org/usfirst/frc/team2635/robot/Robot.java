@@ -28,6 +28,7 @@ import org.usfirst.frc.team2635.robot.commands.ToggleDriveModeCommand;
 import org.usfirst.frc.team2635.robot.commands.VisionLightCommand;
 import org.usfirst.frc.team2635.robot.model.FMSInfo;
 import org.usfirst.frc.team2635.robot.model.MotionMagicLibrary;
+import org.usfirst.frc.team2635.robot.subsystems.Bling;
 import org.usfirst.frc.team2635.robot.subsystems.Climber;
 import org.usfirst.frc.team2635.robot.subsystems.Drive;
 import org.usfirst.frc.team2635.robot.subsystems.Elevator;
@@ -54,6 +55,7 @@ public class Robot extends TimedRobot {
 	public static Gearbox gearbox;
 	public static Grabber grabber;
 	public static Tilt tilter;
+	public static Bling bling;
 	
 	DriveCommand driveCommand;
 	AutonomousCommand autoCommand;
@@ -89,6 +91,7 @@ public class Robot extends TimedRobot {
 		elevator = new Elevator();
 		gearbox = new Gearbox();
 		grabber = new Grabber();
+		bling = new Bling();
 		
 		m_chooser = new SendableChooser();
 		
@@ -102,6 +105,8 @@ public class Robot extends TimedRobot {
 		gearShiftCommand = new GearShiftCommand();
 		//grabberCommand = new GrabberCommand();
 		//tiltCommand = new TiltCommand();
+		
+		vision.ledOff();
 		
 		InitializeChooser();
 		
@@ -206,7 +211,7 @@ public class Robot extends TimedRobot {
 //		GetFMSCommand fmsInfoCmd = new GetFMSCommand(fmsInfo);
 //		fmsInfoCmd.start();
 		//MotionMagicLibrary.CenterStationToLeftSwitch().start();
-		
+		vision.ledOn();
 	}
 
 	/**
@@ -235,6 +240,7 @@ public class Robot extends TimedRobot {
 			driveCommand.start();
 			vision.driveMode();
 		}
+		vision.ledOff();
 		
 	}
 
