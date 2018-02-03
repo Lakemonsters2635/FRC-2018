@@ -63,13 +63,13 @@ public class RobotMap {
 //	public static double MOTION_MAGIC_D = 50;
 //	public static double MOTION_MAGIC_F = 1.5;
 	//2017 COMP BOT
-	public static double MOTION_MAGIC_P = 5;
-	public static double MOTION_MAGIC_I = 0.008;
-	public static double MOTION_MAGIC_D = 0;
+	public static double MOTION_MAGIC_P = 10.0;
+	public static double MOTION_MAGIC_I = 0.0;
+	public static double MOTION_MAGIC_D = 0.0;
 	public static double MOTION_MAGIC_F = 1.5;
 	
 	public static final double WHEEL_SEPARATION_INCHES = 25;
-	public static int MOTION_MAGIC_ACCELERATION = 500;
+	public static int MOTION_MAGIC_ACCELERATION = 250;
 	public static int MOTION_MAGIC_CRUISE_VELOCITY = 500;
 	
 	public static double MOTION_MAGIC_DISTANCE = 3000;
@@ -77,7 +77,7 @@ public class RobotMap {
 	
 	public static double ERRORTOLERANCE = 10;
 
-	public static boolean VELOCITYDRIVEMODE = true;
+	public static boolean VELOCITYDRIVEMODE = false;
 
 	
 	public static final double AUTO_DRIVE_VELOCITY = 500;

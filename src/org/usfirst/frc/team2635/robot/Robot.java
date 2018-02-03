@@ -169,8 +169,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		
+		RobotMap.MOTION_MAGIC_P = SmartDashboard.getNumber("P:", RobotMap.MOTION_MAGIC_P);
+		RobotMap.MOTION_MAGIC_I = SmartDashboard.getNumber("I:", RobotMap.MOTION_MAGIC_I);   
+		RobotMap.MOTION_MAGIC_D = SmartDashboard.getNumber("D:", RobotMap.MOTION_MAGIC_D);
+		RobotMap.MOTION_MAGIC_F = SmartDashboard.getNumber("F:", RobotMap.MOTION_MAGIC_F);
 		
-		
+		drive.autoInit();
 		
 		String selectedCommandName = (String) m_chooser.getSelected();
 		if (selectedCommandName == "RightStation")
@@ -225,6 +229,7 @@ public class Robot extends TimedRobot {
 		RobotMap.MOTION_MAGIC_D = SmartDashboard.getNumber("D:", RobotMap.MOTION_MAGIC_D);
 		RobotMap.MOTION_MAGIC_F = SmartDashboard.getNumber("F:", RobotMap.MOTION_MAGIC_F);
 		
+		System.out.println("P: " + RobotMap.MOTION_MAGIC_P);
 	}
 
 	@Override

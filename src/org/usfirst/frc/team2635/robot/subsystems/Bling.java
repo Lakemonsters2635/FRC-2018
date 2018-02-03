@@ -17,7 +17,8 @@ public class Bling extends Subsystem
     //ID's to send to arduino for each lighting scene. Used for reference
     public static final int rainbowFade = 0,
                             firing = 1,
-                            marchRWB = 2;
+                            marchRWB = 2,
+    						trace = 3;
     private I2C chat;
     private int previousScene = 0;
     private int currentScene = 0;
