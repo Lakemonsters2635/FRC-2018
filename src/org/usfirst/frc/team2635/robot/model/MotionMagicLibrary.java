@@ -243,6 +243,26 @@ public class MotionMagicLibrary
 		return output;
 	}
 	
+	public  static CommandGroup LeftScale()
+	{
+		CommandGroup output = new CommandGroup();
+		FMSInfo fmsInfo = getFMSInfo();
+		
+		if (fmsInfo.scaleLocation == 'R')
+		{
+			output = LeftToRightScale();
+		}
+		else if (fmsInfo.scaleLocation == 'L'){
+			output = LeftToLeftScale();
+		}
+		else
+		{
+			output = DoNothingCommand();
+		}
+		output.setName(getMethodName());
+		return output;
+	}
+	
 	public static CommandGroup RightStationToLeftSwitch() {
 		CommandGroup output;
 		output = new CommandGroup();
@@ -322,6 +342,33 @@ public class MotionMagicLibrary
 		
 		return output;
 	}
+	
+	public static CommandGroup LeftToLeftScale() {
+		CommandGroup output; 
+		output = new CommandGroup(getMethodName());
+		System.out.println("LeftToLeftScale() Called");
+		output.addSequential(new AutonomousStraightCommand(324-RobotMap.ROBOT_LENGTH/2, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));//Should be 4.9" away
+		
+		return output;
+	}
+	
+	public static CommandGroup LeftToRightScale() {
+		CommandGroup output; 
+		output = new CommandGroup(getMethodName());
+		System.out.println("LeftToRightScale() Called");
+		output.addSequential(new AutonomousStraightCommand(207.125, RobotMap.AUTO_DRIVE_VELOCITY));
+		//output.addSequential(new AutonomousStraightCommand(208, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90));
+		output.addSequential(new AutonomousStraightCommand(235, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));
+		output.addSequential(new AutonomousStraightCommand(96, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90));//Should be 4.9" away
+		
+		
+		return output;
+	}
+	
 	
 	public static FMSInfo getFMSInfo()
 	{

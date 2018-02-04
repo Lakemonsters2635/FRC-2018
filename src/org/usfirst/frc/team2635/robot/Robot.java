@@ -189,6 +189,14 @@ public class Robot extends TimedRobot {
 		{
 			m_autonomousCommand = MotionMagicLibrary.LeftStation();
 		}
+		else if (selectedCommandName == "LeftScale")
+		{
+			m_autonomousCommand = MotionMagicLibrary.LeftScale();
+		}
+		else if (selectedCommandName == "RightScale")
+		{
+			m_autonomousCommand = MotionMagicLibrary.DoNothingCommand();
+		}
 
 //		Class<?> c = Class.forName("MotionMagicLibrary");
 //		Method method = c.getDeclaredMethod(selectedCommandName, null);
@@ -273,10 +281,12 @@ public class Robot extends TimedRobot {
 		//m_chooser.initSendable(builder);;
 		m_chooser.addDefault("Do Nothing", "DoNothingCommand");
 		
-		m_chooser.addObject("Left Station", "LeftStation");
-		m_chooser.addObject("Center Station", "CenterStation");
-		m_chooser.addObject("Right Station", "RightStation");
+		m_chooser.addObject("Left Station to Switch", "LeftStation");
+		m_chooser.addObject("Center Station to Switch", "CenterStation");
+		m_chooser.addObject("Right Station to Switch", "RightStation");
 		
+		m_chooser.addObject("Left Side to Scale", "LeftScale");
+		m_chooser.addObject("Right Side to Scale", "RightScale");
 		
 		//chooser.addObject("Center", centerStationToLeftSwitch);
 		//chooser.addObject("Right", centerStationToLeftSwitch);
