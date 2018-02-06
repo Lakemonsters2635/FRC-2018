@@ -19,13 +19,15 @@ public class AutonomousTurnCommand extends Command {
 	
 	double rpm;
 	double targetAngle;
+	double acceleration;
 	
-    public AutonomousTurnCommand(double rpm, double targetAngle) {
+    public AutonomousTurnCommand(double rpm, double targetAngle, double acceleration) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
     	this.rpm = rpm;
     	this.targetAngle = targetAngle;
+    	this.acceleration = acceleration;
     }
 
     // Called just before this Command runs the first time
@@ -33,7 +35,7 @@ public class AutonomousTurnCommand extends Command {
     	
     	Robot.drive.reset();
 	   	rotationParams = MotionMagicLibrary.getRotationParameters(targetAngle,
-				RobotMap.WHEEL_RADIUS_INCHES, RobotMap.WHEEL_SEPARATION_INCHES, rpm);
+				RobotMap.WHEEL_RADIUS_INCHES, RobotMap.WHEEL_SEPARATION_INCHES, rpm, acceleration);
     }
 
     // Called repeatedly when this Command is scheduled to run

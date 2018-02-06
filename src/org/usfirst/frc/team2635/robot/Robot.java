@@ -9,6 +9,7 @@ package org.usfirst.frc.team2635.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -66,6 +67,7 @@ public class Robot extends TimedRobot {
 	GearShiftCommand gearShiftCommand;
 	GrabberCommand grabberCommand;
 	TiltCommand tiltCommand;
+	CommandGroup returnCommand;
 	
 	Command doNothingCmd;
 	
@@ -103,6 +105,7 @@ public class Robot extends TimedRobot {
 		climbUpCommand = new ClimbUpCommand();
 		climbDownCommand = new ClimbDownCommand();
 		gearShiftCommand = new GearShiftCommand();
+		returnCommand = MotionMagicLibrary.ReturnFromRight();
 		//grabberCommand = new GrabberCommand();
 		//tiltCommand = new TiltCommand();
 		
@@ -125,6 +128,7 @@ public class Robot extends TimedRobot {
 		oi.gearShiftButton.toggleWhenPressed(gearShiftCommand);
 		oi.grabberButtonLeft.toggleWhenPressed(grabberCommand);
 		oi.tiltToggleButton.toggleWhenPressed(tiltCommand);
+		oi.returnButton.whenPressed(returnCommand);
 	}
 
 	/**
@@ -195,8 +199,9 @@ public class Robot extends TimedRobot {
 		}
 		else if (selectedCommandName == "RightScale")
 		{
-			m_autonomousCommand = MotionMagicLibrary.DoNothingCommand();
+			m_autonomousCommand = MotionMagicLibrary.RightScale();
 		}
+		
 
 //		Class<?> c = Class.forName("MotionMagicLibrary");
 //		Method method = c.getDeclaredMethod(selectedCommandName, null);
@@ -287,6 +292,7 @@ public class Robot extends TimedRobot {
 		
 		m_chooser.addObject("Left Side to Scale", "LeftScale");
 		m_chooser.addObject("Right Side to Scale", "RightScale");
+		
 		
 		//chooser.addObject("Center", centerStationToLeftSwitch);
 		//chooser.addObject("Right", centerStationToLeftSwitch);

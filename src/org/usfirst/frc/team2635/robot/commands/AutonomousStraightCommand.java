@@ -16,17 +16,19 @@ public class AutonomousStraightCommand extends Command {
 	MotionParameters motionParams;
 	double distance;
 	double velocity;
-    public AutonomousStraightCommand(double distance, double velocity) {
+	double acceleration;
+    public AutonomousStraightCommand(double distance, double velocity, double acceleration) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drive);
         this.distance = distance;
         this.velocity = velocity;
+        this.acceleration = acceleration;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drive.reset();
-    	motionParams = MotionMagicLibrary.getDriveParameters(3, distance, velocity, false);
+    	motionParams = MotionMagicLibrary.getDriveParameters(3, distance, velocity, false, acceleration);
     }
 
     // Called repeatedly when this Command is scheduled to run

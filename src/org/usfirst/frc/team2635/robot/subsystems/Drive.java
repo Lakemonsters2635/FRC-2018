@@ -126,8 +126,8 @@ public class Drive extends Subsystem {
     	frontRightMotor.selectProfileSlot(0, 0);
     	frontLeftMotor.selectProfileSlot(0, 0);
     	//Backup in case values are not otherwise set
-    	frontRightMotor.configMotionAcceleration(RobotMap.MOTION_MAGIC_ACCELERATION, 0);
-    	frontLeftMotor.configMotionAcceleration(RobotMap.MOTION_MAGIC_ACCELERATION, 0);
+    	frontRightMotor.configMotionAcceleration(RobotMap.AUTO_DRIVE_ACCELERATION, 0);
+    	frontLeftMotor.configMotionAcceleration(RobotMap.AUTO_DRIVE_ACCELERATION, 0);
     	
     	frontRightMotor.configMotionCruiseVelocity(RobotMap.MOTION_MAGIC_CRUISE_VELOCITY, 0);
     	frontLeftMotor.configMotionCruiseVelocity(RobotMap.MOTION_MAGIC_CRUISE_VELOCITY, 0);

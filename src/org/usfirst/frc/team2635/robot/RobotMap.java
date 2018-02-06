@@ -28,6 +28,7 @@ public class RobotMap {
 	public static final int CLIMB_UP_BUTTON = 3;
 	public static final int CLIMB_DOWN_BUTTON = 2;
 	public static final int TILT_BUTTON = 4;
+	public static final int RETURN_BUTTON = 10;
 	
 	//PCM
 	public static final int OPEN_GRABBER = 1;
@@ -70,8 +71,10 @@ public class RobotMap {
 	public static double MOTION_MAGIC_F = 1.5;
 	
 	public static final double WHEEL_SEPARATION_INCHES = 25;
-	public static int MOTION_MAGIC_ACCELERATION = 100;
-	public static int MOTION_MAGIC_CRUISE_VELOCITY = 500;
+	
+	
+	
+	public static final int MOTION_MAGIC_CRUISE_VELOCITY = 500;
 	
 	public static double MOTION_MAGIC_DISTANCE = 3000;
 	public static double WHEEL_DIAMETER = 6;
@@ -79,11 +82,13 @@ public class RobotMap {
 	public static double ERRORTOLERANCE = 5;
 
 	public static boolean VELOCITYDRIVEMODE = false;
+	
 
 	
-	public static final double AUTO_DRIVE_VELOCITY = 500;
+	public static final double AUTO_DRIVE_VELOCITY = 750;
 	public static final double AUTO_TURN_VELOCITY = 500;
-	
+	public static final int AUTO_DRIVE_ACCELERATION = 250;
+	public static final int AUTO_TURN_ACCELERATION = 500;
 	
 	public static final int AUTO_FWD1 = 50;
 	public static final int AUTO_FWD2 = 50;

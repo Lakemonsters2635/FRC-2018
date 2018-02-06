@@ -35,6 +35,7 @@ public class OI {
 	public Button elevatorUpButton = new JoystickButton(rightStick, RobotMap.ELEVATOR_UP_BUTTON);
 	public Button elevatorDownButton = new JoystickButton(rightStick, RobotMap.ELEVATOR_DOWN_BUTTON);
 	public Button intakeToggleButton = new JoystickButton(rightStick, RobotMap.INTAKE_TOGGLE_BUTTON);
+	public Button returnButton = new JoystickButton(rightStick, RobotMap.RETURN_BUTTON);
 	
 	
 	
