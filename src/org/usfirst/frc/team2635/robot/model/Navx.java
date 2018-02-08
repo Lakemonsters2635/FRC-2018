@@ -28,8 +28,11 @@ public class Navx {
     }
     
     public double getHeading() {
+    	
     	return navx.getFusedHeading();
+    	
     }
+   
     
     public float[] getDisplacement() {
     	float[] displacement = new float[3];

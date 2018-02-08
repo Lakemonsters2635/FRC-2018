@@ -29,6 +29,8 @@ public class RobotMap {
 	public static final int CLIMB_DOWN_BUTTON = 2;
 	public static final int TILT_BUTTON = 4;
 	public static final int RETURN_BUTTON = 10;
+	public static final int INTAKE_BUTTON = 11;
+	public static final int NAVX_ROTATE_BUTTON = 7;
 	
 	//PCM
 	public static final int OPEN_GRABBER = 1;
@@ -51,7 +53,10 @@ public class RobotMap {
 	public static final int ELEVATOR_UPPER_MOTOR_CHANNEL = 5;
 	public static final int ELEVATOR_LOWER_MOTOR1_CHANNEL = 6;
 	public static final int ELEVATOR_LOWER_MOTOR2_CHANNEL = 7;
-
+	
+	public static final int INTAKE_1_MOTOR_CHANNEL = 10;
+	public static final int INTAKE_2_MOTOR_CHANNEL = 11;
+	
 	
 	//TODO change these vaules
 	public static final double WHEEL_RADIUS_INCHES = 3;

@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.lang.reflect.Method;
 
 import org.usfirst.frc.team2635.robot.commands.AutonomousCommand;
+import org.usfirst.frc.team2635.robot.commands.AutonomousNavxRotate;
 import org.usfirst.frc.team2635.robot.commands.ClimbDownCommand;
 import org.usfirst.frc.team2635.robot.commands.ClimbUpCommand;
 import org.usfirst.frc.team2635.robot.commands.DriveCommand;
@@ -68,6 +69,7 @@ public class Robot extends TimedRobot {
 	GrabberCommand grabberCommand;
 	TiltCommand tiltCommand;
 	CommandGroup returnCommand;
+	AutonomousNavxRotate navxRotateCommand;
 	
 	Command doNothingCmd;
 	
@@ -106,6 +108,7 @@ public class Robot extends TimedRobot {
 		climbDownCommand = new ClimbDownCommand();
 		gearShiftCommand = new GearShiftCommand();
 		returnCommand = MotionMagicLibrary.ReturnFromRight();
+		navxRotateCommand = new AutonomousNavxRotate(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION);
 		//grabberCommand = new GrabberCommand();
 		//tiltCommand = new TiltCommand();
 		
@@ -129,6 +132,7 @@ public class Robot extends TimedRobot {
 		oi.grabberButtonLeft.toggleWhenPressed(grabberCommand);
 		oi.tiltToggleButton.toggleWhenPressed(tiltCommand);
 		oi.returnButton.whenPressed(returnCommand);
+		oi.navxRotateButton.whenPressed(navxRotateCommand);
 	}
 
 	/**
@@ -241,8 +245,6 @@ public class Robot extends TimedRobot {
 		RobotMap.MOTION_MAGIC_I = SmartDashboard.getNumber("I:", RobotMap.MOTION_MAGIC_I);   
 		RobotMap.MOTION_MAGIC_D = SmartDashboard.getNumber("D:", RobotMap.MOTION_MAGIC_D);
 		RobotMap.MOTION_MAGIC_F = SmartDashboard.getNumber("F:", RobotMap.MOTION_MAGIC_F);
-		
-		System.out.println("P: " + RobotMap.MOTION_MAGIC_P);
 	}
 
 	@Override

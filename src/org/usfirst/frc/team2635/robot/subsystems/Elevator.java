@@ -86,6 +86,13 @@ public class Elevator extends Subsystem {
 		return true;
 	}
 	
+	public boolean elevatorHeight(int index) {
+		if(targetHeightIndex != index) {
+			targetHeightIndex = index;
+		}
+		return true;
+	}
+	
 	public double currentHeight() {
 		
 		double lowerHeight = lowerMotor1.getSelectedSensorPosition(0);
@@ -118,6 +125,14 @@ public class Elevator extends Subsystem {
     	
     	lowerMotor1.configMotionCruiseVelocity(100, 0);
     	upperMotor.configMotionCruiseVelocity(100, 0);
+	}
+	
+	public static enum Height {
+		GROUND(0), SWITCH(1), SCALE(2), CLIMB(3);
+		public int index;
+		private Height(int index) {
+			this.index = index;
+		}
 	}
 	
     public void initDefaultCommand() {

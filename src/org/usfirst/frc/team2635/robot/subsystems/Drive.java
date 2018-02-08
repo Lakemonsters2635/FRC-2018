@@ -22,7 +22,12 @@ public class Drive extends Subsystem {
 	Joystick leftJoy;
 	Joystick rightJoy;
 	DifferentialDrive drive;
-    
+
+	public double errNavxDrive;
+	
+	public Navx navx = new Navx();
+	
+	
 	public Drive(){
 		//2017 BUNNYBOT
 //		frontLeftMotor = new WPI_TalonSRX(1);
@@ -159,6 +164,7 @@ public class Drive extends Subsystem {
 	
 
 	}
+   
     
     public boolean motionMagicDone(MotionParameters motionParams, double errorTolerance) {
     	
@@ -180,12 +186,31 @@ public class Drive extends Subsystem {
     	
     	return false;
     }
+    public boolean motionNavxDone(double targetAngle, double errorTolerance) {
+    	
+    	double currentAngle = navx.getAngle();
+    	double angleDelta = Math.abs(currentAngle - targetAngle);
+    	return (angleDelta < errorTolerance);
+    	
+    }
+
     public void reset(){
     	frontLeftMotor.setSelectedSensorPosition(0, 0, 0);
     	frontRightMotor.setSelectedSensorPosition(0, 0, 0);
     	
     	frontLeftMotor.set(ControlMode.PercentOutput, 0);
     	frontRightMotor.set(ControlMode.PercentOutput, 0);
+    }
+    public double getNavxHeading() {
+    	return navx.getHeading();
+    	
+    }
+    public double getNavxAngle() {
+    	return navx.getAngle();
+    }
+    
+    public void navxReset() {
+    	navx.reset();
     }
 
 	@Override

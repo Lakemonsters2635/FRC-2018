@@ -17,18 +17,25 @@ public class AutonomousStraightCommand extends Command {
 	double distance;
 	double velocity;
 	double acceleration;
+	double intialHeading; 
     public AutonomousStraightCommand(double distance, double velocity, double acceleration) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drive);
         this.distance = distance;
         this.velocity = velocity;
         this.acceleration = acceleration;
+        
+       
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drive.reset();
+    	Robot.drive.navxReset();
     	motionParams = MotionMagicLibrary.getDriveParameters(3, distance, velocity, false, acceleration);
+    	
+    	intialHeading = Robot.drive.getNavxHeading();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -46,8 +53,14 @@ public class AutonomousStraightCommand extends Command {
     	
     	boolean isFinished = Robot.drive.motionMagicDone(motionParams, RobotMap.ERRORTOLERANCE);
     	if(isFinished) {
-    		System.out.println("Drive Straight Finished");
+    		double currentHeading = Robot.drive.getNavxHeading();
+    		double navxHeading = Math.abs(intialHeading-currentHeading);
+    		System.out.println("Navx straight heading:" + navxHeading);
+    		System.out.println("Navx straight-drive angle: " + Robot.drive.getNavxAngle());
+    		System.out.println("Drive Straight Finished.");
+    		System.out.println("-----------");
     	}
+    	
     	return isFinished;
     }
 
@@ -55,12 +68,14 @@ public class AutonomousStraightCommand extends Command {
     protected void end() {
     	Robot.drive.motorControl(ControlMode.PercentOutput, 0.0, 0.0, false);
     	Robot.drive.reset();
-
+    	
+//    	System.out.println("Drive straight end");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+//    	System.out.println("Drive straight interrupted");
     	end();
     }
 }

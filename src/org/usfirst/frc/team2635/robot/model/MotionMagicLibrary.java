@@ -7,7 +7,9 @@ import org.usfirst.frc.team2635.robot.Robot;
 import org.usfirst.frc.team2635.robot.RobotMap;
 import org.usfirst.frc.team2635.robot.commands.AutonomousStraightCommand;
 import org.usfirst.frc.team2635.robot.commands.AutonomousTurnCommand;
+import org.usfirst.frc.team2635.robot.commands.ElevatorSetHeightCommand;
 import org.usfirst.frc.team2635.robot.commands.GetFMSCommand;
+import org.usfirst.frc.team2635.robot.subsystems.Elevator.Height;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -288,6 +290,7 @@ public class MotionMagicLibrary
 		CommandGroup output;
 		output = new CommandGroup();
 		
+		output.addSequential(new ElevatorSetHeightCommand(Height.SWITCH));
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
 		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
@@ -379,6 +382,7 @@ public class MotionMagicLibrary
 		CommandGroup output; 
 		output = new CommandGroup(getMethodName());
 		System.out.println("LeftToRightScale() Called");
+		
 		output.addSequential(new AutonomousStraightCommand(207.125, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		//output.addSequential(new AutonomousStraightCommand(208, RobotMap.AUTO_DRIVE_VELOCITY));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
@@ -461,6 +465,7 @@ public class MotionMagicLibrary
 		
 		return fmsInfo;
 	}
+}
 	
 	public static CommandGroup DoNothingCommand() {
 		CommandGroup output;
