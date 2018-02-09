@@ -132,7 +132,7 @@ public class Robot extends TimedRobot {
 		oi.grabberButtonLeft.toggleWhenPressed(grabberCommand);
 		oi.tiltToggleButton.toggleWhenPressed(tiltCommand);
 		oi.returnButton.whenPressed(returnCommand);
-		oi.navxRotateButton.whenPressed(navxRotateCommand);
+		//oi.navxRotateButton.whenPressed(navxRotateCommand);
 	}
 
 	/**
@@ -205,7 +205,10 @@ public class Robot extends TimedRobot {
 		{
 			m_autonomousCommand = MotionMagicLibrary.RightScale();
 		}
-		
+		else if (selectedCommandName == "NavxRotateTest")
+		{
+			m_autonomousCommand = MotionMagicLibrary.NavxRotateTest();
+		}
 
 //		Class<?> c = Class.forName("MotionMagicLibrary");
 //		Method method = c.getDeclaredMethod(selectedCommandName, null);
@@ -294,7 +297,7 @@ public class Robot extends TimedRobot {
 		
 		m_chooser.addObject("Left Side to Scale", "LeftScale");
 		m_chooser.addObject("Right Side to Scale", "RightScale");
-		
+		m_chooser.addObject("Navx Rotate Test", "NavxRotateTest");
 		
 		//chooser.addObject("Center", centerStationToLeftSwitch);
 		//chooser.addObject("Right", centerStationToLeftSwitch);

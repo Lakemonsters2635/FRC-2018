@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.usfirst.frc.team2635.robot.Robot;
 import org.usfirst.frc.team2635.robot.RobotMap;
+import org.usfirst.frc.team2635.robot.commands.AutonomousNavxRotate;
 import org.usfirst.frc.team2635.robot.commands.AutonomousStraightCommand;
 import org.usfirst.frc.team2635.robot.commands.AutonomousTurnCommand;
 import org.usfirst.frc.team2635.robot.commands.ElevatorSetHeightCommand;
@@ -465,11 +466,20 @@ public class MotionMagicLibrary
 		
 		return fmsInfo;
 	}
-}
+
 	
 	public static CommandGroup DoNothingCommand() {
 		CommandGroup output;
 		output = new CommandGroup(getMethodName());
+		
+		return output;
+	}
+	
+	public static CommandGroup NavxRotateTest() {
+		System.out.println(getMethodName() + " Called");
+		CommandGroup output = new CommandGroup(getMethodName());
+		output.addSequential(new AutonomousNavxRotate(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
+		
 		
 		return output;
 	}

@@ -44,6 +44,8 @@ public class Drive extends Subsystem {
 		//Polarity of Encoder
 		frontLeftMotor.setSensorPhase(true);
 		frontRightMotor.setSensorPhase(true);
+		//frontLeftMotor.setSensorPhase(false);
+		//frontRightMotor.setSensorPhase(false);
 		//END 2017 BOT
 		
 		
