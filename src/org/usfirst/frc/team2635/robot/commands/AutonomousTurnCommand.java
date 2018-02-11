@@ -8,6 +8,7 @@ import org.usfirst.frc.team2635.robot.model.MotionParameters;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -20,7 +21,10 @@ public class AutonomousTurnCommand extends Command {
 	double rpm;
 	double targetAngle;
 	double acceleration;
-	double intialHeading; 
+	boolean encodersDone;
+	double errorTolerance;
+	int retryCount = 0;
+	
     public AutonomousTurnCommand(double rpm, double targetAngle, double acceleration) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -28,6 +32,7 @@ public class AutonomousTurnCommand extends Command {
     	this.rpm = rpm;
     	this.targetAngle = targetAngle;
     	this.acceleration = acceleration;
+    	errorTolerance = RobotMap.ERRORTOLERANCE;
     }
 
     // Called just before this Command runs the first time
@@ -35,34 +40,65 @@ public class AutonomousTurnCommand extends Command {
     	
     	Robot.drive.reset();
     	Robot.drive.navxReset();
-    	intialHeading = Robot.drive.getNavxHeading();
+    	double navxAngle = Robot.drive.getNavxAngle();
 	   	rotationParams = MotionMagicLibrary.getRotationParameters(targetAngle,
 				RobotMap.WHEEL_RADIUS_INCHES, RobotMap.WHEEL_SEPARATION_INCHES, rpm, acceleration);
+	   	encodersDone = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	Robot.drive.motionMagic(rotationParams);  
-    	
+   
+    	if(!encodersDone) {
+    		Robot.drive.motionMagic(rotationParams);  
+    		encodersDone = Robot.drive.motionMagicDone(rotationParams, errorTolerance);
+    	} 
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	boolean isFinished = Robot.drive.motionMagicDone(rotationParams, RobotMap.ERRORTOLERANCE);
-    	if(isFinished) {
-    		double currentHeading = Robot.drive.getNavxHeading();
-    		double navxHeading = Math.abs(intialHeading-currentHeading);
-    		System.out.println("Navx turn heading: " + navxHeading);
-    		System.out.println("Navx turn angle: " + Robot.drive.getNavxAngle());
+    	//MotionParameters motionParams, double targetAngle, double encoderErrorTolerance, double navxErrorTolerance
+    	double navxErrorTolerance = 0.3; //TODO: Put in RobotMap
+    	//boolean done = Robot.drive.rotationDone(rotationParams, targetAngle, RobotMap.ERRORTOLERANCE, navxErrorTolerance);
+    	
+    	boolean encodersDone = Robot.drive.motionMagicDone(rotationParams,errorTolerance);
+
+    	
+    	if(encodersDone) {
+//    		System.out.println("Navx turn angle: " + Robot.drive.getNavxAngle());
+//        	double navxAngle = Robot.drive.getNavxAngle();
+//        	double angleDelta = (-targetAngle - navxAngle);
+//        	boolean navxDone = ( Math.abs(angleDelta) < navxErrorTolerance);
+//        	
+//        	if (!navxDone && retryCount == 0) {
+//        		retryCount++;
+//        		
+//        		Robot.drive.setPIDValues(100);
+//        		System.out.println("TRY AGAIN!!!");
+//        		System.out.println("Retry Navx turn angle: " + navxAngle);
+//        		System.out.println("angleDelta: " + angleDelta);
+//        		encodersDone = false;
+//        		targetAngle = angleDelta;
+//        		this.initialize(); 
+//        	}
+    		
+    	}
+    	
+    	if (encodersDone) {
+        	double navxAngle = Robot.drive.getNavxAngle();
+        	double angleDelta = (-targetAngle - navxAngle);
+        	System.out.println("Final Navx turn delta: " + angleDelta);
+        	System.out.println("Final Navx turn angle: " + navxAngle);
     		System.out.println("Drive Turn Finished");
     		System.out.println("-----------");
+    		Robot.drive.setPIDValues(RobotMap.MOTION_MAGIC_P);
     	}
-    	return isFinished;
+    	return encodersDone;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.drive.setPIDValues(RobotMap.MOTION_MAGIC_P);
     	Robot.drive.motorControl(ControlMode.PercentOutput, 0.0, 0.0, false);
     	Robot.drive.reset();
     }

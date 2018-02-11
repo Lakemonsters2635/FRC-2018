@@ -197,17 +197,17 @@ public class Robot extends TimedRobot {
 		{
 			m_autonomousCommand = MotionMagicLibrary.LeftStation();
 		}
-		else if (selectedCommandName == "LeftScale")
+		else if (selectedCommandName == "FarLeftToScale")
 		{
-			m_autonomousCommand = MotionMagicLibrary.LeftScale();
+			m_autonomousCommand = MotionMagicLibrary.FarLeftToScale();
 		}
-		else if (selectedCommandName == "RightScale")
+		else if (selectedCommandName == "FarRightToScale")
 		{
-			m_autonomousCommand = MotionMagicLibrary.RightScale();
+			m_autonomousCommand = MotionMagicLibrary.FarRightToScale();
 		}
-		else if (selectedCommandName == "NavxRotateTest")
+		else if (selectedCommandName == "RotateTest")
 		{
-			m_autonomousCommand = MotionMagicLibrary.NavxRotateTest();
+			m_autonomousCommand = MotionMagicLibrary.RotateTest();
 		}
 
 //		Class<?> c = Class.forName("MotionMagicLibrary");
@@ -295,9 +295,9 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("Center Station to Switch", "CenterStation");
 		m_chooser.addObject("Right Station to Switch", "RightStation");
 		
-		m_chooser.addObject("Left Side to Scale", "LeftScale");
-		m_chooser.addObject("Right Side to Scale", "RightScale");
-		m_chooser.addObject("Navx Rotate Test", "NavxRotateTest");
+		m_chooser.addObject("Far Left to Scale", "FarLeftToScale");
+		m_chooser.addObject("Far Right to Scale", "FarRightToScale");
+		m_chooser.addObject("Rotate Test", "RotateTest");
 		
 		//chooser.addObject("Center", centerStationToLeftSwitch);
 		//chooser.addObject("Right", centerStationToLeftSwitch);

@@ -41,7 +41,8 @@ public class AutonomousNavxRotate extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	boolean isFinished = Robot.drive.motionNavxDone(targetAngle, 3);
+    	double navxErrorTolerance = 1; //TODO: Put in RobotMap
+    	boolean isFinished = Robot.drive.rotationDone(rotationParams, targetAngle, RobotMap.ERRORTOLERANCE, navxErrorTolerance);
     	if(isFinished) {
     		System.out.println("Drive Navx Turn Finished");
     		System.out.println("-----------");

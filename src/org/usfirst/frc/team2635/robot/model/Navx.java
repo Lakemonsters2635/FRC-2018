@@ -33,6 +33,10 @@ public class Navx {
     	
     }
    
+    public boolean isMoving()
+    {
+    	return navx.isMoving();
+    }
     
     public float[] getDisplacement() {
     	float[] displacement = new float[3];

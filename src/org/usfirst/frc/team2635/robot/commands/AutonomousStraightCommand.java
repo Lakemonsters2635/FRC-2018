@@ -68,6 +68,7 @@ public class AutonomousStraightCommand extends Command {
     protected void end() {
     	Robot.drive.motorControl(ControlMode.PercentOutput, 0.0, 0.0, false);
     	Robot.drive.reset();
+    	Robot.drive.navxReset();
     	
 //    	System.out.println("Drive straight end");
     }

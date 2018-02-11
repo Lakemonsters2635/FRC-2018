@@ -75,6 +75,7 @@ public class RobotMap {
 	public static double MOTION_MAGIC_D = 0.0;
 	public static double MOTION_MAGIC_F = 1.5;
 	
+	//public static double TURN_CONSTANT = 
 	public static final double WHEEL_SEPARATION_INCHES = 25;
 	
 	
@@ -84,7 +85,7 @@ public class RobotMap {
 	public static double MOTION_MAGIC_DISTANCE = 3000;
 	public static double WHEEL_DIAMETER = 6;
 	
-	public static double ERRORTOLERANCE = 5;
+	public static double ERRORTOLERANCE = 6;
 
 	public static boolean VELOCITYDRIVEMODE = false;
 	

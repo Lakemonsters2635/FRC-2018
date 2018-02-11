@@ -81,6 +81,11 @@ public class Drive extends Subsystem {
 		}
 	}
 	
+	public void setPIDValues(double p) {
+		frontLeftMotor.config_kP(1, p, 0);
+		frontRightMotor.config_kP(1, p, 0);
+	}
+	
 	public void motorControl(ControlMode controlMode, Double left, Double right, Boolean slave){
 		frontLeftMotor.set(controlMode, left);
 		frontRightMotor.set(controlMode, right);
@@ -155,6 +160,7 @@ public class Drive extends Subsystem {
     	return counts;
     }
     public void motionMagic(MotionParameters motionParams) {
+    	
 		frontRightMotor.configMotionCruiseVelocity(motionParams.rightVelocity, 0);
 		frontLeftMotor.configMotionCruiseVelocity(motionParams.leftVelocity, 0);
 
@@ -188,14 +194,39 @@ public class Drive extends Subsystem {
     	
     	return false;
     }
-    public boolean motionNavxDone(double targetAngle, double errorTolerance) {
+    public boolean rotationDone(MotionParameters motionParams, double targetAngle, double encoderErrorTolerance, double navxErrorTolerance) {
     	
-    	double currentAngle = navx.getAngle();
-    	double angleDelta = Math.abs(currentAngle - targetAngle);
-    	return (angleDelta < errorTolerance);
+    	double constant = 1.25;
+    	double currentAngle =  navx.getAngle();
+    	 //diff b/w how far its gone & how far we want it to go. Currently returns the right value, but 
+    	
+    	boolean encodersDone = motionMagicDone(motionParams, encoderErrorTolerance );
+
+    	
+    	double angleDelta = (-targetAngle - currentAngle); //Difference b/w how far we've turned & how far we want to turn
+    	//boolean navxDone =  (angleDelta < navxErrorTolerance && angleDelta > -navxErrorTolerance);
+    	boolean navxDone = ( Math.abs(angleDelta) < navxErrorTolerance);
+    	
+    	
+    	if (encodersDone && !navxDone) {
+    		
+    		System.out.println("rotationDone.currentAngle: " + currentAngle);
+    		System.out.println("rotationDone.targetAngle: " + targetAngle);
+    		//Darrel's magic goes here.
+
+    		double driveValue = angleDelta*constant;
+    		motorControl(ControlMode.PercentOutput, driveValue, driveValue, true);
+    	}
+    	
+    	if (navxDone || encodersDone) {
+    		System.out.println("Navx Done: " + navxDone + "\t Angle Delta:" + angleDelta);
+    		System.out.println("Encoders Done: " + encodersDone);
+    	}
+    	return navxDone;
     	
     }
-
+    
+    
     public void reset(){
     	frontLeftMotor.setSelectedSensorPosition(0, 0, 0);
     	frontRightMotor.setSelectedSensorPosition(0, 0, 0);

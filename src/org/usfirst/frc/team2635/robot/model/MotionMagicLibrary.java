@@ -247,7 +247,7 @@ public class MotionMagicLibrary
 		return output;
 	}
 	
-	public  static CommandGroup LeftScale()
+	public  static CommandGroup FarLeftToScale()
 	{
 		CommandGroup output = new CommandGroup();
 		FMSInfo fmsInfo = getFMSInfo();
@@ -267,7 +267,7 @@ public class MotionMagicLibrary
 		return output;
 	}
 	
-	public  static CommandGroup RightScale()
+	public  static CommandGroup FarRightToScale()
 	{
 		CommandGroup output = new CommandGroup();
 		FMSInfo fmsInfo = getFMSInfo();
@@ -475,10 +475,11 @@ public class MotionMagicLibrary
 		return output;
 	}
 	
-	public static CommandGroup NavxRotateTest() {
+	public static CommandGroup RotateTest() {
 		System.out.println(getMethodName() + " Called");
 		CommandGroup output = new CommandGroup(getMethodName());
-		output.addSequential(new AutonomousNavxRotate(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
+		double targetAngle = 90;
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, targetAngle, RobotMap.AUTO_TURN_ACCELERATION)); // _, targetAngle, _)
 		
 		
 		return output;
