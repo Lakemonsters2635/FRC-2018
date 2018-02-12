@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2635.robot.commands;
 
 import org.usfirst.frc.team2635.robot.Robot;
+import org.usfirst.frc.team2635.robot.subsystems.Elevator.Height;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -8,24 +9,30 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ElevatorCommand extends Command {
-
-    public ElevatorCommand() {
+	public Height height;
+    public ElevatorCommand(Height height) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.elevator);
+        this.height = height;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.elevator.setTargetHeight(height);
     }
 
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-    	Robot.elevator.motorControl();
+    protected void execute() { //Is continuously called until the isFinished command is returned as true.
+    	Robot.elevator.motorControl(); 
     }
 
     // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
+    protected boolean isFinished() { 
+    	boolean elevatorIsFinished = Robot.elevator.isFinished();
+    	if(elevatorIsFinished){
+    		System.out.println("Elevator Command finished");
+    	}
+        return elevatorIsFinished;
     }
 
     // Called once after isFinished returns true

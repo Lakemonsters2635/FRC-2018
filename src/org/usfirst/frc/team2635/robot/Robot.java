@@ -23,12 +23,10 @@ import org.usfirst.frc.team2635.robot.commands.ClimbDownCommand;
 import org.usfirst.frc.team2635.robot.commands.ClimbUpCommand;
 import org.usfirst.frc.team2635.robot.commands.DriveCommand;
 import org.usfirst.frc.team2635.robot.commands.GearShiftCommand;
-import org.usfirst.frc.team2635.robot.commands.GetFMSCommand;
 import org.usfirst.frc.team2635.robot.commands.GrabberCommand;
 import org.usfirst.frc.team2635.robot.commands.TiltCommand;
 import org.usfirst.frc.team2635.robot.commands.ToggleDriveModeCommand;
 import org.usfirst.frc.team2635.robot.commands.VisionLightCommand;
-import org.usfirst.frc.team2635.robot.model.FMSInfo;
 import org.usfirst.frc.team2635.robot.model.MotionMagicLibrary;
 import org.usfirst.frc.team2635.robot.subsystems.Bling;
 import org.usfirst.frc.team2635.robot.subsystems.Climber;
@@ -185,17 +183,17 @@ public class Robot extends TimedRobot {
 		drive.autoInit();
 		
 		String selectedCommandName = (String) m_chooser.getSelected();
-		if (selectedCommandName == "RightStation")
+		if (selectedCommandName == "RightStationToSwitch")
 		{
-			m_autonomousCommand = MotionMagicLibrary.RightStation();
+			m_autonomousCommand = MotionMagicLibrary.RightStationToSwitch();
 		}
-		else if (selectedCommandName == "CenterStation")
+		else if (selectedCommandName == "CenterStationToSwitch")
 		{
-			m_autonomousCommand = MotionMagicLibrary.CenterStation();
+			m_autonomousCommand = MotionMagicLibrary.CenterStationToSwitch();
 		}
-		else if (selectedCommandName == "LeftStation")
+		else if (selectedCommandName == "LeftStationToSwitch")
 		{
-			m_autonomousCommand = MotionMagicLibrary.LeftStation();
+			m_autonomousCommand = MotionMagicLibrary.LeftStationToSwitch();
 		}
 		else if (selectedCommandName == "FarLeftToScale")
 		{
@@ -291,12 +289,15 @@ public class Robot extends TimedRobot {
 		//m_chooser.initSendable(builder);;
 		m_chooser.addDefault("Do Nothing", "DoNothingCommand");
 		
-		m_chooser.addObject("Left Station to Switch", "LeftStation");
-		m_chooser.addObject("Center Station to Switch", "CenterStation");
-		m_chooser.addObject("Right Station to Switch", "RightStation");
+		m_chooser.addObject("Left Station to Switch", "LeftStationToSwitch");
+		m_chooser.addObject("Center Station to Switch", "CenterStationToSwitch");
+		m_chooser.addObject("Right Station to Switch", "RightStationToSwitch");
 		
 		m_chooser.addObject("Far Left to Scale", "FarLeftToScale");
 		m_chooser.addObject("Far Right to Scale", "FarRightToScale");
+		m_chooser.addObject("Far Left to Switch", "FarLeftToSwitch");
+		m_chooser.addObject("Far Right to Switch", "FarRightToSwitch");
+
 		m_chooser.addObject("Rotate Test", "RotateTest");
 		
 		//chooser.addObject("Center", centerStationToLeftSwitch);

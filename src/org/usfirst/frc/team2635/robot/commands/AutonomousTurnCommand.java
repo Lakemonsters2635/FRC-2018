@@ -5,6 +5,10 @@ import org.usfirst.frc.team2635.robot.RobotMap;
 import org.usfirst.frc.team2635.robot.model.MotionMagicLibrary;
 import org.usfirst.frc.team2635.robot.model.MotionParameters;
 
+import java.security.Timestamp;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
@@ -65,10 +69,48 @@ public class AutonomousTurnCommand extends Command {
 
     	
     	if(encodersDone) {
-//    		System.out.println("Navx turn angle: " + Robot.drive.getNavxAngle());
-//        	double navxAngle = Robot.drive.getNavxAngle();
-//        	double angleDelta = (-targetAngle - navxAngle);
-//        	boolean navxDone = ( Math.abs(angleDelta) < navxErrorTolerance);
+    		
+    		
+
+        	double navxAngle = Robot.drive.getNavxAngle();
+        	System.out.println("Navx turn angle: " + navxAngle);
+        	double angleDelta = (-targetAngle - navxAngle);
+        	boolean navxDone = ( Math.abs(angleDelta) < navxErrorTolerance);
+        	if (!navxDone) {
+        		//long startTime = getTime();
+        		//System.out.println("******Wait for Navx to settle down******");
+        		/*while (timeDelta < 1000) {
+        			System.out.println("Navx turn angle: " + Robot.drive.getNavxAngle());
+        			timeDelta = getTime - startTime; //Trying to get real time, and make the loop last only 1 realtime second.
+        			//Keep printing out the angle for a second.
+        			
+        		}*/
+        		/*Timestamp currentTime = new Timestamp(System.currentTimeMillis());*/
+//        		long startTime = System.currentTimeMillis();
+//        		long timeDelta = 0;
+//        		while(timeDelta < 1000){
+//        			timeDelta = System.currentTimeMillis() - startTime;
+//        			try {
+//						Thread.sleep(20);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//
+//        		System.out.println("Navx turn angle: " + Robot.drive.getNavxAngle());
+//        		}
+        		/*for (int i=0; i < 10; i++) {
+        			System.out.println("Navx turn angle: " + Robot.drive.getNavxAngle());
+        			try {
+						//Thread.sleep(100);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+        		}*/
+        	}
+        		
+        	
 //        	
 //        	if (!navxDone && retryCount == 0) {
 //        		retryCount++;

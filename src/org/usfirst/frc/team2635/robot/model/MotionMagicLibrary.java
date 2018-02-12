@@ -8,8 +8,9 @@ import org.usfirst.frc.team2635.robot.RobotMap;
 import org.usfirst.frc.team2635.robot.commands.AutonomousNavxRotate;
 import org.usfirst.frc.team2635.robot.commands.AutonomousStraightCommand;
 import org.usfirst.frc.team2635.robot.commands.AutonomousTurnCommand;
-import org.usfirst.frc.team2635.robot.commands.ElevatorSetHeightCommand;
-import org.usfirst.frc.team2635.robot.commands.GetFMSCommand;
+import org.usfirst.frc.team2635.robot.commands.ElevatorCommand;
+import org.usfirst.frc.team2635.robot.commands.GrabberCommand;
+import org.usfirst.frc.team2635.robot.commands.TiltCommand;
 import org.usfirst.frc.team2635.robot.subsystems.Elevator.Height;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -25,84 +26,6 @@ public class MotionMagicLibrary
 {
 
 
-	public static MotionParameters getArcRotationParameters(double targetAngle, 
-														   double wheelRadiusInches,
-														   double turnRadiusInches, 
-														   double wheelSeparationInches,  
-														   double velocity, 
-														   boolean Clockwise, 
-														   boolean rotateCenter)
-	{
-		double inchesPerRotation = wheelRadiusInches * 2 * Math.PI;
-		
-		double arcLengthRight;
-		double archLengthLeft;
-		double rightWheelRotations;
-		double leftWheelRotations;
-		
-		if (rotateCenter)
-		{			
-			//To rotate around center.
-			double radius = wheelSeparationInches/2.0;
-			//radius is 1/2 of wheelSeparationInches
-			//ArcLengh = radius * angle in radians
-			
-			arcLengthRight = radius *  (2*Math.PI)/360.0 * targetAngle;
-			archLengthLeft = arcLengthRight;
-			rightWheelRotations = arcLengthRight/inchesPerRotation;
-			leftWheelRotations = archLengthLeft/inchesPerRotation;
-
-		}
-		else
-		{	
-			arcLengthRight = turnRadiusInches *  (2*Math.PI)/360.0 * targetAngle;
-			archLengthLeft = (turnRadiusInches + wheelSeparationInches)  *  (2*Math.PI)/360.0 * targetAngle;
-			rightWheelRotations = arcLengthRight/inchesPerRotation;
-			leftWheelRotations = -archLengthLeft/inchesPerRotation;
-		}
-		
-		
-		double velocityRatio = Math.abs(leftWheelRotations/rightWheelRotations);
-		
-		double rightVelocity = velocity;
-		double leftVelocity = velocity * velocityRatio;
-		
-		double rightAcceleration =  rightVelocity;
-		double leftAcceleration =  leftVelocity;
-		
-		
-		if (!Clockwise && !rotateCenter)
-		{
-			double tmpRotation = rightWheelRotations;
-			rightWheelRotations = leftWheelRotations;
-			leftWheelRotations = tmpRotation;
-			
-			double tmpAcceleration = rightAcceleration;
-			rightAcceleration = leftAcceleration;
-			leftAcceleration = tmpAcceleration;
-			
-			double tmpVelocity = rightVelocity;
-			rightVelocity = leftVelocity;
-			leftVelocity = tmpVelocity;
-		}
-		else if (Clockwise && rotateCenter)
-		{
-			rightWheelRotations = -rightWheelRotations;
-			leftWheelRotations = -leftWheelRotations;
-		}
-		
-		
-		MotionParameters rotationParams = new MotionParameters();
-		rotationParams.rightAcceleration = (int) rightAcceleration;
-		rotationParams.leftAcceleration = (int) leftAcceleration;
-		rotationParams.rightVelocity     = (int) rightVelocity;
-		rotationParams.leftVelocity     = (int) leftVelocity;
-		rotationParams.rightWheelRotations = rightWheelRotations * 1000;
-		rotationParams.leftWheelRotations = leftWheelRotations * 1000;
-
-		return rotationParams;
-
-	}
 	
 	
 	public static MotionParameters getRotationParameters(double targetAngle,    double wheelRadiusInches, 
@@ -144,8 +67,8 @@ public class MotionMagicLibrary
 			rotationParams.leftAcceleration = (int) leftAcceleration;
 			rotationParams.rightVelocity     = (int) rightVelocity;
 			rotationParams.leftVelocity     = (int) leftVelocity;
-			rotationParams.rightWheelRotations = rightWheelRotations*1000;
-			rotationParams.leftWheelRotations = leftWheelRotations*1000;
+			rotationParams.rightWheelRotations = rightWheelRotations*RobotMap.ENCODER_COUNTS_PER_REVOLUTION;
+			rotationParams.leftWheelRotations = leftWheelRotations*RobotMap.ENCODER_COUNTS_PER_REVOLUTION;
 			
 			return rotationParams;
 			}
@@ -177,15 +100,15 @@ public class MotionMagicLibrary
 		MotionParameters driveParams = new MotionParameters();
 		driveParams.leftAcceleration = (int) acceleration;
 		driveParams.rightAcceleration = (int) acceleration;
-		driveParams.leftWheelRotations = leftWheelRotations * 1000;
-		driveParams.rightWheelRotations = rightWheelRotations * 1000;
+		driveParams.leftWheelRotations = leftWheelRotations * RobotMap.ENCODER_COUNTS_PER_REVOLUTION;
+		driveParams.rightWheelRotations = rightWheelRotations * RobotMap.ENCODER_COUNTS_PER_REVOLUTION;
 		driveParams.leftVelocity     = (int) velocit;
 		driveParams.rightVelocity     = (int) velocit;
 		return driveParams;
 
 	}
 	
-	public static CommandGroup RightStation()
+	public static CommandGroup RightStationToSwitch()
 	{
 		CommandGroup output = new CommandGroup();
 		FMSInfo fmsInfo = getFMSInfo();
@@ -198,14 +121,14 @@ public class MotionMagicLibrary
 		}
 		else
 		{
-			output = DoNothingCommand();
+			output = CrossLineCommand();
 		}
 		output.setName(getMethodName());
 		
 		return output;
 	}
 	
-	public  static CommandGroup CenterStation()
+	public  static CommandGroup CenterStationToSwitch()
 	{
 		CommandGroup output = new CommandGroup();
 		
@@ -221,13 +144,13 @@ public class MotionMagicLibrary
 		}
 		else
 		{
-			output = DoNothingCommand();
+			output = CrossLineCommand();
 		}
 		output.setName(getMethodName());
 		return output;
 	}
 	
-	public  static CommandGroup LeftStation()
+	public  static CommandGroup LeftStationToSwitch()
 	{
 		CommandGroup output = new CommandGroup();
 		FMSInfo fmsInfo = getFMSInfo();
@@ -241,8 +164,9 @@ public class MotionMagicLibrary
 		}
 		else
 		{
-			output = DoNothingCommand();
+			output = CrossLineCommand(); //Turn into cross line
 		}
+		
 		output.setName(getMethodName());
 		return output;
 	}
@@ -261,13 +185,41 @@ public class MotionMagicLibrary
 		}
 		else
 		{
-			output = DoNothingCommand();
+			output = CrossLineCommand();
 		}
 		output.setName(getMethodName());
 		return output;
 	}
 	
-	public  static CommandGroup FarRightToScale()
+	
+	public static CommandGroup FarLeftToSwitch(){
+		CommandGroup output = new CommandGroup();
+		FMSInfo fmsInfo = getFMSInfo();
+		
+		if (fmsInfo.scaleLocation == 'R')
+		{
+			//output = FarLeftToRightScale();
+			
+		}
+		else if (fmsInfo.scaleLocation == 'L'){
+			output = FarLeftToLeftScale();
+		}
+		else
+		{
+			output = CrossLineCommand();
+		}
+		output.setName(getMethodName());
+		return output;
+	}
+	
+	
+	private static CommandGroup FarLeftToLeftScale() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public static CommandGroup FarRightToScale()
 	{
 		CommandGroup output = new CommandGroup();
 		FMSInfo fmsInfo = getFMSInfo();
@@ -281,7 +233,7 @@ public class MotionMagicLibrary
 		}
 		else
 		{
-			output = DoNothingCommand();
+			output = CrossLineCommand();
 		}
 		output.setName(getMethodName());
 		return output;
@@ -291,13 +243,15 @@ public class MotionMagicLibrary
 		CommandGroup output;
 		output = new CommandGroup();
 		
-		output.addSequential(new ElevatorSetHeightCommand(Height.SWITCH));
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
 		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		
+		output.addSequential(new ElevatorCommand(Height.SWITCH));
+		output.addSequential(new TiltCommand());
+		output.addSequential(new GrabberCommand());
+//		output.addParallel(command); does two things @ the same time, which is what we'll want for later.
 		return output;
 	}
 	
@@ -392,7 +346,7 @@ public class MotionMagicLibrary
 		output.addSequential(new AutonomousStraightCommand(96, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));//Should be 4.9" away
 		output.addSequential(new AutonomousStraightCommand(7, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		
+		output.addSequential(new ElevatorCommand(Height.SCALE)); //Going to use the elevator & deliver it to the highest value. Uses SCALE constant(Units: in')
 		return output;
 	}
 	
@@ -472,6 +426,13 @@ public class MotionMagicLibrary
 		CommandGroup output;
 		output = new CommandGroup(getMethodName());
 		
+		return output;
+	}
+	
+	public static CommandGroup CrossLineCommand() {
+		CommandGroup output;
+		output = new CommandGroup(getMethodName());
+		output.addSequential(new AutonomousStraightCommand(138.0, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		return output;
 	}
 	

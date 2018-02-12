@@ -28,8 +28,7 @@ public class Elevator extends Subsystem {
 	//Lower: 4000
 	//Upper: 3000
 	
-	int[] heightArray;
-	int targetHeightIndex;
+	Height targetHeight;
 	double lowerElevatorMax;
 	double upperElevatorMax;
 	
@@ -41,22 +40,18 @@ public class Elevator extends Subsystem {
     	lowerMotor2.follow(lowerMotor1);
     	
     	encoderStart();
-    	//TODO FAKE VALUES, UPDATE TO ACCURATE VALUES
-    	int groundHeight = 0;
-    	int switchHeight = 2000;
-    	int scaleHeight = 5000;
-    	int climbHeight = 7000;
+    	//TODO FAKE VALUES, UPDATE TO ACCURATE VALUES, Fix this...
+    	// In inches (units)
     	
     	lowerElevatorMax = 4000;
     	upperElevatorMax = 3000;
     	//END FAKE VALUES
     	
-    	targetHeightIndex = 0;
-    	heightArray = new int[] {groundHeight, switchHeight, scaleHeight, climbHeight};
+    	targetHeight = Height.GROUND;
 	}
 	
 	public void motorControl() {
-		double height = heightArray[targetHeightIndex];
+		double height = targetHeight.height;
 		double lowerHeight = 0;
 		double upperHeight = 0;
 		
@@ -72,26 +67,18 @@ public class Elevator extends Subsystem {
 		upperMotor.set(ControlMode.MotionMagic, upperHeight);
 	}
 	
-	public boolean elevatorUp() {
-		if(targetHeightIndex < 4) {
-			targetHeightIndex += 1;
-		}
+	public boolean setTargetHeight(Height height) {
+		targetHeight = height;
 		return true;
 	}
 	
-	public boolean elevatorDown() {
-		if(targetHeightIndex > 0) {
-			targetHeightIndex -= 1;
+
+	/*public boolean elevatorHeight(Height height) {
+		if(targetHeightIndex != height) {
+			targetHeightIndex = height;
 		}
 		return true;
-	}
-	
-	public boolean elevatorHeight(int index) {
-		if(targetHeightIndex != index) {
-			targetHeightIndex = index;
-		}
-		return true;
-	}
+	}*/
 	
 	public double currentHeight() {
 		
@@ -102,7 +89,9 @@ public class Elevator extends Subsystem {
 		
 		return totalHeight;
 	}
-	
+	public boolean isFinished(){
+		return false;
+	}
 	private void encoderStart() {
 		upperMotor.setSelectedSensorPosition(0, 0, 0);
     	upperMotor.config_kP(0, 5, 0);
@@ -126,12 +115,13 @@ public class Elevator extends Subsystem {
     	lowerMotor1.configMotionCruiseVelocity(100, 0);
     	upperMotor.configMotionCruiseVelocity(100, 0);
 	}
-	
+	// Currently has fake values inside it, what it's supposed to do is pass values to the elevator
+	// for it to go to those heights.
 	public static enum Height {
-		GROUND(0), SWITCH(1), SCALE(2), CLIMB(3);
-		public int index;
-		private Height(int index) {
-			this.index = index;
+		GROUND(0), SWITCH(22), SCALE(50), CLIMB(70);
+		public int height;
+		private Height(int height) {
+			this.height = height;
 		}
 	}
 	

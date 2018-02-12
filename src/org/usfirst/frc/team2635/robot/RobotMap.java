@@ -89,7 +89,11 @@ public class RobotMap {
 
 	public static boolean VELOCITYDRIVEMODE = false;
 	
-
+	//2017 BOT
+	//public static final int ENCODER_COUNTS_PER_REVOLUTION = 1000;
+	
+	//2018 BOT
+	public static final int ENCODER_COUNTS_PER_REVOLUTION = 4096/3;
 	
 	public static final double AUTO_DRIVE_VELOCITY = 750;
 	public static final double AUTO_TURN_VELOCITY = 500;

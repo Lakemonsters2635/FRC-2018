@@ -41,12 +41,15 @@ public class Drive extends Subsystem {
 		backRightMotor = new WPI_TalonSRX(RobotMap.BACK_RIGHT_DRIVE_CHANNEL);
 		
 		
-		//Polarity of Encoder
-		frontLeftMotor.setSensorPhase(true);
-		frontRightMotor.setSensorPhase(true);
-		//frontLeftMotor.setSensorPhase(false);
-		//frontRightMotor.setSensorPhase(false);
+		//Polarity of Encoder (2017 bot)
+		//frontLeftMotor.setSensorPhase(true);
+		//frontRightMotor.setSensorPhase(true);
 		//END 2017 BOT
+		
+		//2018 bot
+		frontLeftMotor.setSensorPhase(false);
+		frontRightMotor.setSensorPhase(false);
+
 		
 		
 		
@@ -75,7 +78,7 @@ public class Drive extends Subsystem {
 	    	frontRightMotor.selectProfileSlot(1, 0);
 	    	frontLeftMotor.selectProfileSlot(1, 0);
 	    	
-			motorControl(ControlMode.Velocity, -left*1000, right*1000, true);
+			motorControl(ControlMode.Velocity, -left*RobotMap.ENCODER_COUNTS_PER_REVOLUTION, right*RobotMap.ENCODER_COUNTS_PER_REVOLUTION, true);
 		}else {
 			motorControl(ControlMode.PercentOutput, -left, right, false);
 		}
@@ -156,7 +159,7 @@ public class Drive extends Subsystem {
     public double inchesToCounts(double inches){
     	double circumference = RobotMap.WHEEL_DIAMETER * Math.PI;
     	
-    	double counts = inches/circumference*1000;
+    	double counts = inches/circumference*RobotMap.ENCODER_COUNTS_PER_REVOLUTION;
     	return counts;
     }
     public void motionMagic(MotionParameters motionParams) {
