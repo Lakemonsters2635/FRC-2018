@@ -35,6 +35,7 @@ import org.usfirst.frc.team2635.robot.subsystems.Elevator;
 import org.usfirst.frc.team2635.robot.subsystems.FMS;
 import org.usfirst.frc.team2635.robot.subsystems.Gearbox;
 import org.usfirst.frc.team2635.robot.subsystems.Grabber;
+import org.usfirst.frc.team2635.robot.subsystems.LimitSwitch;
 import org.usfirst.frc.team2635.robot.subsystems.Tilt;
 import org.usfirst.frc.team2635.robot.subsystems.Vision;
 
@@ -56,6 +57,7 @@ public class Robot extends TimedRobot {
 	public static Grabber grabber;
 	public static Tilt tilter;
 	public static Bling bling;
+	public static LimitSwitch limitSwitch;
 	
 	DriveCommand driveCommand;
 	AutonomousCommand autoCommand;
@@ -94,6 +96,7 @@ public class Robot extends TimedRobot {
 		gearbox = new Gearbox();
 		grabber = new Grabber();
 		bling = new Bling();
+		limitSwitch = new LimitSwitch();
 		
 		m_chooser = new SendableChooser();
 		
@@ -130,6 +133,9 @@ public class Robot extends TimedRobot {
 		oi.grabberButtonLeft.toggleWhenPressed(grabberCommand);
 		oi.tiltToggleButton.toggleWhenPressed(tiltCommand);
 		oi.returnButton.whenPressed(returnCommand);
+		oi.elevatorUpButton.whenPressed(MotionMagicLibrary.ElevatorUp());
+		oi.elevatorDownButton.whenPressed(MotionMagicLibrary.ElevatorDown());
+		
 		//oi.navxRotateButton.whenPressed(navxRotateCommand);
 	}
 
@@ -202,6 +208,10 @@ public class Robot extends TimedRobot {
 		else if (selectedCommandName == "FarRightToScale")
 		{
 			m_autonomousCommand = MotionMagicLibrary.FarRightToScale();
+		}
+		else if (selectedCommandName == "FarLeftToSwitch")
+		{
+			m_autonomousCommand = MotionMagicLibrary.FarLeftToSwitch();
 		}
 		else if (selectedCommandName == "RotateTest")
 		{

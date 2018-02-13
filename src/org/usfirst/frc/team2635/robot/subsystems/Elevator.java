@@ -89,8 +89,13 @@ public class Elevator extends Subsystem {
 		
 		return totalHeight;
 	}
+	
 	public boolean isFinished(){
 		return false;
+	}
+	
+	public boolean isWithinTolerance(Height height) {
+		return (currentHeight() > (height.height - RobotMap.ELEVATOR_TOLERANCE) && currentHeight() < (height.height + RobotMap.ELEVATOR_TOLERANCE)); //
 	}
 	private void encoderStart() {
 		upperMotor.setSelectedSensorPosition(0, 0, 0);
@@ -115,10 +120,10 @@ public class Elevator extends Subsystem {
     	lowerMotor1.configMotionCruiseVelocity(100, 0);
     	upperMotor.configMotionCruiseVelocity(100, 0);
 	}
-	// Currently has fake values inside it, what it's supposed to do is pass values to the elevator
-	// for it to go to those heights.
+	// No longer has fake values <3, this just sets the values for the ground, switch, scale, and climb heights that the elevator uses.
 	public static enum Height {
-		GROUND(0), SWITCH(22), SCALE(50), CLIMB(70);
+		GROUND(RobotMap.ELEVATOR_GROUND_HEIGHT), SWITCH(RobotMap.ELEVATOR_SWITCH_HEIGHT), SCALE(RobotMap.ELEVATOR_SCALE_HEIGHT), CLIMB(RobotMap.ELEVATOR_CLIMB_HEIGHT);
+		
 		public int height;
 		private Height(int height) {
 			this.height = height;

@@ -77,28 +77,21 @@ public class AutonomousTurnCommand extends Command {
         	double angleDelta = (-targetAngle - navxAngle);
         	boolean navxDone = ( Math.abs(angleDelta) < navxErrorTolerance);
         	if (!navxDone) {
-        		//long startTime = getTime();
-        		//System.out.println("******Wait for Navx to settle down******");
-        		/*while (timeDelta < 1000) {
-        			System.out.println("Navx turn angle: " + Robot.drive.getNavxAngle());
-        			timeDelta = getTime - startTime; //Trying to get real time, and make the loop last only 1 realtime second.
-        			//Keep printing out the angle for a second.
-        			
-        		}*/
-        		/*Timestamp currentTime = new Timestamp(System.currentTimeMillis());*/
-//        		long startTime = System.currentTimeMillis();
-//        		long timeDelta = 0;
-//        		while(timeDelta < 1000){
-//        			timeDelta = System.currentTimeMillis() - startTime;
-//        			try {
-//						Thread.sleep(20);
-//					} catch (InterruptedException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//
-//        		System.out.println("Navx turn angle: " + Robot.drive.getNavxAngle());
-//        		}
+
+        	
+        		long startTime = System.currentTimeMillis();
+        		long timeDelta = 0;
+        		while(timeDelta < 1000){
+        			timeDelta = System.currentTimeMillis() - startTime;
+        			try {
+						Thread.sleep(20);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+        		   System.out.println("Navx turn angle: " + Robot.drive.getNavxAngle());
+        		}
         		/*for (int i=0; i < 10; i++) {
         			System.out.println("Navx turn angle: " + Robot.drive.getNavxAngle());
         			try {

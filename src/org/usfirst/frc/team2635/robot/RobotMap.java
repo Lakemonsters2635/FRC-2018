@@ -54,9 +54,19 @@ public class RobotMap {
 	public static final int ELEVATOR_LOWER_MOTOR1_CHANNEL = 6;
 	public static final int ELEVATOR_LOWER_MOTOR2_CHANNEL = 7;
 	
+	public static final int ELEVATOR_GROUND_HEIGHT = 0; //Actually will be 0
+	//ALL FAKE VALUES VVV
+	public static final int ELEVATOR_SWITCH_HEIGHT = 0;
+	public static final int ELEVATOR_SCALE_HEIGHT = 0;
+	public static final int ELEVATOR_CLIMB_HEIGHT = 0;
+	public static final int ELEVATOR_TOLERANCE = 0;
+	//ALL FAKE VALUES ^^^
+	
 	public static final int INTAKE_1_MOTOR_CHANNEL = 10;
 	public static final int INTAKE_2_MOTOR_CHANNEL = 11;
 	
+	
+	public static final int LIMIT_SWITCH_IO_CHANNEL = 1;
 	
 	//TODO change these vaules
 	public static final double WHEEL_RADIUS_INCHES = 3;

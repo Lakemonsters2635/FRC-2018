@@ -15,6 +15,7 @@ import org.usfirst.frc.team2635.robot.subsystems.Elevator.Height;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.TimedCommand;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -198,11 +199,11 @@ public class MotionMagicLibrary
 		
 		if (fmsInfo.scaleLocation == 'R')
 		{
-			//output = FarLeftToRightScale();
+			output = FarLeftToRightSwitch();
 			
 		}
 		else if (fmsInfo.scaleLocation == 'L'){
-			output = FarLeftToLeftScale();
+			output = FarLeftToLeftSwitch();
 		}
 		else
 		{
@@ -213,9 +214,27 @@ public class MotionMagicLibrary
 	}
 	
 	
-	private static CommandGroup FarLeftToLeftScale() {
-		// TODO Auto-generated method stub
-		return null;
+	private static CommandGroup FarLeftToLeftSwitch() {
+		// TODO Auto-generated method stub, implement this thingie.
+		CommandGroup output = new CommandGroup();
+		output.addSequential(new AutonomousStraightCommand(148, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(20, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		
+		return output;
+	}
+	
+	private static CommandGroup FarLeftToRightSwitch() {
+		//TODO find true values 
+		CommandGroup output = new CommandGroup();
+		output.addSequential(new AutonomousStraightCommand(207.125, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(168, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(35, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		
+		
+		return output;
 	}
 
 
@@ -328,7 +347,7 @@ public class MotionMagicLibrary
 		System.out.println("LeftToLeftScale() Called");
 		output.addSequential(new AutonomousStraightCommand(290, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));//Should be 4.9" away
-		output.addSequential(new AutonomousStraightCommand(7, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(20, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		
 		return output;
 	}
@@ -345,7 +364,7 @@ public class MotionMagicLibrary
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
 		output.addSequential(new AutonomousStraightCommand(96, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));//Should be 4.9" away
-		output.addSequential(new AutonomousStraightCommand(7, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(20, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new ElevatorCommand(Height.SCALE)); //Going to use the elevator & deliver it to the highest value. Uses SCALE constant(Units: in')
 		return output;
 	}
@@ -356,7 +375,7 @@ public class MotionMagicLibrary
 		System.out.println("RightToRightScale() Called");
 		output.addSequential(new AutonomousStraightCommand(290, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));//Should be 4.9" away
-		output.addSequential(new AutonomousStraightCommand(7, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(20, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		
 		return output;
 	}
@@ -372,7 +391,7 @@ public class MotionMagicLibrary
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
 		output.addSequential(new AutonomousStraightCommand(96, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));//Should be 4.9" away
-		output.addSequential(new AutonomousStraightCommand(7, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(20, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		
 		return output;
 	}
@@ -382,7 +401,7 @@ public class MotionMagicLibrary
 		output = new CommandGroup(getMethodName());
 		System.out.println("LeftToRightScale() Called");
 		
-		output.addSequential(new AutonomousStraightCommand(-7, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(-20, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));//Should be 4.9" away
 		output.addSequential(new AutonomousStraightCommand(-96, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
@@ -446,6 +465,34 @@ public class MotionMagicLibrary
 		return output;
 	}
 	
+	public static Command ElevatorUp() {
+		Height targetHeight;
+		 if(Robot.elevator.isWithinTolerance(Height.GROUND)) {
+			 targetHeight = Height.SWITCH;
+	     } else if(Robot.elevator.isWithinTolerance(Height.SWITCH)) {
+	         targetHeight = Height.SCALE;
+	     } else if(Robot.elevator.isWithinTolerance(Height.SCALE)) {
+	         targetHeight = Height.CLIMB;
+	     } else {
+	        return null;
+	     }
+		 return new ElevatorCommand(targetHeight);
+		 // Raises the elevator to the next level if its w/i a defined tolerance.
+	}
+	
+	public static Command ElevatorDown(){
+		Height targetHeight;
+		if(Robot.elevator.isWithinTolerance(Height.CLIMB)) {
+			targetHeight = Height.SCALE;
+		} else if(Robot.elevator.isWithinTolerance(Height.SCALE)) {
+			targetHeight = Height.SWITCH;
+		} else if(Robot.elevator.isWithinTolerance(Height.SWITCH)) {
+			targetHeight = Height.GROUND;
+		} else {
+			return null;
+		}
+		return new ElevatorCommand(targetHeight);
+	}
 	public static String getMethodName()
 	{
 		String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();

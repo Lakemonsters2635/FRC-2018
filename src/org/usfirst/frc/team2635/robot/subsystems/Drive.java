@@ -188,7 +188,9 @@ public class Drive extends Subsystem {
     	double leftError = Math.abs(leftIntended - leftPos);
     	double rightError = Math.abs(rightIntended - rightPos);
     	
-    	
+    	if(Robot.limitSwitch.get()) {
+    		return true;
+    	}
     	//System.out.println("Left Error: " + leftError + "    Right Error: " + rightError);
     	if(leftError < errorTolerance && rightError < errorTolerance) {
     		
