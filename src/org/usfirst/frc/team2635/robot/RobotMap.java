@@ -33,13 +33,14 @@ public class RobotMap {
 	public static final int NAVX_ROTATE_BUTTON = 7;
 	
 	//PCM
-	public static final int OPEN_GRABBER = 1;
-	public static final int CLOSE_GRABBER = 2;
+	public static final int OPEN_GRABBER = 0;
+	public static final int CLOSE_GRABBER = 1;
 	
-	public static final int UP_LEFT_TILT_PCM_CHANNEL = 3;
-	public static final int DOWN_LEFT_TILT_PCM_CHANNEL= 4;
-	public static final int UP_RIGHT_TILT_PCM_CHANNEL = 5;
-	public static final int DOWN_RIGHT_TILT_PCM_CHANNEL = 6;
+	public static final int UP_TILT_PCM_CHANNEL = 2;
+	public static final int DOWN_TILT_PCM_CHANNEL= 3;
+	public static final int GEARBOX_PCM_CHANNEL= 7;
+
+
 	
 
 	public static final int FRONT_RIGHT_DRIVE_CHANNEL = 1;
@@ -54,11 +55,15 @@ public class RobotMap {
 	public static final int ELEVATOR_LOWER_MOTOR1_CHANNEL = 6;
 	public static final int ELEVATOR_LOWER_MOTOR2_CHANNEL = 7;
 	
-	public static final int ELEVATOR_GROUND_HEIGHT = 0; //Actually will be 0
+	public static final int ELEVATOR_GROUND_LOWER_HEIGHT = 0; //Actually will be 0
+	public static final int ELEVATOR_GROUND_UPPER_HEIGHT = 0;
 	//ALL FAKE VALUES VVV
-	public static final int ELEVATOR_SWITCH_HEIGHT = 0;
-	public static final int ELEVATOR_SCALE_HEIGHT = 0;
-	public static final int ELEVATOR_CLIMB_HEIGHT = 0;
+	public static final int ELEVATOR_SWITCH_LOWER_HEIGHT = 0;
+	public static final int ELEVATOR_SWITCH_UPPER_HEIGHT = 0;
+	public static final int ELEVATOR_SCALE_LOWER_HEIGHT = 0;
+	public static final int ELEVATOR_SCALE_UPPER_HEIGHT = 0;
+	public static final int ELEVATOR_CLIMB_LOWER_HEIGHT = 0;
+	public static final int ELEVATOR_CLIMB_UPPER_HEIGHT = 0;
 	public static final int ELEVATOR_TOLERANCE = 0;
 	//ALL FAKE VALUES ^^^
 	
@@ -66,7 +71,9 @@ public class RobotMap {
 	public static final int INTAKE_2_MOTOR_CHANNEL = 11;
 	
 	
-	public static final int LIMIT_SWITCH_IO_CHANNEL = 1;
+	public static final int MAST_LIMIT_SWITCH_IO_CHANNEL = 0;
+	public static final int ELEVATOR_BOTTOM_LIMIT_SWITCH_IO_CHANNEL = 1;
+	public static final int ELEVATOR_TOP_LIMIT_SWITCH_IO_CHANNEL = 2;
 	
 	//TODO change these vaules
 	public static final double WHEEL_RADIUS_INCHES = 3;
@@ -91,6 +98,7 @@ public class RobotMap {
 	
 	
 	public static final int MOTION_MAGIC_CRUISE_VELOCITY = 500;
+	public static final int APPROACH_SCALE_VELOCITY = 250;
 	
 	public static double MOTION_MAGIC_DISTANCE = 3000;
 	public static double WHEEL_DIAMETER = 6;

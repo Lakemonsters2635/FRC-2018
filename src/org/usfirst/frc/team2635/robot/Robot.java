@@ -27,6 +27,8 @@ import org.usfirst.frc.team2635.robot.commands.GrabberCommand;
 import org.usfirst.frc.team2635.robot.commands.TiltCommand;
 import org.usfirst.frc.team2635.robot.commands.ToggleDriveModeCommand;
 import org.usfirst.frc.team2635.robot.commands.VisionLightCommand;
+import org.usfirst.frc.team2635.robot.model.FarLeftAutonomousSequences;
+import org.usfirst.frc.team2635.robot.model.FarRightAutonomousSequences;
 import org.usfirst.frc.team2635.robot.model.MotionMagicLibrary;
 import org.usfirst.frc.team2635.robot.subsystems.Bling;
 import org.usfirst.frc.team2635.robot.subsystems.Climber;
@@ -108,7 +110,7 @@ public class Robot extends TimedRobot {
 		climbUpCommand = new ClimbUpCommand();
 		climbDownCommand = new ClimbDownCommand();
 		gearShiftCommand = new GearShiftCommand();
-		returnCommand = MotionMagicLibrary.ReturnFromRight();
+		returnCommand = FarRightAutonomousSequences.ReturnFromRight();
 		navxRotateCommand = new AutonomousNavxRotate(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION);
 		//grabberCommand = new GrabberCommand();
 		//tiltCommand = new TiltCommand();
@@ -133,8 +135,8 @@ public class Robot extends TimedRobot {
 		oi.grabberButtonLeft.toggleWhenPressed(grabberCommand);
 		oi.tiltToggleButton.toggleWhenPressed(tiltCommand);
 		oi.returnButton.whenPressed(returnCommand);
-		oi.elevatorUpButton.whenPressed(MotionMagicLibrary.ElevatorUp());
-		oi.elevatorDownButton.whenPressed(MotionMagicLibrary.ElevatorDown());
+		oi.elevatorUpButton.whenPressed(elevator.ElevatorUp());
+		oi.elevatorDownButton.whenPressed(elevator.ElevatorDown());
 		
 		//oi.navxRotateButton.whenPressed(navxRotateCommand);
 	}
@@ -203,21 +205,28 @@ public class Robot extends TimedRobot {
 		}
 		else if (selectedCommandName == "FarLeftToScale")
 		{
-			m_autonomousCommand = MotionMagicLibrary.FarLeftToScale();
+			m_autonomousCommand = FarLeftAutonomousSequences.FarLeftToScale();
 		}
 		else if (selectedCommandName == "FarRightToScale")
 		{
-			m_autonomousCommand = MotionMagicLibrary.FarRightToScale();
+			m_autonomousCommand = FarRightAutonomousSequences.FarRightToScale();
 		}
 		else if (selectedCommandName == "FarLeftToSwitch")
 		{
-			m_autonomousCommand = MotionMagicLibrary.FarLeftToSwitch();
+			m_autonomousCommand = FarLeftAutonomousSequences.FarLeftToSwitch();
+		}
+		else if (selectedCommandName == "FarRightToSwitch")
+		{
+			m_autonomousCommand = FarRightAutonomousSequences.FarRightToSwitch();
 		}
 		else if (selectedCommandName == "RotateTest")
 		{
 			m_autonomousCommand = MotionMagicLibrary.RotateTest();
 		}
-
+		else if (selectedCommandName == "DriveStraightTest")
+		{
+			m_autonomousCommand = MotionMagicLibrary.DriveStraightTest();
+		}
 //		Class<?> c = Class.forName("MotionMagicLibrary");
 //		Method method = c.getDeclaredMethod(selectedCommandName, null);
 //		m_autonomousCommand = (Command) method.invoke(c, null);
@@ -305,11 +314,11 @@ public class Robot extends TimedRobot {
 		
 		m_chooser.addObject("Far Left to Scale", "FarLeftToScale");
 		m_chooser.addObject("Far Right to Scale", "FarRightToScale");
-		m_chooser.addObject("Far Left to Switch", "FarLeftToSwitch");
-		m_chooser.addObject("Far Right to Switch", "FarRightToSwitch");
+		m_chooser.addObject("Far Left to Switch (TODO:Measure)", "FarLeftToSwitch");
+		m_chooser.addObject("Far Right to Switch (TODO:Measure)", "FarRightToSwitch");
 
 		m_chooser.addObject("Rotate Test", "RotateTest");
-		
+		m_chooser.addObject("Drive Straight Test", "DriveStraightTest");
 		//chooser.addObject("Center", centerStationToLeftSwitch);
 		//chooser.addObject("Right", centerStationToLeftSwitch);
 		//chooser.addObject("Left", centerStationToLeftSwitch);

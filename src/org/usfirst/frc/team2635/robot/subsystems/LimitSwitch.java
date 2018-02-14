@@ -16,7 +16,7 @@ public class LimitSwitch extends Subsystem {
 	public DigitalInput limitSwitch; 
 
 	public LimitSwitch() {
-		limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH_IO_CHANNEL); 
+		limitSwitch = new DigitalInput(RobotMap.MAST_LIMIT_SWITCH_IO_CHANNEL); 
 	}
 
 	public boolean get() {

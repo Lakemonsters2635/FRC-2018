@@ -13,12 +13,12 @@ public class Tilt extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	DoubleSolenoid leftSolenoid;
-	DoubleSolenoid rightSolenoid;
+	DoubleSolenoid tiltSolenoid;
+
 	
 	public Tilt () {
-		leftSolenoid = new DoubleSolenoid(RobotMap.UP_LEFT_TILT_PCM_CHANNEL, RobotMap.DOWN_LEFT_TILT_PCM_CHANNEL);
-    	rightSolenoid = new DoubleSolenoid(RobotMap.UP_RIGHT_TILT_PCM_CHANNEL, RobotMap.DOWN_RIGHT_TILT_PCM_CHANNEL);
+		tiltSolenoid = new DoubleSolenoid(RobotMap.UP_TILT_PCM_CHANNEL, RobotMap.DOWN_TILT_PCM_CHANNEL);
+    
 	}
 	
     public void initDefaultCommand() {
@@ -27,13 +27,12 @@ public class Tilt extends Subsystem {
     }
     
     public void setUp() {
-    	leftSolenoid.set(Value.kForward);
-    	rightSolenoid.set(Value.kForward);
+    	tiltSolenoid.set(Value.kForward);
+
     }
     
     public void setDown() {
-    	leftSolenoid.set(Value.kReverse);
-    	rightSolenoid.set(Value.kReverse);	
+    	tiltSolenoid.set(Value.kReverse);
     }
 }
 

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2635.robot.subsystems;
 
+import org.usfirst.frc.team2635.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -14,7 +16,7 @@ public class Gearbox extends Subsystem {
 	Solenoid gearShiftSolenoid;
 	
 	public Gearbox(){
-		gearShiftSolenoid = new Solenoid(7);
+		gearShiftSolenoid = new Solenoid(RobotMap.GEARBOX_PCM_CHANNEL);
 	}
 	
 	public void scootMode(){

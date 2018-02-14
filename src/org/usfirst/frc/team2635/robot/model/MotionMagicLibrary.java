@@ -172,91 +172,8 @@ public class MotionMagicLibrary
 		return output;
 	}
 	
-	public  static CommandGroup FarLeftToScale()
-	{
-		CommandGroup output = new CommandGroup();
-		FMSInfo fmsInfo = getFMSInfo();
-		
-		if (fmsInfo.scaleLocation == 'R')
-		{
-			output = LeftToRightScale();
-		}
-		else if (fmsInfo.scaleLocation == 'L'){
-			output = LeftToLeftScale();
-		}
-		else
-		{
-			output = CrossLineCommand();
-		}
-		output.setName(getMethodName());
-		return output;
-	}
-	
-	
-	public static CommandGroup FarLeftToSwitch(){
-		CommandGroup output = new CommandGroup();
-		FMSInfo fmsInfo = getFMSInfo();
-		
-		if (fmsInfo.scaleLocation == 'R')
-		{
-			output = FarLeftToRightSwitch();
-			
-		}
-		else if (fmsInfo.scaleLocation == 'L'){
-			output = FarLeftToLeftSwitch();
-		}
-		else
-		{
-			output = CrossLineCommand();
-		}
-		output.setName(getMethodName());
-		return output;
-	}
-	
-	
-	private static CommandGroup FarLeftToLeftSwitch() {
-		// TODO Auto-generated method stub, implement this thingie.
-		CommandGroup output = new CommandGroup();
-		output.addSequential(new AutonomousStraightCommand(148, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(20, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		
-		return output;
-	}
-	
-	private static CommandGroup FarLeftToRightSwitch() {
-		//TODO find true values 
-		CommandGroup output = new CommandGroup();
-		output.addSequential(new AutonomousStraightCommand(207.125, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(168, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(35, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		
-		
-		return output;
-	}
 
 
-	public static CommandGroup FarRightToScale()
-	{
-		CommandGroup output = new CommandGroup();
-		FMSInfo fmsInfo = getFMSInfo();
-		
-		if (fmsInfo.scaleLocation == 'R')
-		{
-			output = RightToRightScale();
-		}
-		else if (fmsInfo.scaleLocation == 'L'){
-			output = RightToLeftScale();
-		}
-		else
-		{
-			output = CrossLineCommand();
-		}
-		output.setName(getMethodName());
-		return output;
-	}
 	
 	public static CommandGroup RightStationToLeftSwitch() {
 		CommandGroup output;
@@ -341,78 +258,6 @@ public class MotionMagicLibrary
 		return output;
 	}
 	
-	public static CommandGroup LeftToLeftScale() {
-		CommandGroup output; 
-		output = new CommandGroup(getMethodName());
-		System.out.println("LeftToLeftScale() Called");
-		output.addSequential(new AutonomousStraightCommand(290, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));//Should be 4.9" away
-		output.addSequential(new AutonomousStraightCommand(20, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		
-		return output;
-	}
-	
-	public static CommandGroup LeftToRightScale() {
-		CommandGroup output; 
-		output = new CommandGroup(getMethodName());
-		System.out.println("LeftToRightScale() Called");
-		
-		output.addSequential(new AutonomousStraightCommand(207.125, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		//output.addSequential(new AutonomousStraightCommand(208, RobotMap.AUTO_DRIVE_VELOCITY));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(235, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(96, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));//Should be 4.9" away
-		output.addSequential(new AutonomousStraightCommand(20, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		output.addSequential(new ElevatorCommand(Height.SCALE)); //Going to use the elevator & deliver it to the highest value. Uses SCALE constant(Units: in')
-		return output;
-	}
-	
-	public static CommandGroup RightToRightScale() {
-		CommandGroup output; 
-		output = new CommandGroup(getMethodName());
-		System.out.println("RightToRightScale() Called");
-		output.addSequential(new AutonomousStraightCommand(290, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));//Should be 4.9" away
-		output.addSequential(new AutonomousStraightCommand(20, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		
-		return output;
-	}
-	
-	public static CommandGroup RightToLeftScale() {
-		CommandGroup output; 
-		output = new CommandGroup(getMethodName());
-		System.out.println("RightToLeftScale() Called");
-		output.addSequential(new AutonomousStraightCommand(207.125, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		//output.addSequential(new AutonomousStraightCommand(208, RobotMap.AUTO_DRIVE_VELOCITY));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(235, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(96, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));//Should be 4.9" away
-		output.addSequential(new AutonomousStraightCommand(20, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		
-		return output;
-	}
-	
-	public static CommandGroup ReturnFromRight() {
-		CommandGroup output; 
-		output = new CommandGroup(getMethodName());
-		System.out.println("LeftToRightScale() Called");
-		
-		output.addSequential(new AutonomousStraightCommand(-20, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));//Should be 4.9" away
-		output.addSequential(new AutonomousStraightCommand(-96, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(-235, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(-207.125, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-
-		return output;
-	}
-	
-	
 	public static FMSInfo getFMSInfo()
 	{
 		FMSInfo fmsInfo = new FMSInfo();
@@ -465,34 +310,13 @@ public class MotionMagicLibrary
 		return output;
 	}
 	
-	public static Command ElevatorUp() {
-		Height targetHeight;
-		 if(Robot.elevator.isWithinTolerance(Height.GROUND)) {
-			 targetHeight = Height.SWITCH;
-	     } else if(Robot.elevator.isWithinTolerance(Height.SWITCH)) {
-	         targetHeight = Height.SCALE;
-	     } else if(Robot.elevator.isWithinTolerance(Height.SCALE)) {
-	         targetHeight = Height.CLIMB;
-	     } else {
-	        return null;
-	     }
-		 return new ElevatorCommand(targetHeight);
-		 // Raises the elevator to the next level if its w/i a defined tolerance.
+	public static CommandGroup DriveStraightTest() {
+
+		CommandGroup output = new CommandGroup(getMethodName());
+		output.addSequential(new AutonomousStraightCommand(36, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		return output;
 	}
-	
-	public static Command ElevatorDown(){
-		Height targetHeight;
-		if(Robot.elevator.isWithinTolerance(Height.CLIMB)) {
-			targetHeight = Height.SCALE;
-		} else if(Robot.elevator.isWithinTolerance(Height.SCALE)) {
-			targetHeight = Height.SWITCH;
-		} else if(Robot.elevator.isWithinTolerance(Height.SWITCH)) {
-			targetHeight = Height.GROUND;
-		} else {
-			return null;
-		}
-		return new ElevatorCommand(targetHeight);
-	}
+
 	public static String getMethodName()
 	{
 		String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
