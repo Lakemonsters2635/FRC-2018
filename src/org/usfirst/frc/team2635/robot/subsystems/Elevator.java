@@ -96,17 +96,26 @@ public class Elevator extends Subsystem {
 		
 		return totalHeight;
 	}
+	public boolean isLimitSwitchPressed(DigitalInput limitSwitch) {
+		boolean result = false;
+		try {
+			result = !limitSwitch.get();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 	public boolean isFinished(){
+		if (isLimitSwitchPressed(bottomLimitSwitch)) {
+    		return true;
+    	}
 		
-    	if(bottomLimitSwitch.get()) {
+		if (isLimitSwitchPressed(topLimitSwitch)) {
     		return true;
     	}
-    	
-    	if(topLimitSwitch.get()) {
-    		return true;
-    	}
-    	
+		
     	
     	double upperEncoderPosition = upperMotor.getSelectedSensorPosition(0);
     	double lowerEncoderPosition = lowerMotor1.getSelectedSensorPosition(1);
@@ -116,6 +125,7 @@ public class Elevator extends Subsystem {
 	public boolean isWithinTolerance(Height height) {
 		return (currentHeight() > (height.height - RobotMap.ELEVATOR_TOLERANCE) && currentHeight() < (height.height + RobotMap.ELEVATOR_TOLERANCE)); //
 	}
+	
 	private void encoderStart() {
 		upperMotor.setSelectedSensorPosition(0, 0, 0);
     	upperMotor.config_kP(0, 5, 0);
@@ -141,7 +151,10 @@ public class Elevator extends Subsystem {
 	}
 	// No longer has fake values <3, this just sets the values for the ground, switch, scale, and climb heights that the elevator uses.
 	public static enum Height {
-		GROUND(RobotMap.ELEVATOR_GROUND_LOWER_HEIGHT), SWITCH(RobotMap.ELEVATOR_SWITCH_LOWER_HEIGHT), SCALE(RobotMap.ELEVATOR_SCALE_LOWER_HEIGHT), CLIMB(RobotMap.ELEVATOR_CLIMB_LOWER_HEIGHT);
+		GROUND(RobotMap.ELEVATOR_GROUND_LOWER_HEIGHT), 
+		SWITCH(RobotMap.ELEVATOR_SWITCH_LOWER_HEIGHT), 
+		SCALE(RobotMap.ELEVATOR_SCALE_LOWER_HEIGHT), 
+		CLIMB(RobotMap.ELEVATOR_CLIMB_LOWER_HEIGHT);
 		
 		public int height;
 		private Height(int height) {

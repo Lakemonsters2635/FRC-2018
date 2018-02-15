@@ -314,8 +314,8 @@ public class Robot extends TimedRobot {
 		
 		m_chooser.addObject("Far Left to Scale", "FarLeftToScale");
 		m_chooser.addObject("Far Right to Scale", "FarRightToScale");
-		m_chooser.addObject("Far Left to Switch (TODO:Measure)", "FarLeftToSwitch");
-		m_chooser.addObject("Far Right to Switch (TODO:Measure)", "FarRightToSwitch");
+		m_chooser.addObject("Far Left to Switch", "FarLeftToSwitch");
+		m_chooser.addObject("Far Right to Switch", "FarRightToSwitch");
 
 		m_chooser.addObject("Rotate Test", "RotateTest");
 		m_chooser.addObject("Drive Straight Test", "DriveStraightTest");

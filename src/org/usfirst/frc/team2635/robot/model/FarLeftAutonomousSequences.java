@@ -48,12 +48,12 @@ public class FarLeftAutonomousSequences {
 		CommandGroup output = new CommandGroup();
 		FMSInfo fmsInfo = MotionMagicLibrary.getFMSInfo();
 		
-		if (fmsInfo.scaleLocation == 'R')
+		if (fmsInfo.switchLocation == 'R')
 		{
 			output = FarLeftToRightSwitch();
 			
 		}
-		else if (fmsInfo.scaleLocation == 'L'){
+		else if (fmsInfo.switchLocation == 'L'){
 			output = FarLeftToLeftSwitch();
 		}
 		else

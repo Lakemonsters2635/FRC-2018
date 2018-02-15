@@ -108,20 +108,21 @@ public class RobotMap {
 	public static boolean VELOCITYDRIVEMODE = false;
 	
 	//2017 BOT
-	//public static final int ENCODER_COUNTS_PER_REVOLUTION = 1000;
+	public static final int ENCODER_COUNTS_PER_REVOLUTION = 1000;
 	
 	//2018 BOT
-	public static final int ENCODER_COUNTS_PER_REVOLUTION = 4096/3;
+	//public static final int ENCODER_COUNTS_PER_REVOLUTION = 4096/3;
 	
 	public static final double AUTO_DRIVE_VELOCITY = 750;
 	public static final double AUTO_TURN_VELOCITY = 500;
 	public static final int AUTO_DRIVE_ACCELERATION = 250;
 	public static final int AUTO_TURN_ACCELERATION = 500;
 	
+	public static final int AUTO_WALL_TO_SWITCH = 102;
 	public static final int AUTO_FWD1 = 50;
-	public static final int AUTO_FWD2 = 50;
+	public static final int AUTO_FWD2 = 52;
 	public static final int CENTER_AUTO_TRANSLATE_FWD = 50;
-	public static final int OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD = 150;
+	public static final int OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD = 100;
 	public static final int OUTSIDE_SAME_AUTO_TRANSLATE_FWD = 20;
 	
 	
