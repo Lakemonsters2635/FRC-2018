@@ -67,6 +67,8 @@ public class RobotMap {
 	public static final int ELEVATOR_TOLERANCE = 0;
 	//ALL FAKE VALUES ^^^
 	
+	public static final int ELEVATOR_VELOCITY = 100;
+	
 	public static final int INTAKE_1_MOTOR_CHANNEL = 10;
 	public static final int INTAKE_2_MOTOR_CHANNEL = 11;
 	

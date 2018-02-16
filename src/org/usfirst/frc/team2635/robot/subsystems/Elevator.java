@@ -143,11 +143,11 @@ public class Elevator extends Subsystem {
     	lowerMotor1.selectProfileSlot(0, 0);
     	upperMotor.selectProfileSlot(0, 0);
     	
-    	lowerMotor1.configMotionAcceleration(100, 0);
-    	upperMotor.configMotionAcceleration(100, 0);
+    	lowerMotor1.configMotionAcceleration(RobotMap.ELEVATOR_VELOCITY, 0);
+    	upperMotor.configMotionAcceleration(RobotMap.ELEVATOR_VELOCITY, 0);
     	
-    	lowerMotor1.configMotionCruiseVelocity(100, 0);
-    	upperMotor.configMotionCruiseVelocity(100, 0);
+    	lowerMotor1.configMotionCruiseVelocity(RobotMap.ELEVATOR_VELOCITY, 0);
+    	upperMotor.configMotionCruiseVelocity(RobotMap.ELEVATOR_VELOCITY, 0);
 	}
 	// No longer has fake values <3, this just sets the values for the ground, switch, scale, and climb heights that the elevator uses.
 	public static enum Height {
@@ -171,8 +171,8 @@ public class Elevator extends Subsystem {
 		CLIMB    (RobotMap.ELEVATOR_CLIMB_LOWER_HEIGHT, RobotMap.ELEVATOR_CLIMB_UPPER_HEIGHT);
 
 
-	    private final double lowerHeight;   // in kilograms
-	    private final double upperHeight; // in meters
+	    private final double lowerHeight;
+	    private final double upperHeight;
 	    Height2(double lowerHeight, double upperHeight) {
 	        this.lowerHeight = lowerHeight;
 	        this.upperHeight = upperHeight;
@@ -195,6 +195,13 @@ public class Elevator extends Subsystem {
 		 return new ElevatorCommand(targetHeight);
 		 // Raises the elevator to the next level if its w/i a defined tolerance.
 	}
+	
+	public  Command ElevatorMove(Height height) {
+
+		 return new ElevatorCommand(height);
+		 // Raises the elevator to the next level if its w/i a defined tolerance.
+	}
+	
 	
 	public  Command ElevatorDown(){
 		Height targetHeight;
