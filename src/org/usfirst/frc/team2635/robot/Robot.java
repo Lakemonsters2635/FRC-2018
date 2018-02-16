@@ -183,6 +183,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		
+		
+		
 		RobotMap.MOTION_MAGIC_P = SmartDashboard.getNumber("P:", RobotMap.MOTION_MAGIC_P);
 		RobotMap.MOTION_MAGIC_I = SmartDashboard.getNumber("I:", RobotMap.MOTION_MAGIC_I);   
 		RobotMap.MOTION_MAGIC_D = SmartDashboard.getNumber("D:", RobotMap.MOTION_MAGIC_D);
@@ -191,54 +193,47 @@ public class Robot extends TimedRobot {
 		drive.autoInit();
 		
 		String selectedCommandName = (String) m_chooser.getSelected();
-		if (selectedCommandName == "RightStationToSwitch")
-		{
-			m_autonomousCommand = MotionMagicLibrary.RightStationToSwitch();
+		
+		switch(selectedCommandName) { 
+	    case "RightStationToSwitch": 
+	    	m_autonomousCommand = MotionMagicLibrary.RightStationToSwitch(); 
+	        break; 
+	    case "CenterStationToSwitch": 
+	    	m_autonomousCommand = MotionMagicLibrary.CenterStationToSwitch();
+	        break;
+	    case "LeftStationToSwitch":
+	    	m_autonomousCommand = MotionMagicLibrary.LeftStationToSwitch();
+	    	break;
+	    case "FarLeftToScale":
+	    	m_autonomousCommand = FarLeftAutonomousSequences.FarLeftToScale();
+	    	break;
+	    case "FarRightToScale":
+	    	m_autonomousCommand = FarRightAutonomousSequences.FarRightToScale();
+	    	break;
+	    case "FarLeftToSwitch":
+	    	m_autonomousCommand = FarLeftAutonomousSequences.FarLeftToSwitch();
+	    	break;
+	    case "FarRightToSwitch":
+	    	m_autonomousCommand = FarRightAutonomousSequences.FarRightToSwitch();
+	    	break;
+	    case "RotateTest":
+	    	m_autonomousCommand = MotionMagicLibrary.RotateTest();
+	    	break;
+	    case "DriveStraightTest":
+	    	m_autonomousCommand = MotionMagicLibrary.DriveStraightTest();
+	    	break;
+	    default:
+	    	m_autonomousCommand = MotionMagicLibrary.DoNothingCommand();
 		}
-		else if (selectedCommandName == "CenterStationToSwitch")
-		{
-			m_autonomousCommand = MotionMagicLibrary.CenterStationToSwitch();
-		}
-		else if (selectedCommandName == "LeftStationToSwitch")
-		{
-			m_autonomousCommand = MotionMagicLibrary.LeftStationToSwitch();
-		}
-		else if (selectedCommandName == "FarLeftToScale")
-		{
-			m_autonomousCommand = FarLeftAutonomousSequences.FarLeftToScale();
-		}
-		else if (selectedCommandName == "FarRightToScale")
-		{
-			m_autonomousCommand = FarRightAutonomousSequences.FarRightToScale();
-		}
-		else if (selectedCommandName == "FarLeftToSwitch")
-		{
-			m_autonomousCommand = FarLeftAutonomousSequences.FarLeftToSwitch();
-		}
-		else if (selectedCommandName == "FarRightToSwitch")
-		{
-			m_autonomousCommand = FarRightAutonomousSequences.FarRightToSwitch();
-		}
-		else if (selectedCommandName == "RotateTest")
-		{
-			m_autonomousCommand = MotionMagicLibrary.RotateTest();
-		}
-		else if (selectedCommandName == "DriveStraightTest")
-		{
-			m_autonomousCommand = MotionMagicLibrary.DriveStraightTest();
-		}
+		
 //		Class<?> c = Class.forName("MotionMagicLibrary");
 //		Method method = c.getDeclaredMethod(selectedCommandName, null);
 //		m_autonomousCommand = (Command) method.invoke(c, null);
 		//m_autonomousCommand.getName();
 		m_autonomousCommand.start();
 		
-		/*
-		 * String autoSelected = SmartDashboard.getString("Auto Selector",
-		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-		 * = new MyAutoCommand(); break; case "Default Auto": default:
-		 * autonomousCommand = new ExampleCommand(); break; }
-		 */
+	
+		 
 
 		// schedule the autonomous command
 		
