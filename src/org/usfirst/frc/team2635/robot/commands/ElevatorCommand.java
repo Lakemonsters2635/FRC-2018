@@ -12,7 +12,7 @@ public class ElevatorCommand extends Command {
 	public Height height;
     public ElevatorCommand(Height height) {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.elevator);
+        //requires(Robot.elevator);
         this.height = height;
     }
 
@@ -23,16 +23,18 @@ public class ElevatorCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() { //Is continuously called until the isFinished command is returned as true.
-    	Robot.elevator.motorControl(); 
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() { 
-    	boolean elevatorIsFinished = Robot.elevator.isFinished();
-    	if(elevatorIsFinished){
-    		System.out.println("Elevator Command finished");
-    	}
-        return elevatorIsFinished;
+//    	boolean elevatorIsFinished = Robot.elevator.isFinished();
+//    	if(elevatorIsFinished){
+//    		System.out.println("Elevator Command finished");
+//    	}
+//        return elevatorIsFinished;
+    	
+    	return false;
     }
 
     // Called once after isFinished returns true

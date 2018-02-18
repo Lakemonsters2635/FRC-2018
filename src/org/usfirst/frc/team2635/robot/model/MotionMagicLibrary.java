@@ -181,13 +181,14 @@ public class MotionMagicLibrary
 		
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
+		
 		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-//		output.addSequential(new ElevatorCommand(Height.SWITCH));
-//		output.addSequential(new TiltCommand());
-//		output.addSequential(new GrabberCommand());
-//		output.addParallel(command); does two things @ the same time, which is what we'll want for later.
+		//output.addSequential(new ElevatorCommand(Height.SWITCH));
+		//output.addSequential(new TiltCommand());
+		//output.addSequential(new GrabberCommand());
+		//output.addParallel(command); does two things @ the same time, which is what we'll want for later.
 		return output;
 	}
 	

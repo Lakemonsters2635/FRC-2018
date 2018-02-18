@@ -19,9 +19,9 @@ public class Elevator extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	WPI_TalonSRX upperMotor;
-	WPI_TalonSRX lowerMotor1; 
-	WPI_TalonSRX lowerMotor2; 
+	WPI_TalonSRX smallMotor;
+	WPI_TalonSRX largeMotor1; 
+	WPI_TalonSRX largeMotor2; 
 	
 	public DigitalInput topLimitSwitch; 
 	public DigitalInput bottomLimitSwitch; 
@@ -36,64 +36,95 @@ public class Elevator extends Subsystem {
 	//Lower: 4000
 	//Upper: 3000
 	
-	Height targetHeight;
-	double lowerElevatorMax;
-	double upperElevatorMax;
+	Height currentTargetHeight;
+	double largeElevatorMax;
+	double smallElevatorMax;
 	
 	public Elevator() {
-		upperMotor  = new WPI_TalonSRX(RobotMap.ELEVATOR_UPPER_MOTOR_CHANNEL);
-    	lowerMotor1 = new WPI_TalonSRX(RobotMap.ELEVATOR_LOWER_MOTOR1_CHANNEL);
-    	lowerMotor2 = new WPI_TalonSRX(RobotMap.ELEVATOR_LOWER_MOTOR2_CHANNEL);
+		smallMotor  = new WPI_TalonSRX(RobotMap.ELEVATOR_UPPER_MOTOR_CHANNEL);
+    	largeMotor1 = new WPI_TalonSRX(RobotMap.ELEVATOR_LOWER_MOTOR1_CHANNEL);
+    	largeMotor2 = new WPI_TalonSRX(RobotMap.ELEVATOR_LOWER_MOTOR2_CHANNEL);
     	
-    	bottomLimitSwitch = new DigitalInput(RobotMap.ELEVATOR_BOTTOM_LIMIT_SWITCH_IO_CHANNEL); 
-    	topLimitSwitch = new DigitalInput(RobotMap.ELEVATOR_TOP_LIMIT_SWITCH_IO_CHANNEL); 
+    	//bottomLimitSwitch = new DigitalInput(RobotMap.ELEVATOR_BOTTOM_LIMIT_SWITCH_IO_CHANNEL); 
+    	//topLimitSwitch = new DigitalInput(RobotMap.ELEVATOR_TOP_LIMIT_SWITCH_IO_CHANNEL); 
 
     	
-    	lowerMotor2.follow(lowerMotor1);
-    	
+    	largeMotor2.follow(largeMotor1);
     	encoderStart();
     	//TODO FAKE VALUES, UPDATE TO ACCURATE VALUES, Fix this...
     	// In inches (units)
     	
-    	lowerElevatorMax = 4000;
-    	upperElevatorMax = 3000;
+    	largeElevatorMax = 17500;
+    	smallElevatorMax = 20000;
     	//END FAKE VALUES
+    	double theCurrentHeight = currentHeight();
+    	largeMotor1.setSensorPhase(true);
+    	if (isWithinTolerance(Height.GROUND)) {
+    		currentTargetHeight = Height.GROUND;
+    		System.out.println("Initializing target Height to Ground.");
     	
-    	targetHeight = Height.GROUND;
+    	}
+    	else {
+    		currentTargetHeight = Height.GROUND;
+    		System.out.println("WARNING: Current height NOT near ground!!!!. Current Height:" + theCurrentHeight);
+    		
+    	}
+    	
 	}
 	
 	public void motorControl() {
-		double height = targetHeight.height;
+	
 		double lowerHeight = 0;
 		double upperHeight = 0;
 		
-		if(height>upperElevatorMax) {
-			lowerHeight = upperElevatorMax;
-			upperHeight = height - upperElevatorMax;
+		if(currentTargetHeight.height > smallElevatorMax) {
+			lowerHeight = smallElevatorMax;
+			upperHeight = currentTargetHeight.height - smallElevatorMax;
+			//System.out.println("currentTargetHeight.height > smallElevatorMax");
+			
+			//System.out.println("Upper height: "+ upperHeight);
+			//System.out.println("Lower height: "+ lowerHeight);
 		} else {
 			upperHeight = 0;
-			lowerHeight = height;
+			lowerHeight = currentTargetHeight.height;
+			//System.out.println("currentTargetHeight.height < smallElevatorMax");
+			
+			//System.out.println("Upper height: "+ upperHeight);
+			//System.out.println("Lower height: "+ lowerHeight);
 		}
+
 		
-		lowerMotor1.set(ControlMode.MotionMagic, lowerHeight);
-		upperMotor.set(ControlMode.MotionMagic, upperHeight);
+		largeMotor1.set(ControlMode.MotionMagic, upperHeight);
+		smallMotor.set(ControlMode.MotionMagic, lowerHeight);
 		
 
 	}
 	
+	public void limitSwitchEncoderReset() {
+		//boolean upperLimitSwitchPressed = isLimitSwitchPressed(topLimitSwitch);
+		//boolean lowerLimitSwitchPressed = isLimitSwitchPressed(topLimitSwitch);
+		
+//		if(upperLimitSwitchPressed) {
+//			upperMotor.setSelectedSensorPosition(0, 0, 0);
+//		}
+//		
+//		if(lowerLimitSwitchPressed) {
+//			lowerMotor1.setSelectedSensorPosition(0, 0, 0);
+//		}
+	}
 	public boolean setTargetHeight(Height height) {
-		targetHeight = height;
+		currentTargetHeight = height;
 		return true;
 	}
 	
 	
 	public double currentHeight() {
 		
-		double lowerHeight = lowerMotor1.getSelectedSensorPosition(0);
-		double upperHeight = upperMotor.getSelectedSensorPosition(0);
+		double lowerHeight = largeMotor1.getSelectedSensorPosition(0);
+		double upperHeight = smallMotor.getSelectedSensorPosition(0);
 		
 		double totalHeight = lowerHeight+upperHeight;
-		
+		System.out.println("lowerHeight:" + lowerHeight + "\tupperHeight:" + upperHeight + "\t totalHeight:" + totalHeight);
 		return totalHeight;
 	}
 	public boolean isLimitSwitchPressed(DigitalInput limitSwitch) {
@@ -103,6 +134,7 @@ public class Elevator extends Subsystem {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			result = false;
 		}
 		return result;
 	}
@@ -117,37 +149,40 @@ public class Elevator extends Subsystem {
     	}
 		
     	
-    	double upperEncoderPosition = upperMotor.getSelectedSensorPosition(0);
-    	double lowerEncoderPosition = lowerMotor1.getSelectedSensorPosition(1);
+    	double upperEncoderPosition = smallMotor.getSelectedSensorPosition(0);
+    	double lowerEncoderPosition = largeMotor1.getSelectedSensorPosition(1);
 		return false;
 	}
 	
 	public boolean isWithinTolerance(Height height) {
-		return (currentHeight() > (height.height - RobotMap.ELEVATOR_TOLERANCE) && currentHeight() < (height.height + RobotMap.ELEVATOR_TOLERANCE)); //
+		return (currentHeight() > (height.height - RobotMap.ELEVATOR_TOLERANCE) 
+			  && currentHeight() < (height.height + RobotMap.ELEVATOR_TOLERANCE)); 
 	}
 	
-	private void encoderStart() {
-		upperMotor.setSelectedSensorPosition(0, 0, 0);
-    	upperMotor.config_kP(0, 5, 0);
-    	upperMotor.config_kI(0, 0, 0);
-    	upperMotor.config_kD(0, 0, 0);
-    	upperMotor.config_kF(0, 0, 0);
+	public void encoderStart() {
+		
+		System.out.println("encoderStart()");
+		smallMotor.setSelectedSensorPosition(0, 0, 0);
+    	smallMotor.config_kP(0, 5, 0);
+    	smallMotor.config_kI(0, 0, 0);
+    	smallMotor.config_kD(0, 0, 0);
+    	smallMotor.config_kF(0, 0, 0);
     	
-    	lowerMotor1.setSelectedSensorPosition(0, 0, 0);
-    	lowerMotor1.config_kP(0, 5, 0);
-    	lowerMotor1.config_kI(0, 0, 0);
-    	lowerMotor1.config_kD(0, 0, 0);
-    	lowerMotor1.config_kF(0, 0, 0);
+    	largeMotor1.setSelectedSensorPosition(0, 0, 0);
+    	largeMotor1.config_kP(0, 5, 0);
+    	largeMotor1.config_kI(0, 0, 0);
+    	largeMotor1.config_kD(0, 0, 0);
+    	largeMotor1.config_kF(0, 0, 0);
     	
     	
-    	lowerMotor1.selectProfileSlot(0, 0);
-    	upperMotor.selectProfileSlot(0, 0);
+    	largeMotor1.selectProfileSlot(0, 0);
+    	smallMotor.selectProfileSlot(0, 0);
     	
-    	lowerMotor1.configMotionAcceleration(RobotMap.ELEVATOR_VELOCITY, 0);
-    	upperMotor.configMotionAcceleration(RobotMap.ELEVATOR_VELOCITY, 0);
+    	largeMotor1.configMotionAcceleration(RobotMap.ELEVATOR_ACCELERATION, 0);
+    	smallMotor.configMotionAcceleration(RobotMap.ELEVATOR_ACCELERATION, 0);
     	
-    	lowerMotor1.configMotionCruiseVelocity(RobotMap.ELEVATOR_VELOCITY, 0);
-    	upperMotor.configMotionCruiseVelocity(RobotMap.ELEVATOR_VELOCITY, 0);
+    	largeMotor1.configMotionCruiseVelocity(RobotMap.ELEVATOR_VELOCITY, 0);
+    	smallMotor.configMotionCruiseVelocity(RobotMap.ELEVATOR_VELOCITY, 0);
 	}
 	// No longer has fake values <3, this just sets the values for the ground, switch, scale, and climb heights that the elevator uses.
 	public static enum Height {
@@ -182,39 +217,53 @@ public class Elevator extends Subsystem {
 	}
 	
 	public  Command ElevatorUp() {
-		Height targetHeight;
-		 if(isWithinTolerance(Height.GROUND)) {
-			 targetHeight = Height.SWITCH;
-	     } else if(isWithinTolerance(Height.SWITCH)) {
-	         targetHeight = Height.SCALE;
-	     } else if(isWithinTolerance(Height.SCALE)) {
-	         targetHeight = Height.CLIMB;
-	     } else {
+		Height newTargetHeight;
+		switch(this.currentTargetHeight) {
+		case GROUND:
+			 newTargetHeight = Height.SWITCH;
+			 break;
+		case SWITCH:
+	         newTargetHeight = Height.SCALE;
+	         break;
+		case SCALE:
+	         newTargetHeight = Height.CLIMB;
+	         break;
+		case CLIMB:
+			 newTargetHeight = Height.CLIMB;
+	    default:
 	        return null;
-	     }
-		 return new ElevatorCommand(targetHeight);
+	     
+		}
+		 return new ElevatorCommand(newTargetHeight);
 		 // Raises the elevator to the next level if its w/i a defined tolerance.
 	}
 	
-	public  Command ElevatorMove(Height height) {
-
-		 return new ElevatorCommand(height);
-		 // Raises the elevator to the next level if its w/i a defined tolerance.
-	}
-	
+//	public  Command ElevatorMove(Height height) {
+//
+//		 return new ElevatorCommand(height);
+//	}
+	//pointless ^^^
 	
 	public  Command ElevatorDown(){
-		Height targetHeight;
-		if(isWithinTolerance(Height.CLIMB)) {
-			targetHeight = Height.SCALE;
-		} else if(isWithinTolerance(Height.SCALE)) {
-			targetHeight = Height.SWITCH;
-		} else if(isWithinTolerance(Height.SWITCH)) {
-			targetHeight = Height.GROUND;
-		} else {
-			return null;
+		Height newTargetHeight;
+		switch(this.currentTargetHeight) {
+		case CLIMB:
+			 newTargetHeight = Height.SCALE;
+			 break;
+		case SCALE:
+	         newTargetHeight = Height.SWITCH;
+	         break;
+		case SWITCH:
+	         newTargetHeight = Height.GROUND;
+	         break;
+		case GROUND:
+			 newTargetHeight = Height.GROUND;
+			 break;
+	    default:
+	        return null;
 		}
-		return new ElevatorCommand(targetHeight);
+		
+		return new ElevatorCommand(newTargetHeight);
 	}
 	
 	

@@ -22,6 +22,8 @@ import org.usfirst.frc.team2635.robot.commands.AutonomousNavxRotate;
 import org.usfirst.frc.team2635.robot.commands.ClimbDownCommand;
 import org.usfirst.frc.team2635.robot.commands.ClimbUpCommand;
 import org.usfirst.frc.team2635.robot.commands.DriveCommand;
+import org.usfirst.frc.team2635.robot.commands.ElevatorCommand;
+import org.usfirst.frc.team2635.robot.commands.ElevatorControl;
 import org.usfirst.frc.team2635.robot.commands.GearShiftCommand;
 import org.usfirst.frc.team2635.robot.commands.GrabberCommand;
 import org.usfirst.frc.team2635.robot.commands.TiltCommand;
@@ -40,6 +42,7 @@ import org.usfirst.frc.team2635.robot.subsystems.Grabber;
 import org.usfirst.frc.team2635.robot.subsystems.LimitSwitch;
 import org.usfirst.frc.team2635.robot.subsystems.Tilt;
 import org.usfirst.frc.team2635.robot.subsystems.Vision;
+import org.usfirst.frc.team2635.robot.subsystems.Elevator.Height;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -72,6 +75,7 @@ public class Robot extends TimedRobot {
 	TiltCommand tiltCommand;
 	CommandGroup returnCommand;
 	AutonomousNavxRotate navxRotateCommand;
+	ElevatorControl elevatorControl;
 	
 	Command doNothingCmd;
 	
@@ -95,6 +99,7 @@ public class Robot extends TimedRobot {
 		vision = new Vision();
 		climber = new Climber();
 		elevator = new Elevator();
+		tilter = new Tilt();
 		gearbox = new Gearbox();
 		grabber = new Grabber();
 		bling = new Bling();
@@ -112,8 +117,9 @@ public class Robot extends TimedRobot {
 		gearShiftCommand = new GearShiftCommand();
 		returnCommand = FarRightAutonomousSequences.ReturnFromRight();
 		navxRotateCommand = new AutonomousNavxRotate(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION);
-		//grabberCommand = new GrabberCommand();
-		//tiltCommand = new TiltCommand();
+		elevatorControl = new ElevatorControl();
+		grabberCommand = new GrabberCommand();
+		tiltCommand = new TiltCommand();
 		
 		vision.ledOff();
 		
@@ -133,10 +139,12 @@ public class Robot extends TimedRobot {
 		oi.climbDownButton.whileHeld(climbDownCommand);
 		oi.gearShiftButton.toggleWhenPressed(gearShiftCommand);
 		oi.grabberButtonLeft.toggleWhenPressed(grabberCommand);
+		oi.grabberButtonRight.toggleWhenPressed(grabberCommand);
 		oi.tiltToggleButton.toggleWhenPressed(tiltCommand);
 		oi.returnButton.whenPressed(returnCommand);
 		oi.elevatorUpButton.whenPressed(elevator.ElevatorUp());
 		oi.elevatorDownButton.whenPressed(elevator.ElevatorDown());
+		oi.elevatorTestButton.whenPressed(new ElevatorCommand(Height.SWITCH));
 		
 		//oi.navxRotateButton.whenPressed(navxRotateCommand);
 	}
@@ -160,7 +168,9 @@ public class Robot extends TimedRobot {
 		{
 			driveCommand.cancel();
 		}
+		elevatorControl.cancel();
 		vision.ledOff();
+		
 	}
 
 	@Override
@@ -230,6 +240,7 @@ public class Robot extends TimedRobot {
 //		Method method = c.getDeclaredMethod(selectedCommandName, null);
 //		m_autonomousCommand = (Command) method.invoke(c, null);
 		//m_autonomousCommand.getName();
+		elevatorControl.start();
 		m_autonomousCommand.start();
 		
 	
@@ -276,6 +287,7 @@ public class Robot extends TimedRobot {
 			vision.driveMode();
 		}
 		vision.ledOff();
+		elevatorControl.start();
 		
 	}
 

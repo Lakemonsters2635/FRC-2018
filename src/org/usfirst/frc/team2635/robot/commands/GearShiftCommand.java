@@ -12,11 +12,11 @@ public class GearShiftCommand extends Command {
     public GearShiftCommand() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.gearbox);
+        Robot.gearbox.scootMode();
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.gearbox.scootMode();
     }
 
     // Called repeatedly when this Command is scheduled to run

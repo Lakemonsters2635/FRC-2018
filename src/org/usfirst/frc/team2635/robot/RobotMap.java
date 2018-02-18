@@ -31,6 +31,7 @@ public class RobotMap {
 	public static final int RETURN_BUTTON = 10;
 	public static final int INTAKE_BUTTON = 11;
 	public static final int NAVX_ROTATE_BUTTON = 7;
+	public static final int ELEVATOR_TEST_BUTTON = 8;
 	
 	//PCM
 	public static final int OPEN_GRABBER = 0;
@@ -58,7 +59,7 @@ public class RobotMap {
 	public static final int ELEVATOR_GROUND_LOWER_HEIGHT = 0; //Actually will be 0
 	public static final int ELEVATOR_GROUND_UPPER_HEIGHT = 0;
 	//ALL FAKE VALUES VVV
-	public static final int ELEVATOR_SWITCH_LOWER_HEIGHT = 0;
+	public static final int ELEVATOR_SWITCH_LOWER_HEIGHT = 37500;
 	public static final int ELEVATOR_SWITCH_UPPER_HEIGHT = 0;
 	public static final int ELEVATOR_SCALE_LOWER_HEIGHT = 0;
 	public static final int ELEVATOR_SCALE_UPPER_HEIGHT = 0;
@@ -67,7 +68,8 @@ public class RobotMap {
 	public static final int ELEVATOR_TOLERANCE = 0;
 	//ALL FAKE VALUES ^^^
 	
-	public static final int ELEVATOR_VELOCITY = 100;
+	public static final int ELEVATOR_VELOCITY = 2000;
+	public static final int ELEVATOR_ACCELERATION = 2000;
 	
 	public static final int INTAKE_1_MOTOR_CHANNEL = 10;
 	public static final int INTAKE_2_MOTOR_CHANNEL = 11;
