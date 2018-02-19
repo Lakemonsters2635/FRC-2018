@@ -252,6 +252,7 @@ public class MotionMagicLibrary
 		System.out.println("LeftStationToRightSwitch() Called");
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
+		output.addParallel(new ElevatorCommand(Height.SWITCH));
 		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
@@ -314,7 +315,7 @@ public class MotionMagicLibrary
 	public static CommandGroup DriveStraightTest() {
 
 		CommandGroup output = new CommandGroup(getMethodName());
-		output.addSequential(new AutonomousStraightCommand(36, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(120, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		return output;
 	}
 

@@ -23,7 +23,7 @@ public class ElevatorCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() { //Is continuously called until the isFinished command is returned as true.
-
+    	Robot.elevator.setTargetHeight(height);
     }
 
     // Make this return true when this Command no longer needs to run execute()

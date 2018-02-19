@@ -24,6 +24,8 @@ import org.usfirst.frc.team2635.robot.commands.ClimbUpCommand;
 import org.usfirst.frc.team2635.robot.commands.DriveCommand;
 import org.usfirst.frc.team2635.robot.commands.ElevatorCommand;
 import org.usfirst.frc.team2635.robot.commands.ElevatorControl;
+import org.usfirst.frc.team2635.robot.commands.ElevatorDownCommand;
+import org.usfirst.frc.team2635.robot.commands.ElevatorUpCommand;
 import org.usfirst.frc.team2635.robot.commands.GearShiftCommand;
 import org.usfirst.frc.team2635.robot.commands.GrabberCommand;
 import org.usfirst.frc.team2635.robot.commands.TiltCommand;
@@ -142,8 +144,8 @@ public class Robot extends TimedRobot {
 		oi.grabberButtonRight.toggleWhenPressed(grabberCommand);
 		oi.tiltToggleButton.toggleWhenPressed(tiltCommand);
 		oi.returnButton.whenPressed(returnCommand);
-		oi.elevatorUpButton.whenPressed(elevator.ElevatorUp());
-		oi.elevatorDownButton.whenPressed(elevator.ElevatorDown());
+		oi.elevatorUpButton.whenPressed(new ElevatorUpCommand());
+		oi.elevatorDownButton.whenPressed(new ElevatorDownCommand());
 		oi.elevatorTestButton.whenPressed(new ElevatorCommand(Height.SWITCH));
 		
 		//oi.navxRotateButton.whenPressed(navxRotateCommand);
@@ -271,6 +273,7 @@ public class Robot extends TimedRobot {
 		RobotMap.MOTION_MAGIC_I = SmartDashboard.getNumber("I:", RobotMap.MOTION_MAGIC_I);   
 		RobotMap.MOTION_MAGIC_D = SmartDashboard.getNumber("D:", RobotMap.MOTION_MAGIC_D);
 		RobotMap.MOTION_MAGIC_F = SmartDashboard.getNumber("F:", RobotMap.MOTION_MAGIC_F);
+		gearbox.scootMode();
 	}
 
 	@Override
@@ -287,6 +290,7 @@ public class Robot extends TimedRobot {
 			vision.driveMode();
 		}
 		vision.ledOff();
+		elevator.encoderStart();
 		elevatorControl.start();
 		
 	}

@@ -59,17 +59,18 @@ public class RobotMap {
 	public static final int ELEVATOR_GROUND_LOWER_HEIGHT = 0; //Actually will be 0
 	public static final int ELEVATOR_GROUND_UPPER_HEIGHT = 0;
 	//ALL FAKE VALUES VVV
-	public static final int ELEVATOR_SWITCH_LOWER_HEIGHT = 37500;
+	//Upper values currently not used
+	public static final int ELEVATOR_SWITCH_LOWER_HEIGHT = 12000;
 	public static final int ELEVATOR_SWITCH_UPPER_HEIGHT = 0;
-	public static final int ELEVATOR_SCALE_LOWER_HEIGHT = 0;
+	public static final int ELEVATOR_SCALE_LOWER_HEIGHT = 25000;
 	public static final int ELEVATOR_SCALE_UPPER_HEIGHT = 0;
-	public static final int ELEVATOR_CLIMB_LOWER_HEIGHT = 0;
+	public static final int ELEVATOR_CLIMB_LOWER_HEIGHT = 37500;
 	public static final int ELEVATOR_CLIMB_UPPER_HEIGHT = 0;
 	public static final int ELEVATOR_TOLERANCE = 0;
 	//ALL FAKE VALUES ^^^
 	
-	public static final int ELEVATOR_VELOCITY = 2000;
-	public static final int ELEVATOR_ACCELERATION = 2000;
+	public static final int ELEVATOR_VELOCITY = 3000;
+	public static final int ELEVATOR_ACCELERATION = 3000;
 	
 	public static final int INTAKE_1_MOTOR_CHANNEL = 10;
 	public static final int INTAKE_2_MOTOR_CHANNEL = 11;
@@ -91,13 +92,19 @@ public class RobotMap {
 //	public static double MOTION_MAGIC_D = 50;
 //	public static double MOTION_MAGIC_F = 1.5;
 	//2017 COMP BOT
+//	public static double MOTION_MAGIC_P = 10.0;
+//	public static double MOTION_MAGIC_I = 0.0;
+//	public static double MOTION_MAGIC_D = 0.0;
+//	public static double MOTION_MAGIC_F = 1.5;
+//	
+	//2018 COMP BOT
 	public static double MOTION_MAGIC_P = 10.0;
 	public static double MOTION_MAGIC_I = 0.0;
 	public static double MOTION_MAGIC_D = 0.0;
-	public static double MOTION_MAGIC_F = 1.5;
+	public static double MOTION_MAGIC_F = 0.0;
 	
 	//public static double TURN_CONSTANT = 
-	public static final double WHEEL_SEPARATION_INCHES = 25;
+	public static final double WHEEL_SEPARATION_INCHES = 24.3;
 	
 	
 	
@@ -107,15 +114,15 @@ public class RobotMap {
 	public static double MOTION_MAGIC_DISTANCE = 3000;
 	public static double WHEEL_DIAMETER = 6;
 	
-	public static double ERRORTOLERANCE = 6;
+	public static double ERRORTOLERANCE = 10;
 
 	public static boolean VELOCITYDRIVEMODE = false;
 	
 	//2017 BOT
-	public static final int ENCODER_COUNTS_PER_REVOLUTION = 1000;
+	//public static final int ENCODER_COUNTS_PER_REVOLUTION = 1000;
 	
 	//2018 BOT
-	//public static final int ENCODER_COUNTS_PER_REVOLUTION = 4096/3;
+	public static final int ENCODER_COUNTS_PER_REVOLUTION = 4096/3;
 	
 	public static final double AUTO_DRIVE_VELOCITY = 750;
 	public static final double AUTO_TURN_VELOCITY = 500;

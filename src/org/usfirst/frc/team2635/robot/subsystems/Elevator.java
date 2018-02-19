@@ -3,6 +3,7 @@ package org.usfirst.frc.team2635.robot.subsystems;
 import org.usfirst.frc.team2635.robot.Robot;
 import org.usfirst.frc.team2635.robot.RobotMap;
 import org.usfirst.frc.team2635.robot.commands.ElevatorCommand;
+import org.usfirst.frc.team2635.robot.commands.EmptyCommand;
 import org.usfirst.frc.team2635.robot.subsystems.Elevator.Height;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -36,9 +37,10 @@ public class Elevator extends Subsystem {
 	//Lower: 4000
 	//Upper: 3000
 	
-	Height currentTargetHeight;
+	public Height currentTargetHeight;
 	double largeElevatorMax;
 	double smallElevatorMax;
+	ElevatorCommand elevatorCommand;
 	
 	public Elevator() {
 		smallMotor  = new WPI_TalonSRX(RobotMap.ELEVATOR_UPPER_MOTOR_CHANNEL);
@@ -58,6 +60,8 @@ public class Elevator extends Subsystem {
     	smallElevatorMax = 20000;
     	//END FAKE VALUES
     	double theCurrentHeight = currentHeight();
+    	
+    	elevatorCommand = new ElevatorCommand(Height.GROUND);
     	largeMotor1.setSensorPhase(true);
     	if (isWithinTolerance(Height.GROUND)) {
     		currentTargetHeight = Height.GROUND;
@@ -73,7 +77,7 @@ public class Elevator extends Subsystem {
 	}
 	
 	public void motorControl() {
-	
+	System.out.println(currentTargetHeight.toString());
 		double lowerHeight = 0;
 		double upperHeight = 0;
 		
@@ -93,9 +97,17 @@ public class Elevator extends Subsystem {
 			//System.out.println("Lower height: "+ lowerHeight);
 		}
 
-		
-		largeMotor1.set(ControlMode.MotionMagic, upperHeight);
-		smallMotor.set(ControlMode.MotionMagic, lowerHeight);
+		if (currentTargetHeight == Height.GROUND) {
+			largeMotor1.set(ControlMode.PercentOutput, 0);
+			smallMotor.set(ControlMode.PercentOutput, 0);
+			
+			
+		}
+		else {
+			largeMotor1.set(ControlMode.MotionMagic, upperHeight);
+			smallMotor.set(ControlMode.MotionMagic, lowerHeight);
+			
+		}
 		
 
 	}
@@ -113,6 +125,7 @@ public class Elevator extends Subsystem {
 //		}
 	}
 	public boolean setTargetHeight(Height height) {
+		elevatorCommand.height = height;
 		currentTargetHeight = height;
 		return true;
 	}
@@ -197,7 +210,7 @@ public class Elevator extends Subsystem {
 		}
 	}
 	
-	
+	//Not Used
 	public enum Height2 {
 		//FHE TODO:  
 		GROUND (RobotMap.ELEVATOR_GROUND_LOWER_HEIGHT, RobotMap.ELEVATOR_GROUND_UPPER_HEIGHT),
@@ -216,25 +229,27 @@ public class Elevator extends Subsystem {
 	    private double upperHeight() { return upperHeight; }
 	}
 	
-	public  Command ElevatorUp() {
+	public Command ElevatorUp() {
 		Height newTargetHeight;
 		switch(this.currentTargetHeight) {
 		case GROUND:
-			 newTargetHeight = Height.SWITCH;
+			 setTargetHeight(Height.SWITCH);
 			 break;
 		case SWITCH:
-	         newTargetHeight = Height.SCALE;
+			setTargetHeight(Height.SCALE);
 	         break;
 		case SCALE:
-	         newTargetHeight = Height.CLIMB;
+			setTargetHeight(Height.CLIMB);
 	         break;
 		case CLIMB:
-			 newTargetHeight = Height.CLIMB;
+			setTargetHeight(Height.CLIMB);
 	    default:
 	        return null;
 	     
 		}
-		 return new ElevatorCommand(newTargetHeight);
+		
+		return elevatorCommand;
+		
 		 // Raises the elevator to the next level if its w/i a defined tolerance.
 	}
 	
@@ -248,22 +263,21 @@ public class Elevator extends Subsystem {
 		Height newTargetHeight;
 		switch(this.currentTargetHeight) {
 		case CLIMB:
-			 newTargetHeight = Height.SCALE;
+			setTargetHeight(Height.SCALE);
 			 break;
 		case SCALE:
-	         newTargetHeight = Height.SWITCH;
+			setTargetHeight(Height.SWITCH);
 	         break;
 		case SWITCH:
-	         newTargetHeight = Height.GROUND;
+			setTargetHeight(Height.GROUND);
 	         break;
 		case GROUND:
-			 newTargetHeight = Height.GROUND;
+			setTargetHeight(Height.GROUND);
 			 break;
 	    default:
 	        return null;
 		}
-		
-		return new ElevatorCommand(newTargetHeight);
+		return elevatorCommand;
 	}
 	
 	
