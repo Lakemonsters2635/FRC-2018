@@ -32,7 +32,7 @@ public class AutonomousStraightCommand extends Command {
     protected void initialize() {
     	Robot.drive.reset();
     	Robot.drive.navxReset();
-    	motionParams = MotionMagicLibrary.getDriveParameters(3, distance, velocity, false, acceleration);
+    	motionParams = MotionMagicLibrary.getDriveParameters(RobotMap.WHEEL_RADIUS_INCHES, distance, velocity, false, acceleration);
     	
     	intialHeading = Robot.drive.getNavxHeading();
     	

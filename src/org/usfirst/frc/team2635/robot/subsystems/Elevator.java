@@ -77,7 +77,7 @@ public class Elevator extends Subsystem {
 	}
 	
 	public void motorControl() {
-	System.out.println(currentTargetHeight.toString());
+	//System.out.println(currentTargetHeight.toString());
 		double lowerHeight = 0;
 		double upperHeight = 0;
 		
@@ -133,11 +133,11 @@ public class Elevator extends Subsystem {
 	
 	public double currentHeight() {
 		
-		double lowerHeight = largeMotor1.getSelectedSensorPosition(0);
-		double upperHeight = smallMotor.getSelectedSensorPosition(0);
+		double upperHeight = Math.abs(largeMotor1.getSelectedSensorPosition(0));
+		double lowerHeight = Math.abs(smallMotor.getSelectedSensorPosition(0));
 		
 		double totalHeight = lowerHeight+upperHeight;
-		System.out.println("lowerHeight:" + lowerHeight + "\tupperHeight:" + upperHeight + "\t totalHeight:" + totalHeight);
+		//System.out.println("lowerHeight:" + lowerHeight + "\tupperHeight:" + upperHeight + "\t totalHeight:" + totalHeight);
 		return totalHeight;
 	}
 	public boolean isLimitSwitchPressed(DigitalInput limitSwitch) {
@@ -168,8 +168,19 @@ public class Elevator extends Subsystem {
 	}
 	
 	public boolean isWithinTolerance(Height height) {
-		return (currentHeight() > (height.height - RobotMap.ELEVATOR_TOLERANCE) 
-			  && currentHeight() < (height.height + RobotMap.ELEVATOR_TOLERANCE)); 
+		double cHeight = currentHeight();
+		
+		int lowerError = (height.height - RobotMap.ELEVATOR_TOLERANCE);
+		int upperError = (height.height + RobotMap.ELEVATOR_TOLERANCE);
+		
+		//System.out.println("lowerError: " + lowerError + " upperError: " + upperError);
+		
+		boolean isOver = (cHeight > lowerError); 
+		boolean isUnder = (cHeight < upperError); 
+		
+		//System.out.println("isOver: " + isOver + " isUnder: " + isUnder);
+		
+		return isOver && isUnder;
 	}
 	
 	public void encoderStart() {

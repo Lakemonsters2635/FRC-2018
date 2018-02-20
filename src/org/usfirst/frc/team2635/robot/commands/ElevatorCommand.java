@@ -28,13 +28,13 @@ public class ElevatorCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() { 
-//    	boolean elevatorIsFinished = Robot.elevator.isFinished();
-//    	if(elevatorIsFinished){
-//    		System.out.println("Elevator Command finished");
-//    	}
-//        return elevatorIsFinished;
+    	boolean elevatorIsFinished = Robot.elevator.isWithinTolerance(height);
+    	if(elevatorIsFinished){
+    		System.out.println("Elevator Command finished");
+    	}
+        return elevatorIsFinished;
     	
-    	return false;
+    	//return false;
     }
 
     // Called once after isFinished returns true

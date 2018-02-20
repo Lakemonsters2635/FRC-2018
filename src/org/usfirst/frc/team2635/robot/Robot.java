@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team2635.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -27,10 +29,13 @@ import org.usfirst.frc.team2635.robot.commands.ElevatorControl;
 import org.usfirst.frc.team2635.robot.commands.ElevatorDownCommand;
 import org.usfirst.frc.team2635.robot.commands.ElevatorUpCommand;
 import org.usfirst.frc.team2635.robot.commands.GearShiftCommand;
+import org.usfirst.frc.team2635.robot.commands.GrabberClosed;
 import org.usfirst.frc.team2635.robot.commands.GrabberCommand;
+import org.usfirst.frc.team2635.robot.commands.GrabberOpen;
 import org.usfirst.frc.team2635.robot.commands.TiltCommand;
 import org.usfirst.frc.team2635.robot.commands.ToggleDriveModeCommand;
 import org.usfirst.frc.team2635.robot.commands.VisionLightCommand;
+import org.usfirst.frc.team2635.robot.model.FMSInfo;
 import org.usfirst.frc.team2635.robot.model.FarLeftAutonomousSequences;
 import org.usfirst.frc.team2635.robot.model.FarRightAutonomousSequences;
 import org.usfirst.frc.team2635.robot.model.MotionMagicLibrary;
@@ -117,7 +122,7 @@ public class Robot extends TimedRobot {
 		climbUpCommand = new ClimbUpCommand();
 		climbDownCommand = new ClimbDownCommand();
 		gearShiftCommand = new GearShiftCommand();
-		returnCommand = FarRightAutonomousSequences.ReturnFromRight();
+		//returnCommand = FarRightAutonomousSequences.ReturnFromRight();
 		navxRotateCommand = new AutonomousNavxRotate(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION);
 		elevatorControl = new ElevatorControl();
 		grabberCommand = new GrabberCommand();
@@ -142,11 +147,14 @@ public class Robot extends TimedRobot {
 		oi.gearShiftButton.toggleWhenPressed(gearShiftCommand);
 		oi.grabberButtonLeft.toggleWhenPressed(grabberCommand);
 		oi.grabberButtonRight.toggleWhenPressed(grabberCommand);
+	
 		oi.tiltToggleButton.toggleWhenPressed(tiltCommand);
-		oi.returnButton.whenPressed(returnCommand);
+		//oi.returnButton.whenPressed(returnCommand);
 		oi.elevatorUpButton.whenPressed(new ElevatorUpCommand());
 		oi.elevatorDownButton.whenPressed(new ElevatorDownCommand());
 		oi.elevatorTestButton.whenPressed(new ElevatorCommand(Height.SWITCH));
+		//oi.closeGrabberTestButton.whenPressed(new GrabberClosed(1));
+		//oi.openGrabberTestButton.whenPressed(new GrabberOpen(1));
 		
 		//oi.navxRotateButton.whenPressed(navxRotateCommand);
 	}
@@ -177,6 +185,14 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		
+//			try {
+//				bling.set(0);
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		
 		Scheduler.getInstance().run();
 		vision.ledOff();
 	}
@@ -194,6 +210,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		
 		
 		
 		
@@ -268,12 +285,30 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+//		try {
+//			FMSInfo fmsInfo = MotionMagicLibrary.getFMSInfo();
+//		
+//			if (fmsInfo.alliance == Alliance.Red) {
+//				bling.set(1);
+//			}
+//			else if (fmsInfo.alliance == Alliance.Blue){
+//				bling.set(3);
+//			}
+//			else if (fmsInfo.alliance == Alliance.Invalid) {
+//				bling.set(2);
+//			}
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
 		Scheduler.getInstance().run();
 		RobotMap.MOTION_MAGIC_P = SmartDashboard.getNumber("P:", RobotMap.MOTION_MAGIC_P);
 		RobotMap.MOTION_MAGIC_I = SmartDashboard.getNumber("I:", RobotMap.MOTION_MAGIC_I);   
 		RobotMap.MOTION_MAGIC_D = SmartDashboard.getNumber("D:", RobotMap.MOTION_MAGIC_D);
 		RobotMap.MOTION_MAGIC_F = SmartDashboard.getNumber("F:", RobotMap.MOTION_MAGIC_F);
 		gearbox.scootMode();
+		//gearbox.bullyMode();
 	}
 
 	@Override

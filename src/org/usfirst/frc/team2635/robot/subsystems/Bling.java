@@ -34,7 +34,7 @@ public class Bling extends Subsystem
         //chat.setCompatabilityMode(true);
         
     }
-    
+   
     public void set(int scene)
     {
         previousScene = currentScene;

@@ -26,11 +26,13 @@ public class Grabber extends Subsystem {
     }
     
     public void setOpen() {
-    	solenoid.set(Value.kReverse);
+    	//solenoid.set(Value.kReverse);
+    	solenoid.set(Value.kForward);
     }
     
     public void setClosed() {
-    	solenoid.set(Value.kForward);
+    	//solenoid.set(Value.kForward);
+    	solenoid.set(Value.kReverse);
     }
 }
 

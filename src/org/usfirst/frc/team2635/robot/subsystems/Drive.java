@@ -5,6 +5,7 @@ import org.usfirst.frc.team2635.robot.RobotMap;
 import org.usfirst.frc.team2635.robot.model.MotionParameters;
 import org.usfirst.frc.team2635.robot.model.Navx;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -128,12 +129,18 @@ public class Drive extends Subsystem {
     public void autoInit() {
     	
     	frontLeftMotor.setSelectedSensorPosition(0, 0, 0);
+    	frontLeftMotor.setNeutralMode(NeutralMode.Brake);
+    	frontRightMotor.setNeutralMode(NeutralMode.Brake);
+    	backRightMotor.setNeutralMode(NeutralMode.Brake);
+    	backLeftMotor.setNeutralMode(NeutralMode.Brake);
+    	
     	frontLeftMotor.config_kP(0, RobotMap.MOTION_MAGIC_P, 0);
     	frontLeftMotor.config_kI(0, RobotMap.MOTION_MAGIC_I, 0);
     	frontLeftMotor.config_kD(0, RobotMap.MOTION_MAGIC_D, 0);
     	frontLeftMotor.config_kF(0, RobotMap.MOTION_MAGIC_F, 0);
     	
     	frontRightMotor.setSelectedSensorPosition(0, 0, 0);
+
     	frontRightMotor.config_kP(0, RobotMap.MOTION_MAGIC_P, 0);
     	frontRightMotor.config_kI(0, RobotMap.MOTION_MAGIC_I, 0);
     	frontRightMotor.config_kD(0, RobotMap.MOTION_MAGIC_D, 0);
@@ -146,6 +153,8 @@ public class Drive extends Subsystem {
     	
     	frontRightMotor.configMotionCruiseVelocity(RobotMap.MOTION_MAGIC_CRUISE_VELOCITY, 0);
     	frontLeftMotor.configMotionCruiseVelocity(RobotMap.MOTION_MAGIC_CRUISE_VELOCITY, 0);
+    	
+
     	//End Backup
     	Robot.vision.ledOn();
     }
@@ -163,6 +172,11 @@ public class Drive extends Subsystem {
     	return counts;
     }
     public void motionMagic(MotionParameters motionParams) {
+    	
+    	int frontRight = getFrontRightPos();
+    	int frontLeft = getFrontLeftPos();
+    	double delta = (Math.abs(frontRight) - Math.abs(frontLeft));
+    	//System.out.println("frontRight: " + frontRight + " frontLeft: " + frontLeft + " delta: " + delta );
     	
 		frontRightMotor.configMotionCruiseVelocity(motionParams.rightVelocity, 0);
 		frontLeftMotor.configMotionCruiseVelocity(motionParams.leftVelocity, 0);

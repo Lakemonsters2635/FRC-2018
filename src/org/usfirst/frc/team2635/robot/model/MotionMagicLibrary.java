@@ -10,7 +10,9 @@ import org.usfirst.frc.team2635.robot.commands.AutonomousStraightCommand;
 import org.usfirst.frc.team2635.robot.commands.AutonomousTurnCommand;
 import org.usfirst.frc.team2635.robot.commands.ElevatorCommand;
 import org.usfirst.frc.team2635.robot.commands.GrabberCommand;
+import org.usfirst.frc.team2635.robot.commands.GrabberOpen;
 import org.usfirst.frc.team2635.robot.commands.TiltCommand;
+import org.usfirst.frc.team2635.robot.commands.TiltDownCommand;
 import org.usfirst.frc.team2635.robot.subsystems.Elevator.Height;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -184,7 +186,10 @@ public class MotionMagicLibrary
 		
 		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
+		output.addParallel(new ElevatorCommand(Height.SWITCH));
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new TiltDownCommand(1));
+		output.addSequential(new GrabberOpen(1));
 		//output.addSequential(new ElevatorCommand(Height.SWITCH));
 		//output.addSequential(new TiltCommand());
 		//output.addSequential(new GrabberCommand());
@@ -196,7 +201,11 @@ public class MotionMagicLibrary
 		CommandGroup output;
 		output = new CommandGroup(getMethodName());
 		
+		output.addParallel(new ElevatorCommand(Height.SWITCH));
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_WALL_TO_SWITCH, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new TiltDownCommand(1));
+		output.addSequential(new GrabberOpen(1));
+		
 //		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
 //		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_SAME_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 //		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
@@ -252,10 +261,17 @@ public class MotionMagicLibrary
 		System.out.println("LeftStationToRightSwitch() Called");
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addParallel(new ElevatorCommand(Height.SWITCH));
 		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addParallel(new ElevatorCommand(Height.SWITCH));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
 		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new TiltDownCommand(1));
+		output.addSequential(new GrabberOpen(1));
+		
+		
+		
+	
+		
 		
 		return output;
 	}

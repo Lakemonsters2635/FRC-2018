@@ -72,36 +72,36 @@ public class AutonomousTurnCommand extends Command {
     		
     		
 
-        	double navxAngle = Robot.drive.getNavxAngle();
-        	System.out.println("Navx turn angle: " + navxAngle);
-        	double angleDelta = (-targetAngle - navxAngle);
-        	boolean navxDone = ( Math.abs(angleDelta) < navxErrorTolerance);
-        	if (!navxDone) {
-
-        	
-        		long startTime = System.currentTimeMillis();
-        		long timeDelta = 0;
-        		while(timeDelta < 1000){
-        			timeDelta = System.currentTimeMillis() - startTime;
-        			try {
-						Thread.sleep(20);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-        		   System.out.println("Navx turn angle: " + Robot.drive.getNavxAngle());
-        		}
-        		/*for (int i=0; i < 10; i++) {
-        			System.out.println("Navx turn angle: " + Robot.drive.getNavxAngle());
-        			try {
-						//Thread.sleep(100);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-        		}*/
-        	}
+//        	double navxAngle = Robot.drive.getNavxAngle();
+//        	System.out.println("Navx turn angle: " + navxAngle);
+//        	double angleDelta = (-targetAngle - navxAngle);
+//        	boolean navxDone = ( Math.abs(angleDelta) < navxErrorTolerance);
+//        	if (!navxDone) {
+//
+//        	
+//        		long startTime = System.currentTimeMillis();
+//        		long timeDelta = 0;
+//        		while(timeDelta < 1000){
+//        			timeDelta = System.currentTimeMillis() - startTime;
+//        			try {
+//						Thread.sleep(20);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//
+//        		   System.out.println("Navx turn angle: " + Robot.drive.getNavxAngle());
+//        		}
+//        		/*for (int i=0; i < 10; i++) {
+//        			System.out.println("Navx turn angle: " + Robot.drive.getNavxAngle());
+//        			try {
+//						//Thread.sleep(100);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//        		}*/
+//        	}
         		
         	
 //        	

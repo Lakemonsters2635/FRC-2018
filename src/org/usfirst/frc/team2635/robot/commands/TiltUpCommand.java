@@ -2,43 +2,35 @@ package org.usfirst.frc.team2635.robot.commands;
 
 import org.usfirst.frc.team2635.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 
 /**
  *
  */
-public class GrabberCommand extends Command {
+public class TiltUpCommand extends TimedCommand {
 
-    public GrabberCommand() {
+    public TiltUpCommand(double timeout) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.grabber);
-    	Robot.grabber.setClosed();
+        super(timeout);
+    	requires(Robot.tilter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	Robot.tilter.setUp();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.grabber.setOpen();
     }
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
-
-    // Called once after isFinished returns true
+    // Called once after timeout
     protected void end() {
-    	Robot.grabber.setClosed();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.grabber.setClosed();
     }
 }
