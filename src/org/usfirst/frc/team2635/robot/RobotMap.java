@@ -29,9 +29,11 @@ public class RobotMap {
 	public static final int CLIMB_DOWN_BUTTON = 2;
 	public static final int TILT_BUTTON = 4;
 	public static final int RETURN_BUTTON = 10;
-	public static final int INTAKE_BUTTON = 11;
+
 	public static final int NAVX_ROTATE_BUTTON = 7;
 	public static final int ELEVATOR_TEST_BUTTON = 8;
+	public static final int CLOSE_GRABBER_TEST_BUTTON = 11;
+	public static final int OPEN_GRABBER_TEST_BUTTON = 9;
 	
 	//PCM
 	public static final int OPEN_GRABBER = 0;
@@ -66,11 +68,11 @@ public class RobotMap {
 	public static final int ELEVATOR_SCALE_UPPER_HEIGHT = 0;
 	public static final int ELEVATOR_CLIMB_LOWER_HEIGHT = 37500;
 	public static final int ELEVATOR_CLIMB_UPPER_HEIGHT = 0;
-	public static final int ELEVATOR_TOLERANCE = 0;
+	public static final int ELEVATOR_TOLERANCE = 1000;
 	//ALL FAKE VALUES ^^^
 	
-	public static final int ELEVATOR_VELOCITY = 3000;
-	public static final int ELEVATOR_ACCELERATION = 3000;
+	public static final int ELEVATOR_VELOCITY = 2000;
+	public static final int ELEVATOR_ACCELERATION = 2000;
 	
 	public static final int INTAKE_1_MOTOR_CHANNEL = 10;
 	public static final int INTAKE_2_MOTOR_CHANNEL = 11;
@@ -97,14 +99,14 @@ public class RobotMap {
 //	public static double MOTION_MAGIC_D = 0.0;
 //	public static double MOTION_MAGIC_F = 1.5;
 //	
-	//2018 COMP BOT
+	//2018 PRACTICE BOT
 	public static double MOTION_MAGIC_P = 10.0;
 	public static double MOTION_MAGIC_I = 0.0;
 	public static double MOTION_MAGIC_D = 0.0;
-	public static double MOTION_MAGIC_F = 0.0;
+	public static double MOTION_MAGIC_F = 1.5;
 	
 	//public static double TURN_CONSTANT = 
-	public static final double WHEEL_SEPARATION_INCHES = 24.3;
+	public static final double WHEEL_SEPARATION_INCHES = 26.3;
 	
 	
 	
@@ -114,7 +116,7 @@ public class RobotMap {
 	public static double MOTION_MAGIC_DISTANCE = 3000;
 	public static double WHEEL_DIAMETER = 6;
 	
-	public static double ERRORTOLERANCE = 10;
+	public static int ERRORTOLERANCE = 10;
 
 	public static boolean VELOCITYDRIVEMODE = false;
 	
@@ -126,7 +128,7 @@ public class RobotMap {
 	
 	public static final double AUTO_DRIVE_VELOCITY = 750;
 	public static final double AUTO_TURN_VELOCITY = 500;
-	public static final int AUTO_DRIVE_ACCELERATION = 250;
+	public static final int AUTO_DRIVE_ACCELERATION = 400;
 	public static final int AUTO_TURN_ACCELERATION = 500;
 	
 	public static final int AUTO_WALL_TO_SWITCH = 102;
