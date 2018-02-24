@@ -27,13 +27,15 @@ public class RobotMap {
 	public static final int INTAKE_TOGGLE_BUTTON = 5;
 	public static final int CLIMB_UP_BUTTON = 3;
 	public static final int CLIMB_DOWN_BUTTON = 2;
-	public static final int TILT_BUTTON = 4;
+	public static final int ALTERNATE_ELEVATOR_UP_BUTTON = 11;
+	public static final int ALTERATE_ELEVATOR_DOWN_BUTTON = 10;
+	public static final int TILT_BUTTON = 1;
 	public static final int RETURN_BUTTON = 10;
 
 	public static final int NAVX_ROTATE_BUTTON = 7;
 	public static final int ELEVATOR_TEST_BUTTON = 8;
-	public static final int CLOSE_GRABBER_TEST_BUTTON = 11;
-	public static final int OPEN_GRABBER_TEST_BUTTON = 9;
+	//public static final int CLOSE_GRABBER_TEST_BUTTON = 11;
+	//public static final int OPEN_GRABBER_TEST_BUTTON = 9;
 	
 	//PCM
 	public static final int OPEN_GRABBER = 0;
@@ -100,10 +102,10 @@ public class RobotMap {
 //	public static double MOTION_MAGIC_F = 1.5;
 //	
 	//2018 PRACTICE BOT
-	public static double MOTION_MAGIC_P = 10.0;
+	public static double MOTION_MAGIC_P = 5;
 	public static double MOTION_MAGIC_I = 0.0;
 	public static double MOTION_MAGIC_D = 0.0;
-	public static double MOTION_MAGIC_F = 1.5;
+	public static double MOTION_MAGIC_F = 0.7;
 	
 	//public static double TURN_CONSTANT = 
 	public static final double WHEEL_SEPARATION_INCHES = 26.3;
@@ -126,9 +128,9 @@ public class RobotMap {
 	//2018 BOT
 	public static final int ENCODER_COUNTS_PER_REVOLUTION = 4096/3;
 	
-	public static final double AUTO_DRIVE_VELOCITY = 750;
+	public static final double AUTO_DRIVE_VELOCITY = 500;
 	public static final double AUTO_TURN_VELOCITY = 500;
-	public static final int AUTO_DRIVE_ACCELERATION = 400;
+	public static final int AUTO_DRIVE_ACCELERATION = 500;
 	public static final int AUTO_TURN_ACCELERATION = 500;
 	
 	public static final int AUTO_WALL_TO_SWITCH = 102;

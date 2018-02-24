@@ -28,6 +28,8 @@ public class Drive extends Subsystem {
 	
 	public Navx navx = new Navx();
 	
+	public double leftErrorReport = 0;
+	public double rightErrorReport = 0;
 	
 	public Drive(){
 		//2017 BUNNYBOT
@@ -177,6 +179,39 @@ public class Drive extends Subsystem {
     	int frontLeft = getFrontLeftPos();
     	double delta = (Math.abs(frontRight) - Math.abs(frontLeft));
     	//System.out.println("frontRight: " + frontRight + " frontLeft: " + frontLeft + " delta: " + delta );
+    	System.out.println(frontRight + "\t" + frontLeft + "\t" + delta + "\t" + frontLeftMotor.getClosedLoopError(0) + "\t" + frontRightMotor.getClosedLoopError(0) );
+    	
+    	//FHE: WHY ARE WE SETTING THESE EVERY TIME?
+    	//SHOULDN'T THIS BE AN INITIALIZATION FUNCTION?
+    	//UNLESS WE WANT TO ADJUST THESE VELOCITIES BASED ON LEFT AND RIGHT ERROR
+		frontRightMotor.configMotionCruiseVelocity(motionParams.rightVelocity, 0);
+		frontLeftMotor.configMotionCruiseVelocity(motionParams.leftVelocity, 0);
+
+		frontRightMotor.configMotionAcceleration(motionParams.rightAcceleration, 0);
+		frontLeftMotor.configMotionAcceleration(motionParams.leftAcceleration, 0);
+		
+	
+		
+		motorControl(ControlMode.MotionMagic, motionParams.leftWheelRotations, motionParams.rightWheelRotations, true);
+	}
+    
+    public double leftClosedLoopError() {
+    	return frontLeftMotor.getClosedLoopError(0);
+    }
+    public double rightClosedLoopError() {
+    	return frontRightMotor.getClosedLoopError(0);
+    }
+    
+    public void motionMagicWithNavx(MotionParameters motionParams, double initialAngle) {
+    	
+    	double currentAngle = getNavxAngle();
+    	double angleDelta = Math.abs(currentAngle - initialAngle);
+    	
+    	int frontRight = getFrontRightPos();
+    	int frontLeft = getFrontLeftPos();
+    	double delta = (Math.abs(frontRight) - Math.abs(frontLeft));
+    	//Use Delta 
+    	//System.out.println("frontRight: " + frontRight + " frontLeft: " + frontLeft + " delta: " + delta );
     	
 		frontRightMotor.configMotionCruiseVelocity(motionParams.rightVelocity, 0);
 		frontLeftMotor.configMotionCruiseVelocity(motionParams.leftVelocity, 0);
@@ -185,11 +220,16 @@ public class Drive extends Subsystem {
 		frontLeftMotor.configMotionAcceleration(motionParams.leftAcceleration, 0);
 		
 		motorControl(ControlMode.MotionMagic, motionParams.leftWheelRotations, motionParams.rightWheelRotations, true);
-		
-	
-
 	}
    
+    public double getErrorDelta() {
+      	int frontRight = getFrontRightPos();
+    	int frontLeft = getFrontLeftPos();
+    	double delta = (Math.abs(frontRight) - Math.abs(frontLeft));
+    	//System.out.println("frontRight: " + frontRight + " frontLeft: " + frontLeft + " delta: " + delta );
+    	return delta;
+  
+    }
     
     public boolean motionMagicDone(MotionParameters motionParams, double errorTolerance) {
     	
@@ -202,10 +242,13 @@ public class Drive extends Subsystem {
     	double leftError = Math.abs(leftIntended - leftPos);
     	double rightError = Math.abs(rightIntended - rightPos);
     	
+    	this.leftErrorReport = leftError;
+    	this.rightErrorReport = rightError;
     	if(Robot.limitSwitch.get()) {
     		return true;
     	}
     	//System.out.println("Left Error: " + leftError + "    Right Error: " + rightError);
+    	//System.out.println("Left Position: " + getFrontLeftPos() + "Right Position" + getFrontRightPos());
     	if(leftError < errorTolerance && rightError < errorTolerance) {
     		
     		return true;
@@ -213,6 +256,9 @@ public class Drive extends Subsystem {
     	
     	return false;
     }
+    
+    
+    
     public boolean rotationDone(MotionParameters motionParams, double targetAngle, double encoderErrorTolerance, double navxErrorTolerance) {
     	
     	double constant = 1.25;

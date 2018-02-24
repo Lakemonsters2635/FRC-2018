@@ -145,14 +145,16 @@ public class Robot extends TimedRobot {
 		oi.climbUpButton.whileHeld(climbUpCommand);
 		oi.climbDownButton.whileHeld(climbDownCommand);
 		oi.gearShiftButton.toggleWhenPressed(gearShiftCommand);
-		oi.grabberButtonLeft.toggleWhenPressed(grabberCommand);
+		//oi.grabberButtonLeft.toggleWhenPressed(grabberCommand);
 		oi.grabberButtonRight.toggleWhenPressed(grabberCommand);
 	
-		oi.tiltToggleButton.toggleWhenPressed(tiltCommand);
+		oi.tiltButton.toggleWhenPressed(tiltCommand);
 		//oi.returnButton.whenPressed(returnCommand);
 		oi.elevatorUpButton.whenPressed(new ElevatorUpCommand());
 		oi.elevatorDownButton.whenPressed(new ElevatorDownCommand());
-		oi.elevatorTestButton.whenPressed(new ElevatorCommand(Height.SWITCH));
+		oi.alternateElevatorUpButton.whenPressed(new ElevatorUpCommand());
+		oi.alternateElevatorDownButton.whenPressed(new ElevatorDownCommand());
+		//oi.elevatorTestButton.whenPressed(new ElevatorCommand(Height.SWITCH));
 		//oi.closeGrabberTestButton.whenPressed(new GrabberClosed(1));
 		//oi.openGrabberTestButton.whenPressed(new GrabberOpen(1));
 		
@@ -307,6 +309,18 @@ public class Robot extends TimedRobot {
 		RobotMap.MOTION_MAGIC_I = SmartDashboard.getNumber("I:", RobotMap.MOTION_MAGIC_I);   
 		RobotMap.MOTION_MAGIC_D = SmartDashboard.getNumber("D:", RobotMap.MOTION_MAGIC_D);
 		RobotMap.MOTION_MAGIC_F = SmartDashboard.getNumber("F:", RobotMap.MOTION_MAGIC_F);
+		
+		SmartDashboard.putNumber("Front Left Position", (double) drive.getFrontLeftPos());
+		SmartDashboard.putNumber("Front Right Position", (double) drive.getFrontRightPos());
+		SmartDashboard.putNumber("LeftError", drive.leftErrorReport);
+		SmartDashboard.putNumber("RightError" , drive.rightErrorReport);
+		SmartDashboard.putNumber("Error Delta" , drive.getErrorDelta());
+		SmartDashboard.putNumber("left closed loop error" , drive.leftClosedLoopError());
+		SmartDashboard.putNumber("right closed loop error" , drive.rightClosedLoopError());
+
+		SmartDashboard.putNumber("Error Delta" , drive.getErrorDelta());
+		SmartDashboard.putNumber("Wheel Delta" ,  drive.getFrontRightPos() + drive.getFrontLeftPos());
+		
 		gearbox.scootMode();
 		//gearbox.bullyMode();
 	}
@@ -336,6 +350,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		
+		SmartDashboard.putNumber("Front Left Position", (double) drive.getFrontLeftPos());
+		SmartDashboard.putNumber("Front Right Position", (double) drive.getFrontRightPos());
+		SmartDashboard.putNumber("LeftError", drive.leftErrorReport);
+		SmartDashboard.putNumber("RightError" , drive.rightErrorReport);
+		
 	}
 
 	/**

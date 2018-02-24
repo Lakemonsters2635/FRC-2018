@@ -17,7 +17,7 @@ public class AutonomousStraightCommand extends Command {
 	double distance;
 	double velocity;
 	double acceleration;
-	double intialHeading; 
+	double initialAngle; 
     public AutonomousStraightCommand(double distance, double velocity, double acceleration) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drive);
@@ -34,7 +34,7 @@ public class AutonomousStraightCommand extends Command {
     	Robot.drive.navxReset();
     	motionParams = MotionMagicLibrary.getDriveParameters(RobotMap.WHEEL_RADIUS_INCHES, distance, velocity, false, acceleration);
     	
-    	intialHeading = Robot.drive.getNavxHeading();
+    	initialAngle = Robot.drive.getNavxAngle();
     	
     }
 
@@ -44,6 +44,7 @@ public class AutonomousStraightCommand extends Command {
     	//Robot.drive.frontRightMotor.set(ControlMode.MotionMagic, -3000);
     	
     	
+    	//Robot.drive.motionMagicWithNavx(motionParams, initialAngle);
     	Robot.drive.motionMagic(motionParams);
     }
 
@@ -53,10 +54,10 @@ public class AutonomousStraightCommand extends Command {
     	
     	boolean isFinished = Robot.drive.motionMagicDone(motionParams, RobotMap.ERRORTOLERANCE);
     	if(isFinished) {
-    		double currentHeading = Robot.drive.getNavxHeading();
-    		double navxHeading = Math.abs(intialHeading-currentHeading);
-    		System.out.println("Navx straight heading:" + navxHeading);
-    		System.out.println("Navx straight-drive angle: " + Robot.drive.getNavxAngle());
+//    		double currentHeading = Robot.drive.getNavxHeading();
+//    		double navxHeading = Math.abs(intialHeading-currentHeading);
+//    		System.out.println("Navx straight heading:" + navxHeading);
+//    		System.out.println("Navx straight-drive angle: " + Robot.drive.getNavxAngle());
     		System.out.println("Drive Straight Finished.");
     		System.out.println("-----------");
     	}
