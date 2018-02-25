@@ -52,8 +52,17 @@ public class Drive extends Subsystem {
 		//2018 bot
 		frontLeftMotor.setSensorPhase(false);
 		frontRightMotor.setSensorPhase(false);
-
 		
+		frontLeftMotor.configPeakOutputForward(1,0);
+		frontRightMotor.configPeakOutputForward(0.1,0);
+		backLeftMotor.configPeakOutputForward(1,0);
+		backRightMotor.configPeakOutputForward(0.1,0);
+//		frontLeftMotor.configVoltageCompSaturation(12, 0);
+//	    backLeftMotor.configVoltageCompSaturation(12, 0);
+//	    
+//		backRightMotor.configVoltageCompSaturation(12, 0);
+//		frontRightMotor.configVoltageCompSaturation(12, 0);
+
 		
 		
 	}
@@ -131,10 +140,10 @@ public class Drive extends Subsystem {
     public void autoInit() {
     	
     	frontLeftMotor.setSelectedSensorPosition(0, 0, 0);
-    	frontLeftMotor.setNeutralMode(NeutralMode.Brake);
-    	frontRightMotor.setNeutralMode(NeutralMode.Brake);
-    	backRightMotor.setNeutralMode(NeutralMode.Brake);
-    	backLeftMotor.setNeutralMode(NeutralMode.Brake);
+//    	frontLeftMotor.setNeutralMode(NeutralMode.Brake);
+//    	frontRightMotor.setNeutralMode(NeutralMode.Brake);
+//    	backRightMotor.setNeutralMode(NeutralMode.Brake);
+//    	backLeftMotor.setNeutralMode(NeutralMode.Brake);
     	
     	frontLeftMotor.config_kP(0, RobotMap.MOTION_MAGIC_P, 0);
     	frontLeftMotor.config_kI(0, RobotMap.MOTION_MAGIC_I, 0);
@@ -179,42 +188,58 @@ public class Drive extends Subsystem {
     	int frontLeft = getFrontLeftPos();
     	double delta = (Math.abs(frontRight) - Math.abs(frontLeft));
     	//System.out.println("frontRight: " + frontRight + " frontLeft: " + frontLeft + " delta: " + delta );
-    	System.out.println(frontRight + "\t" + frontLeft + "\t" + delta + "\t" + frontLeftMotor.getClosedLoopError(0) + "\t" + frontRightMotor.getClosedLoopError(0) );
+    	//System.out.println(frontRight + "\t" + frontLeft + "\t" + delta + "\t" + frontLeftMotor.getClosedLoopError(0) + "\t" + frontRightMotor.getClosedLoopError(0) );
     	
-    	//FHE: WHY ARE WE SETTING THESE EVERY TIME?
-    	//SHOULDN'T THIS BE AN INITIALIZATION FUNCTION?
-    	//UNLESS WE WANT TO ADJUST THESE VELOCITIES BASED ON LEFT AND RIGHT ERROR
+
 		frontRightMotor.configMotionCruiseVelocity(motionParams.rightVelocity, 0);
 		frontLeftMotor.configMotionCruiseVelocity(motionParams.leftVelocity, 0);
 
 		frontRightMotor.configMotionAcceleration(motionParams.rightAcceleration, 0);
 		frontLeftMotor.configMotionAcceleration(motionParams.leftAcceleration, 0);
-		
-	
+    	
 		
 		motorControl(ControlMode.MotionMagic, motionParams.leftWheelRotations, motionParams.rightWheelRotations, true);
 	}
     
-    public double leftClosedLoopError() {
-    	return frontLeftMotor.getClosedLoopError(0);
-    }
-    public double rightClosedLoopError() {
-    	return frontRightMotor.getClosedLoopError(0);
+    
+    public void motionDriveInit(MotionParameters motionParams)
+    {
+    	//FHE: WHY ARE WE SETTING THESE EVERY TIME?
+    	//SHOULDN'T THIS BE AN INITIALIZATION FUNCTION?
+    	//UNLESS WE WANT TO ADJUST THESE VELOCITIES BASED ON LEFT AND RIGHT ERROR
+    	
+    	//Hi, these need to be set every time because things like turn require variable speeds to accomplish a turn
+		frontRightMotor.configMotionCruiseVelocity(motionParams.rightVelocity, 0);
+		frontLeftMotor.configMotionCruiseVelocity(motionParams.leftVelocity, 0);
+
+		frontRightMotor.configMotionAcceleration(motionParams.rightAcceleration, 0);
+		frontLeftMotor.configMotionAcceleration(motionParams.leftAcceleration, 0);
     }
     
-    public void motionMagicWithNavx(MotionParameters motionParams, double initialAngle) {
+
+    
+    public void motionMagicWithNavx(MotionParameters motionParams, double averageAngleDelta) {
     	
-    	double currentAngle = getNavxAngle();
-    	double angleDelta = Math.abs(currentAngle - initialAngle);
+//    	double currentAngle = getNavxAngle();
+//    	double angleDelta = (currentAngle - initialAngle);
+    	double velocityFudge = averageAngleDelta * 1;
+    	
+    	
+		frontRightMotor.configMotionCruiseVelocity((motionParams.rightVelocity  - (int)velocityFudge), 0);
+		frontLeftMotor.configMotionCruiseVelocity((motionParams.leftVelocity  + (int)velocityFudge), 0);
+
+		frontRightMotor.configMotionAcceleration(motionParams.rightAcceleration, 0);
+		frontLeftMotor.configMotionAcceleration(motionParams.leftAcceleration, 0);
+
     	
     	int frontRight = getFrontRightPos();
     	int frontLeft = getFrontLeftPos();
     	double delta = (Math.abs(frontRight) - Math.abs(frontLeft));
     	//Use Delta 
-    	//System.out.println("frontRight: " + frontRight + " frontLeft: " + frontLeft + " delta: " + delta );
+    	System.out.println("frontRight: " + frontRight + " frontLeft: " + frontLeft + " angleDelta: " + averageAngleDelta );
     	
-		frontRightMotor.configMotionCruiseVelocity(motionParams.rightVelocity, 0);
-		frontLeftMotor.configMotionCruiseVelocity(motionParams.leftVelocity, 0);
+		//frontRightMotor.configMotionCruiseVelocity(motionParams.rightVelocity, 0);
+		//frontLeftMotor.configMotionCruiseVelocity(motionParams.leftVelocity, 0);
 
 		frontRightMotor.configMotionAcceleration(motionParams.rightAcceleration, 0);
 		frontLeftMotor.configMotionAcceleration(motionParams.leftAcceleration, 0);
@@ -275,8 +300,8 @@ public class Drive extends Subsystem {
     	
     	if (encodersDone && !navxDone) {
     		
-    		System.out.println("rotationDone.currentAngle: " + currentAngle);
-    		System.out.println("rotationDone.targetAngle: " + targetAngle);
+    		//System.out.println("rotationDone.currentAngle: " + currentAngle);
+    		//System.out.println("rotationDone.targetAngle: " + targetAngle);
     		//Darrel's magic goes here.
 
     		double driveValue = angleDelta*constant;
@@ -284,8 +309,8 @@ public class Drive extends Subsystem {
     	}
     	
     	if (navxDone || encodersDone) {
-    		System.out.println("Navx Done: " + navxDone + "\t Angle Delta:" + angleDelta);
-    		System.out.println("Encoders Done: " + encodersDone);
+    		//System.out.println("Navx Done: " + navxDone + "\t Angle Delta:" + angleDelta);
+    		//System.out.println("Encoders Done: " + encodersDone);
     	}
     	return navxDone;
     	

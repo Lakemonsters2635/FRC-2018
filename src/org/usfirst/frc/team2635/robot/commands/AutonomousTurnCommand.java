@@ -43,10 +43,11 @@ public class AutonomousTurnCommand extends Command {
     protected void initialize() {
     	
     	Robot.drive.reset();
-    	Robot.drive.navxReset();
-    	double navxAngle = Robot.drive.getNavxAngle();
+    	//Robot.drive.navxReset();
+    	//double navxAngle = Robot.drive.getNavxAngle();
 	   	rotationParams = MotionMagicLibrary.getRotationParameters(targetAngle,
 				RobotMap.WHEEL_RADIUS_INCHES, RobotMap.WHEEL_SEPARATION_INCHES, rpm, acceleration);
+	   
 	   	encodersDone = false;
     }
 
@@ -68,62 +69,13 @@ public class AutonomousTurnCommand extends Command {
     	boolean encodersDone = Robot.drive.motionMagicDone(rotationParams,errorTolerance);
 
     	
-    	if(encodersDone) {
-    		
-    		
 
-//        	double navxAngle = Robot.drive.getNavxAngle();
-//        	System.out.println("Navx turn angle: " + navxAngle);
-//        	double angleDelta = (-targetAngle - navxAngle);
-//        	boolean navxDone = ( Math.abs(angleDelta) < navxErrorTolerance);
-//        	if (!navxDone) {
-//
-//        	
-//        		long startTime = System.currentTimeMillis();
-//        		long timeDelta = 0;
-//        		while(timeDelta < 1000){
-//        			timeDelta = System.currentTimeMillis() - startTime;
-//        			try {
-//						Thread.sleep(20);
-//					} catch (InterruptedException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//
-//        		   System.out.println("Navx turn angle: " + Robot.drive.getNavxAngle());
-//        		}
-//        		/*for (int i=0; i < 10; i++) {
-//        			System.out.println("Navx turn angle: " + Robot.drive.getNavxAngle());
-//        			try {
-//						//Thread.sleep(100);
-//					} catch (InterruptedException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//        		}*/
-//        	}
-        		
-        	
-//        	
-//        	if (!navxDone && retryCount == 0) {
-//        		retryCount++;
-//        		
-//        		Robot.drive.setPIDValues(100);
-//        		System.out.println("TRY AGAIN!!!");
-//        		System.out.println("Retry Navx turn angle: " + navxAngle);
-//        		System.out.println("angleDelta: " + angleDelta);
-//        		encodersDone = false;
-//        		targetAngle = angleDelta;
-//        		this.initialize(); 
-//        	}
-    		
-    	}
     	
     	if (encodersDone) {
-        	double navxAngle = Robot.drive.getNavxAngle();
-        	double angleDelta = (-targetAngle - navxAngle);
-        	System.out.println("Final Navx turn delta: " + angleDelta);
-        	System.out.println("Final Navx turn angle: " + navxAngle);
+        	//double navxAngle = Robot.drive.getNavxAngle();
+        	//double angleDelta = (-targetAngle - navxAngle);
+        	//System.out.println("Final Navx turn delta: " + angleDelta);
+        	//System.out.println("Final Navx turn angle: " + navxAngle);
     		System.out.println("Drive Turn Finished");
     		System.out.println("-----------");
     		Robot.drive.setPIDValues(RobotMap.MOTION_MAGIC_P);

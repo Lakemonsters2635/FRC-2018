@@ -68,7 +68,12 @@ public class RobotMap {
 	public static final int ELEVATOR_SWITCH_UPPER_HEIGHT = 0;
 	public static final int ELEVATOR_SCALE_LOWER_HEIGHT = 25000;
 	public static final int ELEVATOR_SCALE_UPPER_HEIGHT = 0;
-	public static final int ELEVATOR_CLIMB_LOWER_HEIGHT = 37500;
+	
+	//COMPETITION-BOT
+//	public static final int ELEVATOR_CLIMB_LOWER_HEIGHT = 37500;
+//	public static final int ELEVATOR_CLIMB_UPPER_HEIGHT = 0;
+	//PRACTICE BOT (shorty)
+	public static final int ELEVATOR_CLIMB_LOWER_HEIGHT = 35000;
 	public static final int ELEVATOR_CLIMB_UPPER_HEIGHT = 0;
 	public static final int ELEVATOR_TOLERANCE = 1000;
 	//ALL FAKE VALUES ^^^
@@ -108,7 +113,7 @@ public class RobotMap {
 	public static double MOTION_MAGIC_F = 0.7;
 	
 	//public static double TURN_CONSTANT = 
-	public static final double WHEEL_SEPARATION_INCHES = 26.3;
+	public static final double WHEEL_SEPARATION_INCHES = 28.3;
 	
 	
 	
@@ -118,7 +123,7 @@ public class RobotMap {
 	public static double MOTION_MAGIC_DISTANCE = 3000;
 	public static double WHEEL_DIAMETER = 6;
 	
-	public static int ERRORTOLERANCE = 10;
+	public static int ERRORTOLERANCE = 7;
 
 	public static boolean VELOCITYDRIVEMODE = false;
 	

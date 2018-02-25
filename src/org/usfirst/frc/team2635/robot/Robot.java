@@ -315,8 +315,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("LeftError", drive.leftErrorReport);
 		SmartDashboard.putNumber("RightError" , drive.rightErrorReport);
 		SmartDashboard.putNumber("Error Delta" , drive.getErrorDelta());
-		SmartDashboard.putNumber("left closed loop error" , drive.leftClosedLoopError());
-		SmartDashboard.putNumber("right closed loop error" , drive.rightClosedLoopError());
 
 		SmartDashboard.putNumber("Error Delta" , drive.getErrorDelta());
 		SmartDashboard.putNumber("Wheel Delta" ,  drive.getFrontRightPos() + drive.getFrontLeftPos());

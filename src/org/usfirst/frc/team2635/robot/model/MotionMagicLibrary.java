@@ -331,7 +331,7 @@ public class MotionMagicLibrary
 	public static CommandGroup DriveStraightTest() {
 
 		CommandGroup output = new CommandGroup(getMethodName());
-		output.addSequential(new AutonomousStraightCommand(120, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(200, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		return output;
 	}
 

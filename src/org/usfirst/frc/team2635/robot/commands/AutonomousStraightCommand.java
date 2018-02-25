@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2635.robot.commands;
 
+import java.util.ArrayList;
+
 import org.usfirst.frc.team2635.robot.Robot;
 import org.usfirst.frc.team2635.robot.RobotMap;
 import org.usfirst.frc.team2635.robot.model.MotionMagicLibrary;
@@ -18,12 +20,14 @@ public class AutonomousStraightCommand extends Command {
 	double velocity;
 	double acceleration;
 	double initialAngle; 
+	public ArrayList<Double> angleDeltas;
     public AutonomousStraightCommand(double distance, double velocity, double acceleration) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.drive);
         this.distance = distance;
         this.velocity = velocity;
         this.acceleration = acceleration;
+        this.angleDeltas = new ArrayList<Double>();
         
        
     }
@@ -33,7 +37,7 @@ public class AutonomousStraightCommand extends Command {
     	Robot.drive.reset();
     	Robot.drive.navxReset();
     	motionParams = MotionMagicLibrary.getDriveParameters(RobotMap.WHEEL_RADIUS_INCHES, distance, velocity, false, acceleration);
-    	
+    	Robot.drive.motionDriveInit(motionParams);
     	initialAngle = Robot.drive.getNavxAngle();
     	
     }
@@ -42,10 +46,29 @@ public class AutonomousStraightCommand extends Command {
     protected void execute() {
     	//Robot.drive.frontLeftMotor.set(ControlMode.MotionMagic, 3000);
     	//Robot.drive.frontRightMotor.set(ControlMode.MotionMagic, -3000);
+    	double currentAngle = Robot.drive.getNavxAngle();
+    	double angleDelta = (currentAngle - initialAngle);
+    	angleDeltas.add(angleDelta);
+    	
+    	double angleDeltaAverage = 0;
+    	double angleSum = 0;
+    	if ( angleDeltas.size() < 10) {
+        	for (int i=0; i < angleDeltas.size(); i++) {
+        		angleSum += angleDeltas.get(i);
+        	}
+        	angleDeltaAverage = angleSum/angleDeltas.size();
+    	}
+    	else {
+        	for (int i=angleDeltas.size() -5; i < angleDeltas.size(); i++) {
+        		angleSum += angleDeltas.get(i);
+        	}
+        	angleDeltaAverage = angleSum/5.0;
+    	}
+    	
     	
     	
     	//Robot.drive.motionMagicWithNavx(motionParams, initialAngle);
-    	Robot.drive.motionMagic(motionParams);
+    	Robot.drive.motionMagicWithNavx(motionParams, angleDeltaAverage);
     }
 
     // Make this return true when this Command no longer needs to run execute()
