@@ -54,9 +54,10 @@ public class Drive extends Subsystem {
 		frontRightMotor.setSensorPhase(false);
 		
 		frontLeftMotor.configPeakOutputForward(1,0);
-		frontRightMotor.configPeakOutputForward(0.1,0);
+		frontRightMotor.configPeakOutputForward(1,0);
 		backLeftMotor.configPeakOutputForward(1,0);
-		backRightMotor.configPeakOutputForward(0.1,0);
+		backRightMotor.configPeakOutputForward(1,0);
+		
 //		frontLeftMotor.configVoltageCompSaturation(12, 0);
 //	    backLeftMotor.configVoltageCompSaturation(12, 0);
 //	    
@@ -104,6 +105,10 @@ public class Drive extends Subsystem {
 	public void motorControl(ControlMode controlMode, Double left, Double right, Boolean slave){
 		frontLeftMotor.set(controlMode, left);
 		frontRightMotor.set(controlMode, right);
+		
+		
+		//System.out.println("Left: " + left + "     Right: " + right + "    Control mode: " + controlMode);
+		
 		if(!slave){
 			backRightMotor.set(controlMode, right);
 			backLeftMotor.set(controlMode, left);
@@ -270,11 +275,13 @@ public class Drive extends Subsystem {
     	this.leftErrorReport = leftError;
     	this.rightErrorReport = rightError;
     	if(Robot.limitSwitch.get()) {
+    		System.out.println("Limit switch true!");
     		return true;
     	}
     	//System.out.println("Left Error: " + leftError + "    Right Error: " + rightError);
     	//System.out.println("Left Position: " + getFrontLeftPos() + "Right Position" + getFrontRightPos());
     	if(leftError < errorTolerance && rightError < errorTolerance) {
+    		System.out.println("Limit switch false!");
     		
     		return true;
     	}

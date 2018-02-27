@@ -127,6 +127,7 @@ public class Elevator extends Subsystem {
 	public boolean setTargetHeight(Height height) {
 		elevatorCommand.height = height;
 		currentTargetHeight = height;
+		System.out.println("Target Height: " + height);
 		return true;
 	}
 	
@@ -210,7 +211,8 @@ public class Elevator extends Subsystem {
 	}
 	// No longer has fake values <3, this just sets the values for the ground, switch, scale, and climb heights that the elevator uses.
 	public static enum Height {
-		GROUND(RobotMap.ELEVATOR_GROUND_LOWER_HEIGHT), 
+		GROUND(RobotMap.ELEVATOR_GROUND_LOWER_HEIGHT),
+		EXCHANGE(RobotMap.ELEVATOR_EXCHANGE_LOWER_HEIGHT),
 		SWITCH(RobotMap.ELEVATOR_SWITCH_LOWER_HEIGHT), 
 		SCALE(RobotMap.ELEVATOR_SCALE_LOWER_HEIGHT), 
 		CLIMB(RobotMap.ELEVATOR_CLIMB_LOWER_HEIGHT);
@@ -225,6 +227,7 @@ public class Elevator extends Subsystem {
 	public enum Height2 {
 		//FHE TODO:  
 		GROUND (RobotMap.ELEVATOR_GROUND_LOWER_HEIGHT, RobotMap.ELEVATOR_GROUND_UPPER_HEIGHT),
+		EXCHANGE (RobotMap.ELEVATOR_EXCHANGE_LOWER_HEIGHT, RobotMap.ELEVATOR_EXCHANGE_UPPER_HEIGHT),
 		SWITCH   (RobotMap.ELEVATOR_SWITCH_LOWER_HEIGHT, RobotMap.ELEVATOR_SWITCH_UPPER_HEIGHT),
 		SCALE   (RobotMap.ELEVATOR_SCALE_LOWER_HEIGHT, RobotMap.ELEVATOR_SCALE_UPPER_HEIGHT),
 		CLIMB    (RobotMap.ELEVATOR_CLIMB_LOWER_HEIGHT, RobotMap.ELEVATOR_CLIMB_UPPER_HEIGHT);
@@ -244,8 +247,11 @@ public class Elevator extends Subsystem {
 		Height newTargetHeight;
 		switch(this.currentTargetHeight) {
 		case GROUND:
-			 setTargetHeight(Height.SWITCH);
+			 setTargetHeight(Height.EXCHANGE);
 			 break;
+		case EXCHANGE:
+			setTargetHeight(Height.SWITCH);
+			break;
 		case SWITCH:
 			setTargetHeight(Height.SCALE);
 	         break;
@@ -280,8 +286,11 @@ public class Elevator extends Subsystem {
 			setTargetHeight(Height.SWITCH);
 	         break;
 		case SWITCH:
-			setTargetHeight(Height.GROUND);
+			setTargetHeight(Height.EXCHANGE);
 	         break;
+		case EXCHANGE:
+			setTargetHeight(Height.GROUND);
+			break;
 		case GROUND:
 			setTargetHeight(Height.GROUND);
 			 break;

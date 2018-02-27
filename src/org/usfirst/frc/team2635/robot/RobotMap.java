@@ -64,6 +64,9 @@ public class RobotMap {
 	public static final int ELEVATOR_GROUND_UPPER_HEIGHT = 0;
 	//ALL FAKE VALUES VVV
 	//Upper values currently not used
+	public static final int ELEVATOR_EXCHANGE_LOWER_HEIGHT = 3000;
+	public static final int ELEVATOR_EXCHANGE_UPPER_HEIGHT = 0;
+	
 	public static final int ELEVATOR_SWITCH_LOWER_HEIGHT = 12000;
 	public static final int ELEVATOR_SWITCH_UPPER_HEIGHT = 0;
 	public static final int ELEVATOR_SCALE_LOWER_HEIGHT = 25000;
