@@ -23,7 +23,10 @@ public class ElevatorUpCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	switch(Robot.elevator.currentTargetHeight) {
-		case GROUND:
+    	case GROUND:
+			Robot.elevator.setTargetHeight(Height.EXCHANGE);
+			 break;
+    	case EXCHANGE:
 			Robot.elevator.setTargetHeight(Height.SWITCH);
 			 break;
 		case SWITCH:

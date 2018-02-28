@@ -38,8 +38,8 @@ public class Elevator extends Subsystem {
 	//Upper: 3000
 	
 	public Height currentTargetHeight;
-	double largeElevatorMax;
-	double smallElevatorMax;
+	//double largeElevatorMax;
+	//double smallElevatorMax;
 	ElevatorCommand elevatorCommand;
 	
 	public Elevator() {
@@ -56,8 +56,8 @@ public class Elevator extends Subsystem {
     	//TODO FAKE VALUES, UPDATE TO ACCURATE VALUES, Fix this...
     	// In inches (units)
     	
-    	largeElevatorMax = 17500;
-    	smallElevatorMax = 20000;
+    	//largeElevatorMax = 17500;
+    	//smallElevatorMax = 20000;
     	//END FAKE VALUES
     	double theCurrentHeight = currentHeight();
     	
@@ -81,9 +81,9 @@ public class Elevator extends Subsystem {
 		double lowerHeight = 0;
 		double upperHeight = 0;
 		
-		if(currentTargetHeight.height > smallElevatorMax) {
-			lowerHeight = smallElevatorMax;
-			upperHeight = currentTargetHeight.height - smallElevatorMax;
+		if(currentTargetHeight.height > RobotMap.SMALL_ELEVATOR_MAX) {
+			lowerHeight = RobotMap.SMALL_ELEVATOR_MAX;
+			upperHeight = currentTargetHeight.height - RobotMap.SMALL_ELEVATOR_MAX;
 			//System.out.println("currentTargetHeight.height > smallElevatorMax");
 			
 			//System.out.println("Upper height: "+ upperHeight);
