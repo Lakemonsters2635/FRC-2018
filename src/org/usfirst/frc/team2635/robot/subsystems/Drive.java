@@ -229,19 +229,28 @@ public class Drive extends Subsystem {
 //    	double angleDelta = (currentAngle - initialAngle);
     	double velocityFudge = averageAngleDelta * 1;
     	
+     	int frontRight = getFrontRightPos();
+    	int frontLeft = getFrontLeftPos();
     	
-		frontRightMotor.configMotionCruiseVelocity((motionParams.rightVelocity  - (int)velocityFudge), 0);
-		frontLeftMotor.configMotionCruiseVelocity((motionParams.leftVelocity  + (int)velocityFudge), 0);
+
+    	double delta = (Math.abs(frontRight) - Math.abs(frontLeft));
+    	double foo = (frontLeft + frontRight) * 0.5;
+  
+    			
+		frontRightMotor.configMotionCruiseVelocity(motionParams.rightVelocity  + (int)foo, 0);
+		frontLeftMotor.configMotionCruiseVelocity(motionParams.leftVelocity  - (int)foo, 0);
+
+    	
+//		frontRightMotor.configMotionCruiseVelocity((motionParams.rightVelocity  - (int)velocityFudge), 0);
+//		frontLeftMotor.configMotionCruiseVelocity((motionParams.leftVelocity  + (int)velocityFudge), 0);
 
 		frontRightMotor.configMotionAcceleration(motionParams.rightAcceleration, 0);
 		frontLeftMotor.configMotionAcceleration(motionParams.leftAcceleration, 0);
 
     	
-    	int frontRight = getFrontRightPos();
-    	int frontLeft = getFrontLeftPos();
-    	double delta = (Math.abs(frontRight) - Math.abs(frontLeft));
+   
     	//Use Delta 
-    	System.out.println("frontRight: " + frontRight + " frontLeft: " + frontLeft + " angleDelta: " + averageAngleDelta );
+    	//System.out.println("frontRight: " + frontRight + " frontLeft: " + frontLeft + " angleDelta: " + averageAngleDelta );
     	
 		//frontRightMotor.configMotionCruiseVelocity(motionParams.rightVelocity, 0);
 		//frontLeftMotor.configMotionCruiseVelocity(motionParams.leftVelocity, 0);

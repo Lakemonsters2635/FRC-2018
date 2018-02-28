@@ -64,7 +64,7 @@ public class RobotMap {
 	public static final int ELEVATOR_GROUND_UPPER_HEIGHT = 0;
 	//ALL FAKE VALUES VVV
 	//Upper values currently not used
-	public static final int SMALL_ELEVATOR_MAX = 20000;
+	public static final double SMALL_ELEVATOR_MAX = 20000;
 	public static final int ELEVATOR_EXCHANGE_LOWER_HEIGHT = 3000;
 	public static final int ELEVATOR_EXCHANGE_UPPER_HEIGHT = 0;
 	
@@ -127,7 +127,7 @@ public class RobotMap {
 	public static double MOTION_MAGIC_DISTANCE = 3000;
 	public static double WHEEL_DIAMETER = 6;
 	
-	public static int ERRORTOLERANCE = 7;
+	public static int ERRORTOLERANCE = 10;
 
 	public static boolean VELOCITYDRIVEMODE = false;
 	
