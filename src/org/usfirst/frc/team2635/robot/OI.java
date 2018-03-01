@@ -29,7 +29,7 @@ public class OI {
 	public Button climbUpButton = new JoystickButton(leftStick, RobotMap.CLIMB_UP_BUTTON);
 	public Button climbDownButton = new JoystickButton(leftStick, RobotMap.CLIMB_DOWN_BUTTON);
 	public Button tiltToggleButton = new JoystickButton(leftStick, RobotMap.TILT_BUTTON); 
-	public Button elevatorTestButton = new JoystickButton(leftStick, RobotMap.ELEVATOR_TEST_BUTTON);
+	//public Button elevatorTestButton = new JoystickButton(leftStick, RobotMap.ELEVATOR_TEST_BUTTON);
 	//public Button openGrabberTestButton = new JoystickButton(leftStick, RobotMap.OPEN_GRABBER_TEST_BUTTON);
 	
 	//RIGHT BUTTONS
@@ -38,7 +38,7 @@ public class OI {
 	public Button elevatorUpButton = new JoystickButton(rightStick, RobotMap.ELEVATOR_UP_BUTTON);
 	public Button elevatorDownButton = new JoystickButton(rightStick, RobotMap.ELEVATOR_DOWN_BUTTON);
 	public Button intakeToggleButton = new JoystickButton(rightStick, RobotMap.INTAKE_TOGGLE_BUTTON);
-	public Button returnButton = new JoystickButton(rightStick, RobotMap.RETURN_BUTTON);
+	//public Button returnButton = new JoystickButton(rightStick, RobotMap.RETURN_BUTTON);
 	public Button navxRotateButton = new JoystickButton(rightStick, RobotMap.NAVX_ROTATE_BUTTON);
 	public Button alternateElevatorUpButton = new JoystickButton(rightStick, RobotMap.ALTERNATE_ELEVATOR_UP_BUTTON);
 	public Button alternateElevatorDownButton = new JoystickButton(rightStick, RobotMap.ALTERATE_ELEVATOR_DOWN_BUTTON);
