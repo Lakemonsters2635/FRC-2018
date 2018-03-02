@@ -36,7 +36,7 @@ public class AutonomousTurnCommand extends Command {
     	this.rpm = rpm;
     	this.targetAngle = targetAngle;
     	this.acceleration = acceleration;
-    	errorTolerance = RobotMap.ERRORTOLERANCE;
+    	errorTolerance = RobotMap.ROTATE_ERRORTOLERANCE;
     }
 
     // Called just before this Command runs the first time

@@ -31,6 +31,9 @@ public class ElevatorDownCommand extends Command {
 			Robot.elevator.setTargetHeight(Height.SWITCH);
 	         break;
 		case SWITCH:
+			Robot.elevator.setTargetHeight(Height.STACK);
+	         break;
+		case STACK:
 			Robot.elevator.setTargetHeight(Height.EXCHANGE);
 	         break;
 		case EXCHANGE:

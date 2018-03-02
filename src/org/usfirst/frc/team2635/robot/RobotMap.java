@@ -129,6 +129,7 @@ public class RobotMap {
 	public static double WHEEL_DIAMETER = 6;
 	
 	public static int ERRORTOLERANCE = 10;
+	public static int ROTATE_ERRORTOLERANCE = 20;
 
 	public static boolean VELOCITYDRIVEMODE = false;
 	

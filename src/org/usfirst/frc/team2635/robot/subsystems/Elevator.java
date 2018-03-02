@@ -43,7 +43,7 @@ public class Elevator extends Subsystem {
 	public Height currentTargetHeight;
 	//double largeElevatorMax;
 	//double smallElevatorMax;
-	ElevatorCommand elevatorCommand;
+	
 	
 	public Elevator() {
 		smallMotor  = new WPI_TalonSRX(RobotMap.ELEVATOR_UPPER_MOTOR_CHANNEL);
@@ -67,7 +67,7 @@ public class Elevator extends Subsystem {
     	//END FAKE VALUES
     	double theCurrentHeight = currentHeight();
     	
-    	elevatorCommand = new ElevatorCommand(Height.GROUND);
+    	
     	largeMotor1.setSensorPhase(true);
     	
     	// begin - reverse for replacement of bag motor by mini-CIM
@@ -109,7 +109,7 @@ public class Elevator extends Subsystem {
 			//System.out.println("Lower height: "+ lowerHeight);
 		}
 
-		if (currentTargetHeight == Height.GROUND) {
+		if (currentTargetHeight == Height.GROUND && isWithinTolerance(Height.GROUND)) {
 			largeMotor1.set(ControlMode.PercentOutput, 0);
 			smallMotor.set(ControlMode.PercentOutput, 0);
 			
@@ -137,9 +137,9 @@ public class Elevator extends Subsystem {
 //		}
 	}
 	public boolean setTargetHeight(Height height) {
-		elevatorCommand.height = height;
+		
 		currentTargetHeight = height;
-		System.out.println("Target Height: " + height);
+		System.out.println("Setting Target Height: " + height);
 		return true;
 	}
 	
@@ -256,32 +256,6 @@ public class Elevator extends Subsystem {
 //	    private double upperHeight() { return upperHeight; }
 //	}
 	
-	public Command ElevatorUp() {
-		Height newTargetHeight;
-		switch(this.currentTargetHeight) {
-		case GROUND:
-			 setTargetHeight(Height.EXCHANGE);
-			 break;
-		case EXCHANGE:
-			setTargetHeight(Height.SWITCH);
-			break;
-		case SWITCH:
-			setTargetHeight(Height.SCALE);
-	         break;
-		case SCALE:
-			setTargetHeight(Height.CLIMB);
-	         break;
-		case CLIMB:
-			setTargetHeight(Height.CLIMB);
-	    default:
-	        return null;
-	     
-		}
-		
-		return elevatorCommand;
-		
-		 // Raises the elevator to the next level if its w/i a defined tolerance.
-	}
 	
 //	public  Command ElevatorMove(Height height) {
 //
@@ -289,30 +263,7 @@ public class Elevator extends Subsystem {
 //	}
 	//pointless ^^^
 	
-	public  Command ElevatorDown(){
-		Height newTargetHeight;
-		switch(this.currentTargetHeight) {
-		case CLIMB:
-			setTargetHeight(Height.SCALE);
-			 break;
-		case SCALE:
-			setTargetHeight(Height.SWITCH);
-	         break;
-		case SWITCH:
-			setTargetHeight(Height.EXCHANGE);
-	         break;
-		case EXCHANGE:
-			setTargetHeight(Height.GROUND);
-			break;
-		case GROUND:
-			setTargetHeight(Height.GROUND);
-			 break;
-	    default:
-	        return null;
-		}
-		return elevatorCommand;
-	}
-	
+		
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

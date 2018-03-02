@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ElevatorUpCommand extends Command {
+public class ExpressElevatorUpCommand extends Command {
 
-    public ElevatorUpCommand() {
+    public ExpressElevatorUpCommand() {
         // Use requires() here to declare subsystem dependencies
     	 requires(Robot.elevator);
     }
@@ -24,12 +24,6 @@ public class ElevatorUpCommand extends Command {
     protected void execute() {
     	switch(Robot.elevator.currentTargetHeight) {
     	case GROUND:
-			Robot.elevator.setTargetHeight(Height.EXCHANGE);
-			 break;
-    	case EXCHANGE:
-			Robot.elevator.setTargetHeight(Height.STACK);
-			 break;
-    	case STACK:
 			Robot.elevator.setTargetHeight(Height.SWITCH);
 			 break;
 		case SWITCH:

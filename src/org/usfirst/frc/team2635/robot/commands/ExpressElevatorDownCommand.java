@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ElevatorUpCommand extends Command {
+public class ExpressElevatorDownCommand extends Command {
 
-    public ElevatorUpCommand() {
+    public ExpressElevatorDownCommand() {
         // Use requires() here to declare subsystem dependencies
-    	 requires(Robot.elevator);
+        requires(Robot.elevator);
     }
 
     // Called just before this Command runs the first time
@@ -22,26 +22,22 @@ public class ElevatorUpCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Height newTargetHeight;
     	switch(Robot.elevator.currentTargetHeight) {
-    	case GROUND:
-			Robot.elevator.setTargetHeight(Height.EXCHANGE);
-			 break;
-    	case EXCHANGE:
-			Robot.elevator.setTargetHeight(Height.STACK);
-			 break;
-    	case STACK:
-			Robot.elevator.setTargetHeight(Height.SWITCH);
-			 break;
-		case SWITCH:
-			Robot.elevator.setTargetHeight(Height.SCALE);
-	         break;
-		case SCALE:
-			Robot.elevator.setTargetHeight(Height.CLIMB);
-	         break;
 		case CLIMB:
-			Robot.elevator.setTargetHeight(Height.CLIMB);
+			Robot.elevator.setTargetHeight(Height.SCALE);
+			 break;
+		case SCALE:
+			Robot.elevator.setTargetHeight(Height.SWITCH);
+	         break;
+		case SWITCH:
+			Robot.elevator.setTargetHeight(Height.GROUND);
+	         break;
+		case GROUND:
+			Robot.elevator.setTargetHeight(Height.GROUND);
+			 break;
 	    default:
-	       
+	        
 		}
     	System.out.println("Initialize called");
     }
