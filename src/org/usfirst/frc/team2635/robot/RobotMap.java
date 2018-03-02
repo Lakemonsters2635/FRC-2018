@@ -61,29 +61,30 @@ public class RobotMap {
 	public static final int ELEVATOR_LOWER_MOTOR2_CHANNEL = 7;
 	
 	public static final int ELEVATOR_GROUND_LOWER_HEIGHT = 0; //Actually will be 0
-	public static final int ELEVATOR_GROUND_UPPER_HEIGHT = 0;
+	//public static final int ELEVATOR_GROUND_UPPER_HEIGHT = 0;
 	//ALL FAKE VALUES VVV
 	//Upper values currently not used
 	public static final double SMALL_ELEVATOR_MAX = 20000;
 	public static final int ELEVATOR_EXCHANGE_LOWER_HEIGHT = 3000;
-	public static final int ELEVATOR_EXCHANGE_UPPER_HEIGHT = 0;
+	public static final int ELEVATOR_STACK_LOWER_HEIGHT = 6000;
+	//public static final int ELEVATOR_EXCHANGE_UPPER_HEIGHT = 0;
 	
 	public static final int ELEVATOR_SWITCH_LOWER_HEIGHT = 12000;
-	public static final int ELEVATOR_SWITCH_UPPER_HEIGHT = 0;
+	//public static final int ELEVATOR_SWITCH_UPPER_HEIGHT = 0;
 	public static final int ELEVATOR_SCALE_LOWER_HEIGHT = 25000;
-	public static final int ELEVATOR_SCALE_UPPER_HEIGHT = 0;
+	//public static final int ELEVATOR_SCALE_UPPER_HEIGHT = 0;
 	
 	//COMPETITION-BOT
 //	public static final int ELEVATOR_CLIMB_LOWER_HEIGHT = 37500;
 //	public static final int ELEVATOR_CLIMB_UPPER_HEIGHT = 0;
 	//PRACTICE BOT (shorty)
 	public static final int ELEVATOR_CLIMB_LOWER_HEIGHT = 35000;
-	public static final int ELEVATOR_CLIMB_UPPER_HEIGHT = 0;
+	//public static final int ELEVATOR_CLIMB_UPPER_HEIGHT = 0;
 	public static final int ELEVATOR_TOLERANCE = 1000;
 	//ALL FAKE VALUES ^^^
 	
-	public static final int ELEVATOR_VELOCITY = 2000;
-	public static final int ELEVATOR_ACCELERATION = 2000;
+	public static final int ELEVATOR_VELOCITY = 3000;
+	public static final int ELEVATOR_ACCELERATION = 5000;
 	
 	public static final int INTAKE_1_MOTOR_CHANNEL = 10;
 	public static final int INTAKE_2_MOTOR_CHANNEL = 11;

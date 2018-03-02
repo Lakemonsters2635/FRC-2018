@@ -22,7 +22,10 @@ public class Elevator extends Subsystem {
     // here. Call these from Commands.
 	WPI_TalonSRX smallMotor;
 	WPI_TalonSRX largeMotor1; 
-	WPI_TalonSRX largeMotor2; 
+	
+	// begin - replacement of 2 bag motors with one full CIM motor
+	//WPI_TalonSRX largeMotor2; 
+	// end - replacement of 2 bag motors with one full CIM motor
 	
 	public DigitalInput topLimitSwitch; 
 	public DigitalInput bottomLimitSwitch; 
@@ -45,13 +48,16 @@ public class Elevator extends Subsystem {
 	public Elevator() {
 		smallMotor  = new WPI_TalonSRX(RobotMap.ELEVATOR_UPPER_MOTOR_CHANNEL);
     	largeMotor1 = new WPI_TalonSRX(RobotMap.ELEVATOR_LOWER_MOTOR1_CHANNEL);
-    	largeMotor2 = new WPI_TalonSRX(RobotMap.ELEVATOR_LOWER_MOTOR2_CHANNEL);
+
     	
     	//bottomLimitSwitch = new DigitalInput(RobotMap.ELEVATOR_BOTTOM_LIMIT_SWITCH_IO_CHANNEL); 
     	//topLimitSwitch = new DigitalInput(RobotMap.ELEVATOR_TOP_LIMIT_SWITCH_IO_CHANNEL); 
 
+    	// begin - replacement of 2 bag motors with one full CIM motor
+    	//largeMotor2 = new WPI_TalonSRX(RobotMap.ELEVATOR_LOWER_MOTOR2_CHANNEL);
+    	//largeMotor2.follow(largeMotor1);
+    	// end - replacement of 2 bag motors with one full CIM motor
     	
-    	largeMotor2.follow(largeMotor1);
     	encoderStart();
     	//TODO FAKE VALUES, UPDATE TO ACCURATE VALUES, Fix this...
     	// In inches (units)
@@ -63,6 +69,12 @@ public class Elevator extends Subsystem {
     	
     	elevatorCommand = new ElevatorCommand(Height.GROUND);
     	largeMotor1.setSensorPhase(true);
+    	
+    	// begin - reverse for replacement of bag motor by mini-CIM
+    	smallMotor.setInverted(true);
+    	smallMotor.setSensorPhase(true);
+    	// end - reverse for replacement of bag motor by mini-CIM
+    	
     	if (isWithinTolerance(Height.GROUND)) {
     		currentTargetHeight = Height.GROUND;
     		System.out.println("Initializing target Height to Ground.");
@@ -213,6 +225,7 @@ public class Elevator extends Subsystem {
 	public static enum Height {
 		GROUND(RobotMap.ELEVATOR_GROUND_LOWER_HEIGHT),
 		EXCHANGE(RobotMap.ELEVATOR_EXCHANGE_LOWER_HEIGHT),
+		STACK(RobotMap.ELEVATOR_STACK_LOWER_HEIGHT),
 		SWITCH(RobotMap.ELEVATOR_SWITCH_LOWER_HEIGHT), 
 		SCALE(RobotMap.ELEVATOR_SCALE_LOWER_HEIGHT), 
 		CLIMB(RobotMap.ELEVATOR_CLIMB_LOWER_HEIGHT);
@@ -224,24 +237,24 @@ public class Elevator extends Subsystem {
 	}
 	
 	//Not Used
-	public enum Height2 {
-		//FHE TODO:  
-		GROUND (RobotMap.ELEVATOR_GROUND_LOWER_HEIGHT, RobotMap.ELEVATOR_GROUND_UPPER_HEIGHT),
-		EXCHANGE (RobotMap.ELEVATOR_EXCHANGE_LOWER_HEIGHT, RobotMap.ELEVATOR_EXCHANGE_UPPER_HEIGHT),
-		SWITCH   (RobotMap.ELEVATOR_SWITCH_LOWER_HEIGHT, RobotMap.ELEVATOR_SWITCH_UPPER_HEIGHT),
-		SCALE   (RobotMap.ELEVATOR_SCALE_LOWER_HEIGHT, RobotMap.ELEVATOR_SCALE_UPPER_HEIGHT),
-		CLIMB    (RobotMap.ELEVATOR_CLIMB_LOWER_HEIGHT, RobotMap.ELEVATOR_CLIMB_UPPER_HEIGHT);
-
-
-	    private final double lowerHeight;
-	    private final double upperHeight;
-	    Height2(double lowerHeight, double upperHeight) {
-	        this.lowerHeight = lowerHeight;
-	        this.upperHeight = upperHeight;
-	    }
-	    private double lowerHeight() { return lowerHeight; }
-	    private double upperHeight() { return upperHeight; }
-	}
+//	public enum Height2 {
+//		//FHE TODO:  
+//		GROUND (RobotMap.ELEVATOR_GROUND_LOWER_HEIGHT, RobotMap.ELEVATOR_GROUND_UPPER_HEIGHT),
+//		EXCHANGE (RobotMap.ELEVATOR_EXCHANGE_LOWER_HEIGHT, RobotMap.ELEVATOR_EXCHANGE_UPPER_HEIGHT),
+//		SWITCH   (RobotMap.ELEVATOR_SWITCH_LOWER_HEIGHT, RobotMap.ELEVATOR_SWITCH_UPPER_HEIGHT),
+//		SCALE   (RobotMap.ELEVATOR_SCALE_LOWER_HEIGHT, RobotMap.ELEVATOR_SCALE_UPPER_HEIGHT),
+//		CLIMB    (RobotMap.ELEVATOR_CLIMB_LOWER_HEIGHT, RobotMap.ELEVATOR_CLIMB_UPPER_HEIGHT);
+//
+//
+//	    private final double lowerHeight;
+//	    private final double upperHeight;
+//	    Height2(double lowerHeight, double upperHeight) {
+//	        this.lowerHeight = lowerHeight;
+//	        this.upperHeight = upperHeight;
+//	    }
+//	    private double lowerHeight() { return lowerHeight; }
+//	    private double upperHeight() { return upperHeight; }
+//	}
 	
 	public Command ElevatorUp() {
 		Height newTargetHeight;
