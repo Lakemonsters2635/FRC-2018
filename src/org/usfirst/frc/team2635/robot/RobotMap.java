@@ -80,7 +80,7 @@ public class RobotMap {
 	//PRACTICE BOT (shorty)
 	public static final int ELEVATOR_CLIMB_LOWER_HEIGHT = 35000;
 	//public static final int ELEVATOR_CLIMB_UPPER_HEIGHT = 0;
-	public static final int ELEVATOR_TOLERANCE = 1000;
+	public static final int ELEVATOR_TOLERANCE = 2000;
 	//ALL FAKE VALUES ^^^
 	
 	public static final int ELEVATOR_VELOCITY = 3000;
@@ -139,16 +139,19 @@ public class RobotMap {
 	//2018 BOT
 	public static final int ENCODER_COUNTS_PER_REVOLUTION = 4096/3;
 	
-	public static final double AUTO_DRIVE_VELOCITY = 500;
+
 	public static final double AUTO_TURN_VELOCITY = 500;
-	public static final int AUTO_DRIVE_ACCELERATION = 500;
-	public static final int AUTO_TURN_ACCELERATION = 500;
+	public static final int AUTO_TURN_ACCELERATION = 700;
+	
+	public static final double AUTO_DRIVE_VELOCITY = 800;
+	public static final int AUTO_DRIVE_ACCELERATION = 1200;
+
 	
 	public static final int AUTO_WALL_TO_SWITCH = 102;
 	public static final int AUTO_FWD1 = 50;
-	public static final int AUTO_FWD2 = 52;
+	public static final int AUTO_FWD2 = 62;
 	public static final int CENTER_AUTO_TRANSLATE_FWD = 50;
-	public static final int OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD = 100;
+	public static final int OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD = 110;
 	public static final int OUTSIDE_SAME_AUTO_TRANSLATE_FWD = 20;
 	
 	

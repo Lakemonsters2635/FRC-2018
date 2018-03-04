@@ -95,6 +95,11 @@ public class Drive extends Subsystem {
 		}else {
 			motorControl(ControlMode.PercentOutput, -left, right, false);
 		}
+		//boolean limitSwitchPressed = Robot.limitSwitch.get();
+
+    	//System.out.println("Limit switch:" + limitSwitchPressed);
+    		
+    	
 	}
 	
 	public void setPIDValues(double p) {

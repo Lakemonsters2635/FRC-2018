@@ -33,6 +33,8 @@ public class AutonomousTurnCommand extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
+    	//FHE: WARNING: HARD CODED TIME OUT
+    	this.setTimeout(2.0);
     	this.rpm = rpm;
     	this.targetAngle = targetAngle;
     	this.acceleration = acceleration;
@@ -65,13 +67,21 @@ public class AutonomousTurnCommand extends Command {
     	//MotionParameters motionParams, double targetAngle, double encoderErrorTolerance, double navxErrorTolerance
     	double navxErrorTolerance = 0.3; //TODO: Put in RobotMap
     	//boolean done = Robot.drive.rotationDone(rotationParams, targetAngle, RobotMap.ERRORTOLERANCE, navxErrorTolerance);
+    	boolean isTurnFinished = isTimedOut();
     	
-    	boolean encodersDone = Robot.drive.motionMagicDone(rotationParams,errorTolerance);
+    	
+    	if (!isTurnFinished) {
+    		isTurnFinished = Robot.drive.motionMagicDone(rotationParams,errorTolerance);
+    	} else {
+    		System.out.println("Turn timed out");
+    	}
+    	
+    	
 
     	
 
     	
-    	if (encodersDone) {
+    	if (isTurnFinished) {
         	//double navxAngle = Robot.drive.getNavxAngle();
         	//double angleDelta = (-targetAngle - navxAngle);
         	//System.out.println("Final Navx turn delta: " + angleDelta);
@@ -80,7 +90,7 @@ public class AutonomousTurnCommand extends Command {
     		System.out.println("-----------");
     		Robot.drive.setPIDValues(RobotMap.MOTION_MAGIC_P);
     	}
-    	return encodersDone;
+    	return isTurnFinished;
     }
 
     // Called once after isFinished returns true
