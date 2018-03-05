@@ -34,7 +34,7 @@ public class AutonomousTurnCommand extends Command {
         // eg. requires(chassis);
     	requires(Robot.drive);
     	//FHE: WARNING: HARD CODED TIME OUT
-    	this.setTimeout(2.0);
+    	this.setTimeout(1.5);
     	this.rpm = rpm;
     	this.targetAngle = targetAngle;
     	this.acceleration = acceleration;
@@ -57,8 +57,8 @@ public class AutonomousTurnCommand extends Command {
     protected void execute() {
    
     	if(!encodersDone) {
-    		Robot.drive.motionMagic(rotationParams);  
-    		encodersDone = Robot.drive.motionMagicDone(rotationParams, errorTolerance);
+    		Robot.drive.motionMagicRotate(rotationParams);  
+    		encodersDone = Robot.drive.motionMagicDone(rotationParams, errorTolerance, false);
     	} 
     }
 
@@ -71,7 +71,7 @@ public class AutonomousTurnCommand extends Command {
     	
     	
     	if (!isTurnFinished) {
-    		isTurnFinished = Robot.drive.motionMagicDone(rotationParams,errorTolerance);
+    		isTurnFinished = Robot.drive.motionMagicDone(rotationParams,errorTolerance, false);
     	} else {
     		System.out.println("Turn timed out");
     	}

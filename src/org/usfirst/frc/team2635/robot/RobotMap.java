@@ -122,14 +122,13 @@ public class RobotMap {
 	
 	
 	
-	public static final int MOTION_MAGIC_CRUISE_VELOCITY = 500;
-	public static final int APPROACH_SCALE_VELOCITY = 250;
+
 	
 	public static double MOTION_MAGIC_DISTANCE = 3000;
 	public static double WHEEL_DIAMETER = 6;
 	
 	public static int ERRORTOLERANCE = 10;
-	public static int ROTATE_ERRORTOLERANCE = 20;
+	public static int ROTATE_ERRORTOLERANCE = 10;
 
 	public static boolean VELOCITYDRIVEMODE = false;
 	
@@ -145,7 +144,16 @@ public class RobotMap {
 	
 	public static final double AUTO_DRIVE_VELOCITY = 800;
 	public static final int AUTO_DRIVE_ACCELERATION = 1200;
+	//public static final double AUTO_DRIVE_VELOCITY = 500;
+	//public static final int AUTO_DRIVE_ACCELERATION = 500;
 
+	public static final int MOTION_MAGIC_CRUISE_VELOCITY = 500;
+	public static final int APPROACH_SCALE_VELOCITY = 300;
+	public static final int APPROACH_SCALE_ACCELERATION = 400;
+	
+	
+	public static final int SHORT_DRIVE_AUTONOMOUS_VELOCITY = 500;
+	public static final int SHORT_DRIVE_AUTONOMOUS_ACCELERATION = 550;
 	
 	public static final int AUTO_WALL_TO_SWITCH = 102;
 	public static final int AUTO_FWD1 = 50;

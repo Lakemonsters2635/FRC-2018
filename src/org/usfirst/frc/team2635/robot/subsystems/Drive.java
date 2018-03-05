@@ -192,7 +192,7 @@ public class Drive extends Subsystem {
     	double counts = inches/circumference*RobotMap.ENCODER_COUNTS_PER_REVOLUTION;
     	return counts;
     }
-    public void motionMagic(MotionParameters motionParams) {
+    public void motionMagicRotate(MotionParameters motionParams) {
     	
     	int frontRight = getFrontRightPos();
     	int frontLeft = getFrontLeftPos();
@@ -228,7 +228,7 @@ public class Drive extends Subsystem {
     
 
     
-    public void motionMagicWithNavx(MotionParameters motionParams, double averageAngleDelta) {
+    public void motionMagicDriveStraight(MotionParameters motionParams, double averageAngleDelta) {
     	
 //    	double currentAngle = getNavxAngle();
 //    	double angleDelta = (currentAngle - initialAngle);
@@ -238,12 +238,18 @@ public class Drive extends Subsystem {
     	int frontLeft = getFrontLeftPos();
     	
 
-    	double delta = (Math.abs(frontRight) - Math.abs(frontLeft));
-    	double foo = (frontLeft + frontRight) * 0.5;
+    	//double delta = (Math.abs(frontRight) - Math.abs(frontLeft));
+    	
+    	double delta = (frontLeft + frontRight) * 0.5;
+    	if (motionParams.leftWheelRotations < 0) {
+    		delta = -delta;
+    	}
   
+       	//System.out.println("frontRight: " + frontRight + " frontLeft: " + frontLeft + " delta: " + delta );
+
     			
-		frontRightMotor.configMotionCruiseVelocity(motionParams.rightVelocity  + (int)foo, 0);
-		frontLeftMotor.configMotionCruiseVelocity(motionParams.leftVelocity  - (int)foo, 0);
+		frontRightMotor.configMotionCruiseVelocity(motionParams.rightVelocity  + (int)delta, 0);
+		frontLeftMotor.configMotionCruiseVelocity(motionParams.leftVelocity  - (int)delta, 0);
 
     	
 //		frontRightMotor.configMotionCruiseVelocity((motionParams.rightVelocity  - (int)velocityFudge), 0);
@@ -275,7 +281,7 @@ public class Drive extends Subsystem {
   
     }
     
-    public boolean motionMagicDone(MotionParameters motionParams, double errorTolerance) {
+    public boolean motionMagicDone(MotionParameters motionParams, double errorTolerance, boolean useLimitSwitch) {
     	
     	double leftIntended = motionParams.leftWheelRotations;
     	double rightIntended = motionParams.rightWheelRotations;
@@ -288,7 +294,7 @@ public class Drive extends Subsystem {
     	
     	this.leftErrorReport = leftError;
     	this.rightErrorReport = rightError;
-    	if(Robot.limitSwitch.get()) {
+    	if(useLimitSwitch && Robot.limitSwitch.get()) {
     		System.out.println("Limit switch true!");
     		return true;
     	}
@@ -311,7 +317,7 @@ public class Drive extends Subsystem {
     	double currentAngle =  navx.getAngle();
     	 //diff b/w how far its gone & how far we want it to go. Currently returns the right value, but 
     	
-    	boolean encodersDone = motionMagicDone(motionParams, encoderErrorTolerance );
+    	boolean encodersDone = motionMagicDone(motionParams, encoderErrorTolerance, false );
 
     	
     	double angleDelta = (-targetAngle - currentAngle); //Difference b/w how far we've turned & how far we want to turn

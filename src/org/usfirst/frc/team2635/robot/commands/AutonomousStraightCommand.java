@@ -49,7 +49,7 @@ public class AutonomousStraightCommand extends TimedCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.motionMagicWithNavx(motionParams, 0.0);
+    	Robot.drive.motionMagicDriveStraight(motionParams, 0.0);
     }
 
     // Called once after timeout
@@ -65,7 +65,7 @@ public class AutonomousStraightCommand extends TimedCommand {
     	
     	boolean isFinished = isTimedOut();
     	if (!isFinished) {
-    		isFinished = Robot.drive.motionMagicDone(motionParams, RobotMap.ERRORTOLERANCE);
+    		isFinished = Robot.drive.motionMagicDone(motionParams, RobotMap.ERRORTOLERANCE, true);
     	}
         
     	if(isFinished) {
