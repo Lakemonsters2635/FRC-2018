@@ -53,7 +53,7 @@ public class FarRightAutonomousSequences {
 		output.addSequential(new AutonomousStraightCommand(148, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
 		output.addParallel(new ElevatorCommand(Height.SWITCH));
-		output.addSequential(new AutonomousStraightCommand(25, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION, 2.5));
+		output.addSequential(new AutonomousStraightCommand(25, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 2.5));
 		MotionMagicLibrary.DeliverCubeAndBackup(output);
 		return output;
 	}
@@ -65,12 +65,12 @@ public class FarRightAutonomousSequences {
 	private static CommandGroup FarRightToLeftSwitch() {
 		//TODO find true values 
 		CommandGroup output = new CommandGroup();
-		output.addSequential(new AutonomousStraightCommand(194, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(197, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 87, RobotMap.AUTO_TURN_ACCELERATION));
 		output.addSequential(new AutonomousStraightCommand(180, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new ElevatorCommand(Height.SWITCH));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(10, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION, 1.0));
+		output.addSequential(new AutonomousStraightCommand(15, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 1.0));
 		MotionMagicLibrary.DeliverCubeAndBackup(output);
 
 		
@@ -79,26 +79,37 @@ public class FarRightAutonomousSequences {
 	
 	
 	
-	public static CommandGroup FarRightToScale()
-	{
+	public static CommandGroup FarRightToScale() {
 		CommandGroup output = new CommandGroup();
 		FMSInfo fmsInfo = MotionMagicLibrary.getFMSInfo();
 		
-		if (fmsInfo.scaleLocation == 'R')
-		{
+		if (fmsInfo.scaleLocation == 'R') {
 			output = FarRightToRightScale();
 		}
 		else if (fmsInfo.scaleLocation == 'L'){
 			output = FarRightToLeftScale();
-		}
-		else
-		{
+		} else {
 			output = MotionMagicLibrary.CrossLineCommand();
 		}
 		output.setName(MotionMagicLibrary.getMethodName());
 		return output;
 	}
 	
+	public static CommandGroup FarRightToScaleAndWait() {
+		CommandGroup output = new CommandGroup();
+		FMSInfo fmsInfo = MotionMagicLibrary.getFMSInfo();
+		
+		if (fmsInfo.scaleLocation == 'R') {
+			output = FarRightToRightScaleAndWait();
+		}
+		else if (fmsInfo.scaleLocation == 'L'){
+			output = FarRightToLeftScaleAndWait();
+		} else {
+			output = MotionMagicLibrary.CrossLineCommand();
+		}
+		output.setName(MotionMagicLibrary.getMethodName());
+		return output;
+	}
 	
 	public static CommandGroup FarRightToRightScale() {
 		CommandGroup output; 
@@ -132,6 +143,28 @@ public class FarRightAutonomousSequences {
 		return output;
 	}
 	
+	public static CommandGroup FarRightToLeftScaleAndWait() {
+		CommandGroup output; 
+		output = new CommandGroup();
+		output.addSequential(new AutonomousStraightCommand(217.125, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		//output.addSequential(new AutonomousStraightCommand(208, RobotMap.AUTO_DRIVE_VELOCITY));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(245, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(84, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));//Should be 4.9" away
+		
+		return output;
+	}
+	
+	public static CommandGroup FarRightToRightScaleAndWait() {
+		CommandGroup output; 
+		output = new CommandGroup();
+		output.addSequential(new AutonomousStraightCommand(290, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));//Should be 4.9" away
+		
+		return output;
+	}
 	
 
 	

@@ -243,6 +243,13 @@ public class Robot extends TimedRobot {
 	    case "FarRightToScale":
 	    	m_autonomousCommand = FarRightAutonomousSequences.FarRightToScale();
 	    	break;
+	    case "FarLeftToScaleAndWait":
+	    	m_autonomousCommand = FarLeftAutonomousSequences.FarLeftToScaleAndWait();
+	    	break;
+	    case "FarRightToScaleAndWait":
+	    	m_autonomousCommand = FarRightAutonomousSequences.FarRightToScaleAndWait();
+	    	break;
+	    
 	    case "FarLeftToSwitch":
 	    	m_autonomousCommand = FarLeftAutonomousSequences.FarLeftToSwitch();
 	    	break;
@@ -372,19 +379,25 @@ public class Robot extends TimedRobot {
 
 		//SendableBuilder builder = null;
 		//m_chooser.initSendable(builder);;
-		m_chooser.addDefault("Do Nothing", "DoNothingCommand");
+		
 		
 		m_chooser.addObject("Left Station to Switch", "LeftStationToSwitch");
 		m_chooser.addObject("Center Station to Switch", "CenterStationToSwitch");
 		m_chooser.addObject("Right Station to Switch", "RightStationToSwitch");
-		
-		m_chooser.addObject("Far Left to Scale", "FarLeftToScale");
-		m_chooser.addObject("Far Right to Scale", "FarRightToScale");
 		m_chooser.addObject("Far Left to Switch", "FarLeftToSwitch");
 		m_chooser.addObject("Far Right to Switch", "FarRightToSwitch");
 
+		m_chooser.addObject("---- Scale ----", "");
+		m_chooser.addObject("Far Left to Scale", "FarLeftToScale");
+		m_chooser.addObject("Far Right to Scale", "FarRightToScale");
+		m_chooser.addObject("Far Left to Scale (wait)", "FarLeftToScaleAndWait");
+		m_chooser.addObject("Far Right to Scale (wait)", "FarRightToScaleAndWait");
+
+		
+		
 		m_chooser.addObject("Rotate Test", "RotateTest");
 		m_chooser.addObject("Drive Straight Test", "DriveStraightTest");
+		m_chooser.addDefault("FMS Test", "DoNothingCommand");
 		//chooser.addObject("Center", centerStationToLeftSwitch);
 		//chooser.addObject("Right", centerStationToLeftSwitch);
 		//chooser.addObject("Left", centerStationToLeftSwitch);
