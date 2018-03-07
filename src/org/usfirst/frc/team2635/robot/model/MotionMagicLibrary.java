@@ -375,7 +375,7 @@ public class MotionMagicLibrary
 
 		CommandGroup output = new CommandGroup(getMethodName());
 		//output.addSequential(new ElevatorCommand(Height.CLIMB));
-		output.addSequential(new AutonomousStraightCommand(120, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(217.125, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 //		output.addSequential(new TiltDownCommand(1));
 //		output.addSequential(new GrabberOpen(2));
 //		output.addSequential(new AutonomousStraightCommand(-10, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));

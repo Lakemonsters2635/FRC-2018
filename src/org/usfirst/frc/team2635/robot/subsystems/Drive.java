@@ -196,11 +196,15 @@ public class Drive extends Subsystem {
     	
     	int frontRight = getFrontRightPos();
     	int frontLeft = getFrontLeftPos();
-    	double delta = (Math.abs(frontRight) - Math.abs(frontLeft));
+    	//double delta = (Math.abs(frontRight) - Math.abs(frontLeft));
     	//System.out.println("frontRight: " + frontRight + " frontLeft: " + frontLeft + " delta: " + delta );
     	//System.out.println(frontRight + "\t" + frontLeft + "\t" + delta + "\t" + frontLeftMotor.getClosedLoopError(0) + "\t" + frontRightMotor.getClosedLoopError(0) );
-    	
+    	double delta = (frontLeft + frontRight) * 0.5;
+    	if (motionParams.leftWheelRotations < 0) {
+    		delta = -delta;
+    	}
 
+    	
 		frontRightMotor.configMotionCruiseVelocity(motionParams.rightVelocity, 0);
 		frontLeftMotor.configMotionCruiseVelocity(motionParams.leftVelocity, 0);
 
