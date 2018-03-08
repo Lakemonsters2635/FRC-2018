@@ -62,7 +62,6 @@ public class RobotMap {
 	
 	public static final int ELEVATOR_GROUND_LOWER_HEIGHT = 0; //Actually will be 0
 	//public static final int ELEVATOR_GROUND_UPPER_HEIGHT = 0;
-	//ALL FAKE VALUES VVV
 	//Upper values currently not used
 	public static final double SMALL_ELEVATOR_MAX = 20000;
 	public static final int ELEVATOR_EXCHANGE_LOWER_HEIGHT = 3000;
@@ -81,7 +80,6 @@ public class RobotMap {
 	public static final int ELEVATOR_CLIMB_LOWER_HEIGHT = 35000;
 	//public static final int ELEVATOR_CLIMB_UPPER_HEIGHT = 0;
 	public static final int ELEVATOR_TOLERANCE = 2000;
-	//ALL FAKE VALUES ^^^
 	
 	public static final int ELEVATOR_VELOCITY = 3000;
 	public static final int ELEVATOR_ACCELERATION = 5000;
@@ -118,7 +116,7 @@ public class RobotMap {
 	public static double MOTION_MAGIC_F = 0.7;
 	
 	//public static double TURN_CONSTANT = 
-	public static final double WHEEL_SEPARATION_INCHES = 28.3;
+	public static final double WHEEL_SEPARATION_INCHES = 27.5;
 	
 	
 	
@@ -137,25 +135,29 @@ public class RobotMap {
 	
 	//2018 BOT
 	public static final int ENCODER_COUNTS_PER_REVOLUTION = 4096/3;
-	
-
-	public static final double AUTO_TURN_VELOCITY = 500;
-	public static final int AUTO_TURN_ACCELERATION = 700;
-	
-	public static final double AUTO_DRIVE_VELOCITY = 800;
-	public static final int AUTO_DRIVE_ACCELERATION = 1200;
-//	public static final double AUTO_DRIVE_VELOCITY = 400;
-//	public static final int AUTO_DRIVE_ACCELERATION = 500;
-	
 	public static final int MOTION_MAGIC_CRUISE_VELOCITY = 500;
 	
-	public static final int APPROACH_SCALE_VELOCITY = 300;
-	public static final int APPROACH_SCALE_ACCELERATION = 400;
-//	public static final int APPROACH_SCALE_VELOCITY = 200;
-//	public static final int APPROACH_SCALE_ACCELERATION = 300;
+	public static final double AUTO_TURN_VELOCITY = 500;
+	public static final int AUTO_TURN_ACCELERATION = 600;
 	
-	public static final int SHORT_DRIVE_AUTONOMOUS_VELOCITY = 500;
-	public static final int SHORT_DRIVE_AUTONOMOUS_ACCELERATION = 550;
+	//FAST
+ 	public static final double AUTO_DRIVE_VELOCITY = 800;
+ 	public static final int AUTO_DRIVE_ACCELERATION = 800;
+	//SLOW
+//	public static final double AUTO_DRIVE_VELOCITY = 600;
+//	public static final int AUTO_DRIVE_ACCELERATION = 800;
+	
+	//FAST
+//	public static final int APPROACH_SCALE_VELOCITY = 300;
+//	public static final int APPROACH_SCALE_ACCELERATION = 400;
+	//SLOW
+	public static final int APPROACH_SCALE_VELOCITY = 200;
+	public static final int APPROACH_SCALE_ACCELERATION = 300;
+	
+	//FAST
+	public static final int SHORT_DRIVE_AUTONOMOUS_VELOCITY = 600;
+	public static final int SHORT_DRIVE_AUTONOMOUS_ACCELERATION = 700;
+	//SLOW
 //	public static final int SHORT_DRIVE_AUTONOMOUS_VELOCITY = 350;
 //	public static final int SHORT_DRIVE_AUTONOMOUS_ACCELERATION = 400;
 	

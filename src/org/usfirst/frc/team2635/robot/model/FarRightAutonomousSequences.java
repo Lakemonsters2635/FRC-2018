@@ -65,14 +65,14 @@ public class FarRightAutonomousSequences {
 	private static CommandGroup FarRightToLeftSwitch() {
 		//TODO find true values 
 		CommandGroup output = new CommandGroup();
-		output.addSequential(new AutonomousStraightCommand(210, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION, 5));
+		output.addSequential(new AutonomousStraightCommand(200, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION, 5.0));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(170, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(195, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION),3.0);
 		output.addSequential(new ElevatorCommand(Height.SWITCH));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 45, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(20, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 1.0));
+		output.addSequential(new AutonomousStraightCommand(-30, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION, 2.0));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 45, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(20, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 1.0));
+		output.addSequential(new AutonomousStraightCommand(50, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 2.0));
 
 		MotionMagicLibrary.DeliverCubeAndBackup(output);
 

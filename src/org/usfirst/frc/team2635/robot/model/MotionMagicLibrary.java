@@ -371,6 +371,16 @@ public class MotionMagicLibrary
 		return output;
 	}
 	
+	public static CommandGroup RotateTestCCW() {
+		System.out.println(getMethodName() + " Called");
+		CommandGroup output = new CommandGroup(getMethodName());
+		double targetAngle = -90;
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, targetAngle, RobotMap.AUTO_TURN_ACCELERATION)); // _, targetAngle, _)
+		
+		
+		return output;
+	}
+	
 	public static CommandGroup DriveStraightTest() {
 
 		CommandGroup output = new CommandGroup(getMethodName());

@@ -249,7 +249,6 @@ public class Robot extends TimedRobot {
 	    case "FarRightToScaleAndWait":
 	    	m_autonomousCommand = FarRightAutonomousSequences.FarRightToScaleAndWait();
 	    	break;
-	    
 	    case "FarLeftToSwitch":
 	    	m_autonomousCommand = FarLeftAutonomousSequences.FarLeftToSwitch();
 	    	break;
@@ -258,6 +257,9 @@ public class Robot extends TimedRobot {
 	    	break;
 	    case "RotateTest":
 	    	m_autonomousCommand = MotionMagicLibrary.RotateTest();
+	    	break;
+	    case "RotateTestCCW":
+	    	m_autonomousCommand= MotionMagicLibrary.RotateTestCCW();
 	    	break;
 	    case "DriveStraightTest":
 	    	m_autonomousCommand = MotionMagicLibrary.DriveStraightTest();
@@ -388,14 +390,15 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("Far Right to Switch", "FarRightToSwitch");
 
 		m_chooser.addObject("---- Scale ----", "");
-		m_chooser.addObject("Far Left to Scale", "FarLeftToScale");
-		m_chooser.addObject("Far Right to Scale", "FarRightToScale");
+//		m_chooser.addObject("Far Left to Scale", "FarLeftToScale");
+//		m_chooser.addObject("Far Right to Scale", "FarRightToScale");
 		m_chooser.addObject("Far Left to Scale (wait)", "FarLeftToScaleAndWait");
 		m_chooser.addObject("Far Right to Scale (wait)", "FarRightToScaleAndWait");
-
+		
 		
 		
 		m_chooser.addObject("Rotate Test", "RotateTest");
+		m_chooser.addObject("Rotate Test Counterclockwise", "RotateTestCCW");
 		m_chooser.addObject("Drive Straight Test", "DriveStraightTest");
 		m_chooser.addDefault("FMS Test", "DoNothingCommand");
 		//chooser.addObject("Center", centerStationToLeftSwitch);
