@@ -7,6 +7,8 @@ import org.usfirst.frc.team2635.robot.RobotMap;
 import org.usfirst.frc.team2635.robot.model.MotionMagicLibrary;
 import org.usfirst.frc.team2635.robot.model.MotionParameters;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.command.TimedCommand;
 
 /**
@@ -54,13 +56,17 @@ public class AutonomousStraightCommand extends TimedCommand {
 
     // Called once after timeout
     protected void end() {
+    	Robot.drive.setPIDValues(RobotMap.MOTION_MAGIC_P);
+    	Robot.drive.motorControl(ControlMode.PercentOutput, 0.0, 0.0, false);
+    	Robot.drive.reset();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
-    
+   
     @Override protected boolean isFinished() {
     	
     	boolean isFinished = isTimedOut();

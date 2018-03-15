@@ -31,6 +31,7 @@ public class RobotMap {
 	public static final int ALTERATE_ELEVATOR_DOWN_BUTTON = 10;
 	public static final int TILT_BUTTON = 1;
 	public static final int RETURN_BUTTON = 10;
+	public static final int ELEVATOR_RESET_BUTTON = 8;
 
 	public static final int NAVX_ROTATE_BUTTON = 7;
 	public static final int ELEVATOR_TEST_BUTTON = 8;
@@ -167,6 +168,7 @@ public class RobotMap {
 	public static final int CENTER_AUTO_TRANSLATE_FWD = 50;
 	public static final int OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD = 110;
 	public static final int OUTSIDE_SAME_AUTO_TRANSLATE_FWD = 20;
+	
 	
 	
 }

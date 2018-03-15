@@ -143,7 +143,10 @@ public class Elevator extends Subsystem {
 		return true;
 	}
 	
-	
+	public void setPercentValue(double speed) {
+		largeMotor1.set(ControlMode.PercentOutput, speed);
+		smallMotor.set(ControlMode.PercentOutput, speed);
+	}
 	public double currentHeight() {
 		
 		double upperHeight = Math.abs(largeMotor1.getSelectedSensorPosition(0));

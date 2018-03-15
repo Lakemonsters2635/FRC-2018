@@ -27,6 +27,7 @@ import org.usfirst.frc.team2635.robot.commands.DriveCommand;
 import org.usfirst.frc.team2635.robot.commands.ElevatorCommand;
 import org.usfirst.frc.team2635.robot.commands.ElevatorControl;
 import org.usfirst.frc.team2635.robot.commands.ElevatorDownCommand;
+import org.usfirst.frc.team2635.robot.commands.ElevatorReset;
 import org.usfirst.frc.team2635.robot.commands.ElevatorUpCommand;
 import org.usfirst.frc.team2635.robot.commands.ExpressElevatorDownCommand;
 import org.usfirst.frc.team2635.robot.commands.ExpressElevatorUpCommand;
@@ -84,7 +85,7 @@ public class Robot extends TimedRobot {
 	TiltCommand tiltCommand;
 	CommandGroup returnCommand;
 	AutonomousNavxRotate navxRotateCommand;
-	ElevatorControl elevatorControl;
+	static ElevatorControl elevatorControl;
 	
 	Command doNothingCmd;
 	
@@ -156,6 +157,7 @@ public class Robot extends TimedRobot {
 		oi.elevatorDownButton.whenPressed(new ElevatorDownCommand());
 		oi.expressElevatorUpButton.whenPressed(new ExpressElevatorUpCommand());
 		oi.expressElevatorDownButton.whenPressed(new ExpressElevatorDownCommand());
+		oi.elevatorResetButton.whileHeld(new ElevatorReset());
 		//oi.elevatorTestButton.whenPressed(new ElevatorCommand(Height.SWITCH));
 		//oi.closeGrabberTestButton.whenPressed(new GrabberClosed(1));
 		//oi.openGrabberTestButton.whenPressed(new GrabberOpen(1));
@@ -390,8 +392,8 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("Far Right to Switch", "FarRightToSwitch");
 
 		m_chooser.addObject("---- Scale ----", "");
-//		m_chooser.addObject("Far Left to Scale", "FarLeftToScale");
-//		m_chooser.addObject("Far Right to Scale", "FarRightToScale");
+		m_chooser.addObject("Far Left to Scale", "FarLeftToScale");
+		m_chooser.addObject("Far Right to Scale", "FarRightToScale");
 		m_chooser.addObject("Far Left to Scale (wait)", "FarLeftToScaleAndWait");
 		m_chooser.addObject("Far Right to Scale (wait)", "FarRightToScaleAndWait");
 		
@@ -419,5 +421,13 @@ public class Robot extends TimedRobot {
 
 		
 		SmartDashboard.putData("Auto Selector", m_chooser);
+	}
+	
+	public static void cancelElevator() {
+		elevatorControl.cancel();
+	}
+	
+	public static void startElevator() {
+		elevatorControl.start();
 	}
 }

@@ -42,6 +42,8 @@ public class OI {
 	public Button navxRotateButton = new JoystickButton(rightStick, RobotMap.NAVX_ROTATE_BUTTON);
 	public Button expressElevatorUpButton = new JoystickButton(rightStick, RobotMap.ALTERNATE_ELEVATOR_UP_BUTTON);
 	public Button expressElevatorDownButton = new JoystickButton(rightStick, RobotMap.ALTERATE_ELEVATOR_DOWN_BUTTON);
+	
+	public Button elevatorResetButton = new JoystickButton(rightStick, RobotMap.ELEVATOR_RESET_BUTTON);
 
 	//public Button closeGrabberTestButton = new JoystickButton(rightStick, RobotMap.CLOSE_GRABBER_TEST_BUTTON);
 	

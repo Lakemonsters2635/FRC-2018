@@ -188,7 +188,7 @@ public class MotionMagicLibrary
 		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
 		output.addParallel(new ElevatorCommand(Height.SWITCH));
-		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 3.0));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2+15, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 4.0));
 		output.addSequential(new TiltDownCommand(1));
 		output.addSequential(new GrabberOpen(2));
 		output.addSequential(new TiltUpCommand(1));
@@ -206,7 +206,7 @@ public class MotionMagicLibrary
 		output = new CommandGroup(getMethodName());
 		
 		output.addParallel(new ElevatorCommand(Height.SWITCH));
-		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_WALL_TO_SWITCH, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_WALL_TO_SWITCH, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 5.5));
 		output.addSequential(new TiltDownCommand(1));
 		output.addSequential(new GrabberOpen(2));
 		output.addSequential(new TiltUpCommand(1));
@@ -265,7 +265,7 @@ public class MotionMagicLibrary
 		
 		System.out.println("LeftStationToLeftSwitch() Called");
 		output.addParallel(new ElevatorCommand(Height.SWITCH));
-		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_WALL_TO_SWITCH, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_WALL_TO_SWITCH, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 5.5));
 		output.addSequential(new TiltDownCommand(1));
 		output.addSequential(new GrabberOpen(2));
 		output.addSequential(new TiltUpCommand(1));
@@ -303,6 +303,7 @@ public class MotionMagicLibrary
 		
 		return output;
 	}
+	
 	
 	public static FMSInfo getFMSInfo()
 	{

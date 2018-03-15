@@ -16,7 +16,7 @@ public class Bling extends Subsystem
     //TODO: Improve buttons bindings for manual control
     //ID's to send to arduino for each lighting scene. Used for reference
     public static final int rainbowFade = 0,
-                            firing = 1,
+                            red = 1,
                             marchRWB = 2,
     						trace = 3;
     private I2C chat;
