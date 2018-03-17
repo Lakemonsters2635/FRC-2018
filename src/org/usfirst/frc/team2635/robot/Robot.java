@@ -163,6 +163,7 @@ public class Robot extends TimedRobot {
 		//oi.openGrabberTestButton.whenPressed(new GrabberOpen(1));
 		
 		//oi.navxRotateButton.whenPressed(navxRotateCommand);
+		vision.ledOff();
 	}
 
 	/**
@@ -292,7 +293,7 @@ public class Robot extends TimedRobot {
 //		GetFMSCommand fmsInfoCmd = new GetFMSCommand(fmsInfo);
 //		fmsInfoCmd.start();
 		//MotionMagicLibrary.CenterStationToLeftSwitch().start();
-		vision.ledOn();
+		vision.data();
 	}
 
 	/**
@@ -349,7 +350,8 @@ public class Robot extends TimedRobot {
 			driveCommand.start();
 			vision.driveMode();
 		}
-		vision.ledOff();
+		vision.driveMode();
+		
 		elevator.encoderStart();
 		elevatorControl.start();
 		

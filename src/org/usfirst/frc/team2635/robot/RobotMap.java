@@ -94,7 +94,7 @@ public class RobotMap {
 	public static final int ELEVATOR_TOP_LIMIT_SWITCH_IO_CHANNEL = 2;
 	
 	//TODO change these vaules
-	public static final double WHEEL_RADIUS_INCHES = 3;
+	public static final double WHEEL_RADIUS_INCHES = 2.93389;
 	public static final double ROBOT_LENGTH = 39; //includes bumpers
 	public static final double ROBOT_WIDTH = 34.75; //includes bumpers
 	
@@ -143,7 +143,7 @@ public class RobotMap {
 	
 	//FAST
  	public static final double AUTO_DRIVE_VELOCITY = 800;
- 	public static final int AUTO_DRIVE_ACCELERATION = 800;
+ 	public static final int AUTO_DRIVE_ACCELERATION = 1200;
 	//SLOW
 //	public static final double AUTO_DRIVE_VELOCITY = 600;
 //	public static final int AUTO_DRIVE_ACCELERATION = 800;
@@ -156,8 +156,8 @@ public class RobotMap {
 	public static final int APPROACH_SCALE_ACCELERATION = 300;
 	
 	//FAST
-	public static final int SHORT_DRIVE_AUTONOMOUS_VELOCITY = 600;
-	public static final int SHORT_DRIVE_AUTONOMOUS_ACCELERATION = 700;
+	public static final int SHORT_DRIVE_AUTONOMOUS_VELOCITY = 500;
+	public static final int SHORT_DRIVE_AUTONOMOUS_ACCELERATION = 300;
 	//SLOW
 //	public static final int SHORT_DRIVE_AUTONOMOUS_VELOCITY = 350;
 //	public static final int SHORT_DRIVE_AUTONOMOUS_ACCELERATION = 400;

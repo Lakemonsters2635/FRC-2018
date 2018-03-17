@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -23,6 +24,7 @@ public class Drive extends Subsystem {
 	Joystick leftJoy;
 	Joystick rightJoy;
 	DifferentialDrive drive;
+	PowerDistributionPanel pdp;
 
 	public double errNavxDrive;
 	
@@ -64,7 +66,7 @@ public class Drive extends Subsystem {
 //		backRightMotor.configVoltageCompSaturation(12, 0);
 //		frontRightMotor.configVoltageCompSaturation(12, 0);
 
-		
+		pdp = new PowerDistributionPanel();
 		
 	}
 
@@ -232,11 +234,11 @@ public class Drive extends Subsystem {
     
 
     
-    public void motionMagicDriveStraight(MotionParameters motionParams, double averageAngleDelta) {
+    public void motionMagicDriveStraight(MotionParameters motionParams, double initialHeading) {
     	
-//    	double currentAngle = getNavxAngle();
-//    	double angleDelta = (currentAngle - initialAngle);
-    	double velocityFudge = averageAngleDelta * 1;
+     	double currentAngle = getNavxHeading();
+    	double angleDelta = (currentAngle - initialHeading);
+    	System.out.println("initialHeading: " + initialHeading + " angleDelta: " + angleDelta  );
     	
      	int frontRight = getFrontRightPos();
     	int frontLeft = getFrontLeftPos();
@@ -244,7 +246,8 @@ public class Drive extends Subsystem {
 
     	//double delta = (Math.abs(frontRight) - Math.abs(frontLeft));
     	
-    	double delta = (frontLeft + frontRight) * 0.5;
+    	//double delta = (frontLeft + frontRight) * 0.6;
+    	double delta = angleDelta * 10;
     	if (motionParams.leftWheelRotations < 0) {
     		delta = -delta;
     	}
@@ -285,8 +288,11 @@ public class Drive extends Subsystem {
   
     }
     
-    public boolean motionMagicDone(MotionParameters motionParams, double errorTolerance, boolean useLimitSwitch) {
+    public boolean motionMagicDone(MotionParameters motionParams, double errorTolerance, boolean useLimitSwitch, boolean useStallDetection) {
     	
+    	if(isStalled()&&useStallDetection){
+    		return true;
+    	}
     	double leftIntended = motionParams.leftWheelRotations;
     	double rightIntended = motionParams.rightWheelRotations;
     	
@@ -318,10 +324,11 @@ public class Drive extends Subsystem {
     public boolean rotationDone(MotionParameters motionParams, double targetAngle, double encoderErrorTolerance, double navxErrorTolerance) {
     	
     	double constant = 1.25;
-    	double currentAngle =  navx.getAngle();
+    	//double currentAngle =  navx.getAngle();
+    	double currentAngle = 0;
     	 //diff b/w how far its gone & how far we want it to go. Currently returns the right value, but 
     	
-    	boolean encodersDone = motionMagicDone(motionParams, encoderErrorTolerance, false );
+    	boolean encodersDone = motionMagicDone(motionParams, encoderErrorTolerance, false, false);
 
     	
     	double angleDelta = (-targetAngle - currentAngle); //Difference b/w how far we've turned & how far we want to turn
@@ -365,6 +372,30 @@ public class Drive extends Subsystem {
     
     public void navxReset() {
     	navx.reset();
+    }
+    
+    public Boolean isStalled(){
+    	Double flCurr = frontLeftMotor.getOutputCurrent();
+    	Double frCurr = frontRightMotor.getOutputCurrent();
+    	Double blCurr = backLeftMotor.getOutputCurrent();
+    	Double brCurr = backRightMotor.getOutputCurrent();
+    	
+    	Double flVolt = frontLeftMotor.getBusVoltage();
+    	Double frVolt = frontRightMotor.getBusVoltage();
+    	Double blVolt = backLeftMotor.getBusVoltage();
+    	Double brVolt = backRightMotor.getBusVoltage();
+    	
+    	
+    	Double totalCurr = (flCurr + frCurr + blCurr + brCurr);
+    	Double avgVolt = (flVolt + frVolt + blVolt + brVolt)/4;
+    	Double battVolt = pdp.getVoltage();
+    	if(battVolt < 6.5){
+    		System.out.println("Stalled Ended Auto Sequence");
+    		return true;
+    	}
+    	else{
+    		return false;
+    	}
     }
 
 	@Override

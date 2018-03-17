@@ -58,7 +58,7 @@ public class AutonomousTurnCommand extends Command {
    
     	if(!encodersDone) {
     		Robot.drive.motionMagicRotate(rotationParams);  
-    		encodersDone = Robot.drive.motionMagicDone(rotationParams, errorTolerance, false);
+    		encodersDone = Robot.drive.motionMagicDone(rotationParams, errorTolerance, false, false);
     	} 
     }
 
@@ -71,7 +71,7 @@ public class AutonomousTurnCommand extends Command {
     	
     	
     	if (!isTurnFinished) {
-    		isTurnFinished = Robot.drive.motionMagicDone(rotationParams,errorTolerance, false);
+    		isTurnFinished = Robot.drive.motionMagicDone(rotationParams,errorTolerance, false, false);
     	} else {
     		System.out.println("Turn timed out");
     	}

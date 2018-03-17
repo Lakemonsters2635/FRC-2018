@@ -20,6 +20,8 @@ public class AutonomousStraightCommand extends TimedCommand {
 	double distance;
 	double velocity;
 	double acceleration;
+	double initialHeading;
+	boolean useStallDetection;
 
     public AutonomousStraightCommand(double distance, double velocity, double acceleration) {
         super(1000.0);
@@ -27,6 +29,7 @@ public class AutonomousStraightCommand extends TimedCommand {
         this.distance = distance;
         this.velocity = velocity;
         this.acceleration = acceleration;
+        this.useStallDetection = false;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -37,6 +40,7 @@ public class AutonomousStraightCommand extends TimedCommand {
         this.distance = distance;
         this.velocity = velocity;
         this.acceleration = acceleration;
+        this.useStallDetection = true;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -44,6 +48,7 @@ public class AutonomousStraightCommand extends TimedCommand {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drive.reset();
+    	this.initialHeading = Robot.drive.getNavxHeading();
       	motionParams = MotionMagicLibrary.getDriveParameters(RobotMap.WHEEL_RADIUS_INCHES, distance, velocity, false, acceleration);
     	Robot.drive.motionDriveInit(motionParams);
     	
@@ -51,7 +56,7 @@ public class AutonomousStraightCommand extends TimedCommand {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.motionMagicDriveStraight(motionParams, 0.0);
+    	Robot.drive.motionMagicDriveStraight(motionParams, initialHeading);
     }
 
     // Called once after timeout
@@ -71,9 +76,9 @@ public class AutonomousStraightCommand extends TimedCommand {
     	
     	boolean isFinished = isTimedOut();
     	if (!isFinished) {
-    		isFinished = Robot.drive.motionMagicDone(motionParams, RobotMap.ERRORTOLERANCE, true);
+    		isFinished = Robot.drive.motionMagicDone(motionParams, RobotMap.ERRORTOLERANCE, true, useStallDetection);
     	}
-        
+
     	if(isFinished) {
 //    		double currentHeading = Robot.drive.getNavxHeading();
 //    		double navxHeading = Math.abs(intialHeading-currentHeading);
