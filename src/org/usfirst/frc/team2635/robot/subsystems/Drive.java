@@ -27,6 +27,7 @@ public class Drive extends Subsystem {
 	PowerDistributionPanel pdp;
 
 	public double errNavxDrive;
+	public double initialHeading;
 	
 	public Navx navx = new Navx();
 	
@@ -232,13 +233,20 @@ public class Drive extends Subsystem {
 		frontLeftMotor.configMotionAcceleration(motionParams.leftAcceleration, 0);
     }
     
-
+    public void initHeading() {
+    	initialHeading = getNavxHeading();
+    }
+    
+    public double getInitialNavxHeading() {
+    	return initialHeading;
+    }
+    
     
     public void motionMagicDriveStraight(MotionParameters motionParams, double initialHeading) {
     	
      	double currentAngle = getNavxHeading();
     	double angleDelta = (currentAngle - initialHeading);
-    	System.out.println("initialHeading: " + initialHeading + " angleDelta: " + angleDelta  );
+//    	System.out.println("initialHeading: " + initialHeading + " angleDelta: " + angleDelta  );
     	
      	int frontRight = getFrontRightPos();
     	int frontLeft = getFrontLeftPos();

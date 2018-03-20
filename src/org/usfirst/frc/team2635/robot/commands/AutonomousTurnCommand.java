@@ -28,12 +28,14 @@ public class AutonomousTurnCommand extends Command {
 	boolean encodersDone;
 	double errorTolerance;
 	int retryCount = 0;
+	double navxCurrentHeading;
 	
     public AutonomousTurnCommand(double rpm, double targetAngle, double acceleration) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.drive);
     	//FHE: WARNING: HARD CODED TIME OUT
+    	
     	this.setTimeout(1.5);
     	this.rpm = rpm;
     	this.targetAngle = targetAngle;
@@ -43,10 +45,18 @@ public class AutonomousTurnCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	navxCurrentHeading = Robot.drive.getNavxHeading(); 
+    	double intialHeading = Robot.drive.getInitialNavxHeading();
+    	double deltaHeading = intialHeading - navxCurrentHeading; 
+    	double computedTarget = targetAngle - deltaHeading;
     	Robot.drive.reset();
     	//Robot.drive.navxReset();
     	//double navxAngle = Robot.drive.getNavxAngle();
+    	System.out.println("Initial heading: " + intialHeading); 
+    	System.out.println("Navx current heading: " + navxCurrentHeading);
+    	System.out.println("Target angle: " + targetAngle);
+    	System.out.println("Computed target: " + computedTarget);
+    	
 	   	rotationParams = MotionMagicLibrary.getRotationParameters(targetAngle,
 				RobotMap.WHEEL_RADIUS_INCHES, RobotMap.WHEEL_SEPARATION_INCHES, rpm, acceleration);
 	   

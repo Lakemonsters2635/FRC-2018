@@ -218,8 +218,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		
-		
-		
+		drive.initHeading();
 		
 		RobotMap.MOTION_MAGIC_P = SmartDashboard.getNumber("P:", RobotMap.MOTION_MAGIC_P);
 		RobotMap.MOTION_MAGIC_I = SmartDashboard.getNumber("I:", RobotMap.MOTION_MAGIC_I);   

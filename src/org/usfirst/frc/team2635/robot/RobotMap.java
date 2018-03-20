@@ -117,7 +117,7 @@ public class RobotMap {
 	public static double MOTION_MAGIC_F = 0.7;
 	
 	//public static double TURN_CONSTANT = 
-	public static final double WHEEL_SEPARATION_INCHES = 27.5;
+	public static final double WHEEL_SEPARATION_INCHES = 25.75;
 	
 	
 	
@@ -143,7 +143,7 @@ public class RobotMap {
 	
 	//FAST
  	public static final double AUTO_DRIVE_VELOCITY = 800;
- 	public static final int AUTO_DRIVE_ACCELERATION = 1200;
+ 	public static final int AUTO_DRIVE_ACCELERATION = 200;
 	//SLOW
 //	public static final double AUTO_DRIVE_VELOCITY = 600;
 //	public static final int AUTO_DRIVE_ACCELERATION = 800;

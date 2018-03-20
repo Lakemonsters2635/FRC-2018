@@ -206,11 +206,8 @@ public class MotionMagicLibrary
 		output = new CommandGroup(getMethodName());
 		
 		output.addParallel(new ElevatorCommand(Height.SWITCH));
-		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_WALL_TO_SWITCH, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 5.5));
-		output.addSequential(new TiltDownCommand(1));
-		output.addSequential(new GrabberOpen(2));
-		output.addSequential(new TiltUpCommand(1));
-		output.addSequential(new ElevatorCommand(Height.GROUND));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_WALL_TO_SWITCH, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION, 5.5));
+		DeliverCube(output);
 		
 		
 //		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
@@ -335,12 +332,20 @@ public class MotionMagicLibrary
 	
 	public static void DeliverCubeAndBackup(CommandGroup cmdGroup) {
 		
-		cmdGroup.addSequential(new TiltDownCommand(1.5));
+		cmdGroup.addSequential(new TiltDownCommand(0.25));
 		cmdGroup.addSequential(new GrabberOpen(2));
 		cmdGroup.addSequential(new AutonomousStraightCommand(-30, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION));
 		cmdGroup.addSequential(new TiltUpCommand(2));
 		cmdGroup.addSequential(new ElevatorCommand(Height.GROUND));
 
+	}
+	
+	public static void DeliverCube(CommandGroup cmdGroup) {
+		
+		cmdGroup.addSequential(new TiltDownCommand(0.25));
+		cmdGroup.addSequential(new GrabberOpen(2));
+		cmdGroup.addSequential(new TiltUpCommand(2));
+		cmdGroup.addSequential(new ElevatorCommand(Height.GROUND));
 	}
 	
 	public static CommandGroup DoNothingCommand() {
@@ -367,7 +372,9 @@ public class MotionMagicLibrary
 		CommandGroup output = new CommandGroup(getMethodName());
 		double targetAngle = 90;
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, targetAngle, RobotMap.AUTO_TURN_ACCELERATION)); // _, targetAngle, _)
-		
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, targetAngle, RobotMap.AUTO_TURN_ACCELERATION));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, targetAngle, RobotMap.AUTO_TURN_ACCELERATION));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, targetAngle, RobotMap.AUTO_TURN_ACCELERATION));
 		
 		return output;
 	}
@@ -377,7 +384,9 @@ public class MotionMagicLibrary
 		CommandGroup output = new CommandGroup(getMethodName());
 		double targetAngle = -90;
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, targetAngle, RobotMap.AUTO_TURN_ACCELERATION)); // _, targetAngle, _)
-		
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, targetAngle, RobotMap.AUTO_TURN_ACCELERATION));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, targetAngle, RobotMap.AUTO_TURN_ACCELERATION));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, targetAngle, RobotMap.AUTO_TURN_ACCELERATION));
 		
 		return output;
 	}
