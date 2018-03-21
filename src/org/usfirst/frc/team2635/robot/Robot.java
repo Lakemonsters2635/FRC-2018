@@ -367,6 +367,10 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Front Right Position", (double) drive.getFrontRightPos());
 		SmartDashboard.putNumber("LeftError", drive.leftErrorReport);
 		SmartDashboard.putNumber("RightError" , drive.rightErrorReport);
+		SmartDashboard.putNumber("Initial Heading" , drive.getInitialNavxHeading());
+		SmartDashboard.putNumber("Relative Heading" , drive.getNavxHeading()-drive.getInitialNavxHeading());
+		SmartDashboard.putNumber("ActualHeading" ,drive.getNavxHeading());
+		SmartDashboard.putNumber("Get Angle" ,drive.getNavxAngle());
 		
 	}
 

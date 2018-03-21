@@ -22,7 +22,7 @@ public class GearShiftCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.gearbox.bullyMode();
-    	Robot.bling.set(2);
+    	Robot.bling.set(1);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.DigitalSource;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -26,7 +27,7 @@ public class Bling extends Subsystem
     
     public Bling()
     {
-    	chat = new I2C(I2C.Port.kOnboard, 168);
+    	chat = new I2C(Port.kOnboard, 4);
         //DigitalModule digiMod = DigitalModule.getInstance(1);
         //chat = digiMod.getI2C(8);
         

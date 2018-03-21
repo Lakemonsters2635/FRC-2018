@@ -181,6 +181,8 @@ public class Drive extends Subsystem {
 
     	//End Backup
     	Robot.vision.ledOn();
+    	Robot.drive.navxReset();
+   
     }
     
     public int getFrontRightPos(){
@@ -369,6 +371,7 @@ public class Drive extends Subsystem {
     	
     	frontLeftMotor.set(ControlMode.PercentOutput, 0);
     	frontRightMotor.set(ControlMode.PercentOutput, 0);
+ 
     }
     public double getNavxHeading() {
     	return navx.getHeading();
