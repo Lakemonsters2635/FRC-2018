@@ -9,6 +9,7 @@ import org.usfirst.frc.team2635.robot.commands.AutonomousNavxRotate;
 import org.usfirst.frc.team2635.robot.commands.AutonomousStraightCommand;
 import org.usfirst.frc.team2635.robot.commands.AutonomousTurnCommand;
 import org.usfirst.frc.team2635.robot.commands.ElevatorCommand;
+import org.usfirst.frc.team2635.robot.commands.GrabberClosed;
 import org.usfirst.frc.team2635.robot.commands.GrabberCommand;
 import org.usfirst.frc.team2635.robot.commands.GrabberOpen;
 import org.usfirst.frc.team2635.robot.commands.TiltCommand;
@@ -132,51 +133,6 @@ public class MotionMagicLibrary
 		return output;
 	}
 	
-	public  static CommandGroup CenterStationToSwitch()
-	{
-		CommandGroup output = new CommandGroup();
-		
-		FMSInfo fmsInfo = getFMSInfo();
-
-		if (fmsInfo.switchLocation == 'R')
-		{
-			output = CenterStationToRightSwitch();
-		}
-		else if (fmsInfo.switchLocation == 'L')
-		{
-			output = CenterStationToLeftSwitch();
-		}
-		else
-		{
-			output = CrossLineCommand();
-		}
-		output.setName(getMethodName());
-		return output;
-	}
-	
-	public  static CommandGroup LeftStationToSwitch()
-	{
-		CommandGroup output = new CommandGroup();
-		FMSInfo fmsInfo = getFMSInfo();
-		
-		if (fmsInfo.switchLocation == 'R')
-		{
-			output = LeftStationToRightSwitch();
-		}
-		else if (fmsInfo.switchLocation == 'L'){
-			output = LeftStationToLeftSwitch();
-		}
-		else
-		{
-			output = CrossLineCommand(); //Turn into cross line
-		}
-		
-		output.setName(getMethodName());
-		return output;
-	}
-	
-
-
 	
 	public static CommandGroup RightStationToLeftSwitch() {
 		CommandGroup output;
@@ -218,112 +174,27 @@ public class MotionMagicLibrary
 		return output;
 	}
 	
-	//TODO put in correct measurements
-	public static CommandGroup CenterStationToRightSwitch() {
-		CommandGroup output;
-		output = new CommandGroup(getMethodName());
-		System.out.println("methodName:" + getMethodName());
-		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(RobotMap.CENTER_AUTO_TRANSLATE_FWD, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addParallel(new ElevatorCommand(Height.SWITCH));
-		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 3.0));
-		output.addSequential(new TiltDownCommand(1));
-		output.addSequential(new GrabberOpen(2));
-		output.addSequential(new TiltUpCommand(1));
-		output.addSequential(new ElevatorCommand(Height.GROUND));
-		
-		return output;
-	}
-	
-	
-	public static CommandGroup CenterStationToLeftSwitch() {
-		CommandGroup output;
-		output = new CommandGroup(getMethodName());
-		System.out.println("methodName:" + getMethodName());
-		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(RobotMap.CENTER_AUTO_TRANSLATE_FWD, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addParallel(new ElevatorCommand(Height.SWITCH));
-		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 3.0));
-		output.addSequential(new TiltDownCommand(1));
-		output.addSequential(new GrabberOpen(2));
-		output.addSequential(new TiltUpCommand(1));
-		output.addSequential(new ElevatorCommand(Height.GROUND));
-		
-		return output;
-	}
-	
-	public static CommandGroup LeftStationToLeftSwitch() {
-		CommandGroup output;
-		output = new CommandGroup(getMethodName());
-		
-		System.out.println("LeftStationToLeftSwitch() Called");
-		output.addParallel(new ElevatorCommand(Height.SWITCH));
-		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_WALL_TO_SWITCH, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 5.5));
-		output.addSequential(new TiltDownCommand(1));
-		output.addSequential(new GrabberOpen(2));
-		output.addSequential(new TiltUpCommand(1));
-		output.addSequential(new ElevatorCommand(Height.GROUND));
-		//output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
-		//output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_SAME_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		//output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
-		//output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		
-		return output;
-	}
-	
-	
 
-	
-	public static CommandGroup LeftStationToRightSwitch() {
-		CommandGroup output;
-		output = new CommandGroup(getMethodName());
-		System.out.println("LeftStationToRightSwitch() Called");
-		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addParallel(new ElevatorCommand(Height.SWITCH));
-		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 3.0));
-		output.addSequential(new TiltDownCommand(1));
-		output.addSequential(new GrabberOpen(2));
-		output.addSequential(new TiltUpCommand(1));
-		output.addSequential(new ElevatorCommand(Height.GROUND));
 		
-		
-		
-	
-		
-		
-		return output;
-	}
-	
-	
 	public static FMSInfo getFMSInfo()
 	{
 		FMSInfo fmsInfo = new FMSInfo();
 		DriverStation driveStation= DriverStation.getInstance();
 		
 		System.out.println("FMS Attached: " + driveStation.isFMSAttached());
-			
-		//FHE: How do we test "IsFMSAttached())
+		String gameSpecificMessage = "";
+
 		
-			String gameSpecificMessage = "";
+		//driveStation.waitForData();
+    	fmsInfo.alliance = driveStation.getAlliance();
+    	gameSpecificMessage = driveStation.getGameSpecificMessage();
 
-    		
-    		//driveStation.waitForData();
-        	fmsInfo.alliance = driveStation.getAlliance();
-        	gameSpecificMessage = driveStation.getGameSpecificMessage();
-
-    		fmsInfo.switchLocation = gameSpecificMessage.charAt(0);
-        	fmsInfo.scaleLocation = gameSpecificMessage.charAt(1);
-        	fmsInfo.opponentSwitchLocation = gameSpecificMessage.charAt(2);
-        	fmsInfo.driveStation = driveStation.getLocation();
-        	fmsInfo.isAutonomous = driveStation.isAutonomous();
-        	fmsInfo.isInitalized = true;
+		fmsInfo.switchLocation = gameSpecificMessage.charAt(0);
+    	fmsInfo.scaleLocation = gameSpecificMessage.charAt(1);
+    	fmsInfo.opponentSwitchLocation = gameSpecificMessage.charAt(2);
+    	fmsInfo.driveStation = driveStation.getLocation();
+    	fmsInfo.isAutonomous = driveStation.isAutonomous();
+    	fmsInfo.isInitalized = true;
 		
 		
 		return fmsInfo;
@@ -333,9 +204,9 @@ public class MotionMagicLibrary
 	public static void DeliverCubeAndBackup(CommandGroup cmdGroup) {
 		
 		cmdGroup.addSequential(new TiltDownCommand(0.25));
-		cmdGroup.addSequential(new GrabberOpen(2));
-		cmdGroup.addSequential(new AutonomousStraightCommand(-30, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION));
-		cmdGroup.addSequential(new TiltUpCommand(2));
+		cmdGroup.addSequential(new GrabberOpen(1.25));
+		cmdGroup.addParallel(new AutonomousStraightCommand(-20, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION));
+		cmdGroup.addSequential(new TiltUpCommand(0.75));
 		cmdGroup.addSequential(new ElevatorCommand(Height.GROUND));
 
 	}
@@ -344,7 +215,7 @@ public class MotionMagicLibrary
 		
 		cmdGroup.addSequential(new TiltDownCommand(0.25));
 		cmdGroup.addSequential(new GrabberOpen(2));
-		cmdGroup.addSequential(new TiltUpCommand(2));
+		cmdGroup.addParallel(new TiltUpCommand(1));
 		cmdGroup.addSequential(new ElevatorCommand(Height.GROUND));
 	}
 	
@@ -367,7 +238,14 @@ public class MotionMagicLibrary
 		return output;
 	}
 	
-	public static CommandGroup RotateTest() {
+	public static CommandGroup CrossLineCommandBackward() {
+		CommandGroup output;
+		output = new CommandGroup(getMethodName());
+		output.addSequential(new AutonomousStraightCommand(-138.0, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		return output;
+	}
+	
+	public static CommandGroup RotateTestCCW() {
 		System.out.println(getMethodName() + " Called");
 		CommandGroup output = new CommandGroup(getMethodName());
 		double targetAngle = 90;
@@ -379,7 +257,7 @@ public class MotionMagicLibrary
 		return output;
 	}
 	
-	public static CommandGroup RotateTestCCW() {
+	public static CommandGroup RotateTest() {
 		System.out.println(getMethodName() + " Called");
 		CommandGroup output = new CommandGroup(getMethodName());
 		double targetAngle = -90;

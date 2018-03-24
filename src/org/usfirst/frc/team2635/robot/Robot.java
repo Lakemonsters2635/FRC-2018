@@ -7,6 +7,9 @@
 
 package org.usfirst.frc.team2635.robot;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -73,7 +76,7 @@ public class Robot extends TimedRobot {
 	public static Tilt tilter;
 	public static Bling bling;
 	public static LimitSwitch limitSwitch;
-	
+	public java.util.Date startDateTime;
 	DriveCommand driveCommand;
 	AutonomousCommand autoCommand;
 	VisionLightCommand visionCommand;
@@ -114,6 +117,9 @@ public class Robot extends TimedRobot {
 		grabber = new Grabber();
 		bling = new Bling();
 		limitSwitch = new LimitSwitch();
+		
+		startDateTime= Calendar.getInstance().getTime();
+
 		
 		m_chooser = new SendableChooser();
 		
@@ -177,6 +183,13 @@ public class Robot extends TimedRobot {
 		//Commands are automatically canceled when robot is disabled,
 		//However you can set a command to run while the robot is disabled using
 		//driveCommand.setRunWhenDisabled(true);
+		
+		java.util.Date autonomousEndDateTime = Calendar.getInstance().getTime();
+		long difference = autonomousEndDateTime.getTime() - startDateTime.getTime();
+		System.out.println("********************************************") ;
+		System.out.println("Autonomous Finished in " + difference/1000 + " seconds!") ;
+		System.out.println("********************************************") ;
+		
 		if (autoCommand != null && autoCommand.isRunning())
 		{
 			autoCommand.cancel();
@@ -200,6 +213,8 @@ public class Robot extends TimedRobot {
 //				e.printStackTrace();
 //			}
 //		
+
+		
 		Scheduler.getInstance().run();
 		vision.ledOff();
 	}
@@ -218,7 +233,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		
+		startDateTime= Calendar.getInstance().getTime();
 		drive.initHeading();
+		drive.navxReset();
 		
 		RobotMap.MOTION_MAGIC_P = SmartDashboard.getNumber("P:", RobotMap.MOTION_MAGIC_P);
 		RobotMap.MOTION_MAGIC_I = SmartDashboard.getNumber("I:", RobotMap.MOTION_MAGIC_I);   
@@ -233,23 +250,17 @@ public class Robot extends TimedRobot {
 	    case "RightStationToSwitch": 
 	    	m_autonomousCommand = MotionMagicLibrary.RightStationToSwitch(); 
 	        break; 
-	    case "CenterStationToSwitch": 
-	    	m_autonomousCommand = MotionMagicLibrary.CenterStationToSwitch();
-	        break;
-	    case "LeftStationToSwitch":
-	    	m_autonomousCommand = MotionMagicLibrary.LeftStationToSwitch();
-	    	break;
 	    case "FarLeftToScale":
-	    	m_autonomousCommand = FarLeftAutonomousSequences.FarLeftToScale();
+	    	m_autonomousCommand = FarLeftAutonomousSequences.FarLeftToScale(true);
 	    	break;
 	    case "FarRightToScale":
-	    	m_autonomousCommand = FarRightAutonomousSequences.FarRightToScale();
+	    	m_autonomousCommand = FarRightAutonomousSequences.FarRightToScale(true);
 	    	break;
 	    case "FarLeftToScaleAndWait":
-	    	m_autonomousCommand = FarLeftAutonomousSequences.FarLeftToScaleAndWait();
+	    	m_autonomousCommand = FarLeftAutonomousSequences.FarLeftToScale(false);
 	    	break;
 	    case "FarRightToScaleAndWait":
-	    	m_autonomousCommand = FarRightAutonomousSequences.FarRightToScaleAndWait();
+	    	m_autonomousCommand = FarRightAutonomousSequences.FarRightToScale(false);
 	    	break;
 	    case "FarLeftToSwitch":
 	    	m_autonomousCommand = FarLeftAutonomousSequences.FarLeftToSwitch();
@@ -339,11 +350,15 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		
+	
 		if (autoCommand != null) {
 			autoCommand.cancel();
 		}
 		
-		if (drive != null)drive.teleInit();
+		if (drive != null) {
+			drive.navxReset();
+			drive.teleInit();
+		}
 		
 		if (driveCommand != null) {
 			driveCommand.start();
@@ -390,8 +405,6 @@ public class Robot extends TimedRobot {
 		//m_chooser.initSendable(builder);;
 		
 		
-		m_chooser.addObject("Left Station to Switch", "LeftStationToSwitch");
-		m_chooser.addObject("Center Station to Switch", "CenterStationToSwitch");
 		m_chooser.addObject("Right Station to Switch", "RightStationToSwitch");
 		m_chooser.addObject("Far Left to Switch", "FarLeftToSwitch");
 		m_chooser.addObject("Far Right to Switch", "FarRightToSwitch");

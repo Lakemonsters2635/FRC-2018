@@ -257,7 +257,7 @@ public class Drive extends Subsystem {
     	//double delta = (Math.abs(frontRight) - Math.abs(frontLeft));
     	
     	//double delta = (frontLeft + frontRight) * 0.6;
-    	double delta = angleDelta * 10;
+    	double delta = angleDelta * 11;
     	if (motionParams.leftWheelRotations < 0) {
     		delta = -delta;
     	}
@@ -300,7 +300,7 @@ public class Drive extends Subsystem {
     
     public boolean motionMagicDone(MotionParameters motionParams, double errorTolerance, boolean useLimitSwitch, boolean useStallDetection) {
     	
-    	if(isStalled()&&useStallDetection){
+    	if(useStallDetection && isStalled() ){
     		return true;
     	}
     	double leftIntended = motionParams.leftWheelRotations;
@@ -321,8 +321,6 @@ public class Drive extends Subsystem {
     	//System.out.println("Left Error: " + leftError + "    Right Error: " + rightError);
     	//System.out.println("Left Position: " + getFrontLeftPos() + "Right Position" + getFrontRightPos());
     	if(leftError < errorTolerance && rightError < errorTolerance) {
-    		System.out.println("Limit switch false!");
-    		
     		return true;
     	}
     	

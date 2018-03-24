@@ -24,7 +24,7 @@ public class AutonomousStraightCommand extends TimedCommand {
 	boolean useStallDetection;
 
     public AutonomousStraightCommand(double distance, double velocity, double acceleration) {
-        super(1000.0);
+        super(7.0);
         requires(Robot.drive);
         this.distance = distance;
         this.velocity = velocity;
@@ -49,6 +49,10 @@ public class AutonomousStraightCommand extends TimedCommand {
     protected void initialize() {
     	Robot.drive.reset();
     	this.initialHeading = Robot.drive.getNavxHeading();
+    	System.out.println("-----Autonomous Straight Started----");
+    	System.out.println("Distance: "+ distance + "  Velocity: " + velocity + "  Acceleration: " + acceleration);
+
+    	
       	motionParams = MotionMagicLibrary.getDriveParameters(RobotMap.WHEEL_RADIUS_INCHES, distance, velocity, false, acceleration);
     	Robot.drive.motionDriveInit(motionParams);
     	
@@ -74,17 +78,20 @@ public class AutonomousStraightCommand extends TimedCommand {
    
     @Override protected boolean isFinished() {
     	
+    	
+    	boolean useLimitSwitch= false;
     	boolean isFinished = isTimedOut();
     	if (!isFinished) {
-    		isFinished = Robot.drive.motionMagicDone(motionParams, RobotMap.ERRORTOLERANCE, true, useStallDetection);
+    		isFinished = Robot.drive.motionMagicDone(motionParams, RobotMap.ERRORTOLERANCE, useLimitSwitch, useStallDetection);
     	}
 
     	if(isFinished) {
-//    		double currentHeading = Robot.drive.getNavxHeading();
-//    		double navxHeading = Math.abs(intialHeading-currentHeading);
+    		double currentHeading = Robot.drive.getNavxHeading();
+    		double headingDelta = Math.abs(this.initialHeading-currentHeading);
 //    		System.out.println("Navx straight heading:" + navxHeading);
 //    		System.out.println("Navx straight-drive angle: " + Robot.drive.getNavxAngle());
     		System.out.println("Drive Straight Finished.");
+    		System.out.println("Heading Delta: " + headingDelta);
     		System.out.println("-----------");
     	}
     	

@@ -126,8 +126,8 @@ public class RobotMap {
 	public static double MOTION_MAGIC_DISTANCE = 3000;
 	public static double WHEEL_DIAMETER = 6;
 	
-	public static int ERRORTOLERANCE = 10;
-	public static int ROTATE_ERRORTOLERANCE = 10;
+	public static int ERRORTOLERANCE = 20;
+	public static int ROTATE_ERRORTOLERANCE = 30;
 
 	public static boolean VELOCITYDRIVEMODE = false;
 	
@@ -138,12 +138,12 @@ public class RobotMap {
 	public static final int ENCODER_COUNTS_PER_REVOLUTION = 4096/3;
 	public static final int MOTION_MAGIC_CRUISE_VELOCITY = 500;
 	
-	public static final double AUTO_TURN_VELOCITY = 500;
-	public static final int AUTO_TURN_ACCELERATION = 600;
+	public static final double AUTO_TURN_VELOCITY = 400;
+	public static final int AUTO_TURN_ACCELERATION = 400;
 	
 	//FAST
- 	public static final double AUTO_DRIVE_VELOCITY = 800;
- 	public static final int AUTO_DRIVE_ACCELERATION = 200;
+ 	public static final double AUTO_DRIVE_VELOCITY = 700;
+ 	public static final int AUTO_DRIVE_ACCELERATION = 700;
 	//SLOW
 //	public static final double AUTO_DRIVE_VELOCITY = 600;
 //	public static final int AUTO_DRIVE_ACCELERATION = 800;

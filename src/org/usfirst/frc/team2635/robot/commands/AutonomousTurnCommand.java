@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
@@ -26,9 +27,9 @@ public class AutonomousTurnCommand extends Command {
 	double targetAngle;
 	double acceleration;
 	boolean encodersDone;
-	double errorTolerance;
+	double initialAngle;
 	int retryCount = 0;
-	double navxCurrentHeading;
+	
 	
     public AutonomousTurnCommand(double rpm, double targetAngle, double acceleration) {
         // Use requires() here to declare subsystem dependencies
@@ -36,31 +37,67 @@ public class AutonomousTurnCommand extends Command {
     	requires(Robot.drive);
     	//FHE: WARNING: HARD CODED TIME OUT
     	
-    	this.setTimeout(1.5);
+    	this.setTimeout(3);
     	this.rpm = rpm;
     	this.targetAngle = targetAngle;
     	this.acceleration = acceleration;
-    	errorTolerance = RobotMap.ROTATE_ERRORTOLERANCE;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	navxCurrentHeading = Robot.drive.getNavxHeading(); 
-    	double intialHeading = Robot.drive.getInitialNavxHeading();
-    	double deltaHeading = intialHeading - navxCurrentHeading; 
-    	double computedTarget = targetAngle - deltaHeading;
     	Robot.drive.reset();
+	   	encodersDone = false;
+
+    	//this.initialAngle = Robot.drive.getNavxAngle();
+    	double currentAngle = Robot.drive.getNavxAngle(); 
+    	double deltaAngle = 0.0; 
+    	//double adjustedTargetAngle = targetAngle - deltaAngle;
+    	double adjustedTargetAngle = targetAngle;
+    	boolean isClockWiseTurn = (targetAngle < 0.0);
+    	boolean targetAngleIs90 = (targetAngle % 90.0 == 0.0);
+     	
+    	System.out.println("-----Autonomous Turn Started----");
+    	if (targetAngleIs90)
+    	{
+    		deltaAngle = currentAngle % 90.0;
+        	if (Math.abs(deltaAngle) > 75)
+        	{
+//        		if (deltaAngle > 75)
+//        		{
+//        			deltaAngle = 90 - deltaAngle;
+//        		}
+//        		else if (deltaAngle < -75)
+//        		{
+//        			deltaAngle = 90 + deltaAngle;
+//        		}
+        			
+            	System.out.println("Delta Angle is WACKY!!!!, so fixing: "+ deltaAngle);
+            	deltaAngle =  90.0 % deltaAngle;
+            	//adjustedTargetAngle = targetAngle;
+            	adjustedTargetAngle = deltaAngle;
+            	System.out.println("Delta Angle fixed: "+ deltaAngle);
+        	} 		
+        	System.out.println("Right Angle Delta: "+ deltaAngle );
+    	   	adjustedTargetAngle = targetAngle + deltaAngle;
+    	}
+    	
+
+    	//Starting Heading
+    	//Heading at start of Turn =-92
+    	// 
+
+    	 
     	//Robot.drive.navxReset();
     	//double navxAngle = Robot.drive.getNavxAngle();
-    	System.out.println("Initial heading: " + intialHeading); 
-    	System.out.println("Navx current heading: " + navxCurrentHeading);
-    	System.out.println("Target angle: " + targetAngle);
-    	System.out.println("Computed target: " + computedTarget);
+
+    	System.out.println("current Angle: " + currentAngle + " Target Angle: "+ targetAngle + "   Delta: " + deltaAngle +  "   Adjusted Target Angle:" + adjustedTargetAngle);
+    	
+    	
     	
 	   	rotationParams = MotionMagicLibrary.getRotationParameters(targetAngle,
 				RobotMap.WHEEL_RADIUS_INCHES, RobotMap.WHEEL_SEPARATION_INCHES, rpm, acceleration);
 	   
-	   	encodersDone = false;
+
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -68,37 +105,29 @@ public class AutonomousTurnCommand extends Command {
    
     	if(!encodersDone) {
     		Robot.drive.motionMagicRotate(rotationParams);  
-    		encodersDone = Robot.drive.motionMagicDone(rotationParams, errorTolerance, false, false);
+    		encodersDone = Robot.drive.motionMagicDone(rotationParams, RobotMap.ROTATE_ERRORTOLERANCE, false, false);
     	} 
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//MotionParameters motionParams, double targetAngle, double encoderErrorTolerance, double navxErrorTolerance
-    	double navxErrorTolerance = 0.3; //TODO: Put in RobotMap
     	//boolean done = Robot.drive.rotationDone(rotationParams, targetAngle, RobotMap.ERRORTOLERANCE, navxErrorTolerance);
     	boolean isTurnFinished = isTimedOut();
     	
     	
     	if (!isTurnFinished) {
-    		isTurnFinished = Robot.drive.motionMagicDone(rotationParams,errorTolerance, false, false);
+    		isTurnFinished = Robot.drive.motionMagicDone(rotationParams,RobotMap.ROTATE_ERRORTOLERANCE, false, false);
     	} else {
     		System.out.println("Turn timed out");
     	}
     	
-    	
-
-    	
-
-    	
+   	
     	if (isTurnFinished) {
-        	//double navxAngle = Robot.drive.getNavxAngle();
-        	//double angleDelta = (-targetAngle - navxAngle);
-        	//System.out.println("Final Navx turn delta: " + angleDelta);
-        	//System.out.println("Final Navx turn angle: " + navxAngle);
     		System.out.println("Drive Turn Finished");
     		System.out.println("-----------");
     		Robot.drive.setPIDValues(RobotMap.MOTION_MAGIC_P);
+
     	}
     	return isTurnFinished;
     }
