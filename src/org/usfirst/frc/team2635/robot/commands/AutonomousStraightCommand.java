@@ -6,6 +6,7 @@ import org.usfirst.frc.team2635.robot.Robot;
 import org.usfirst.frc.team2635.robot.RobotMap;
 import org.usfirst.frc.team2635.robot.model.MotionMagicLibrary;
 import org.usfirst.frc.team2635.robot.model.MotionParameters;
+import org.usfirst.frc.team2635.robot.model.SensorParams;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
@@ -22,6 +23,7 @@ public class AutonomousStraightCommand extends TimedCommand {
 	double acceleration;
 	double initialHeading;
 	boolean useStallDetection;
+	SensorParams visionParams;
 
     public AutonomousStraightCommand(double distance, double velocity, double acceleration) {
         super(7.0);
@@ -44,14 +46,30 @@ public class AutonomousStraightCommand extends TimedCommand {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
+    
+    public AutonomousStraightCommand(SensorParams params, double velocity, double acceleration, double timeout) {
+        super(timeout);
+        requires(Robot.drive);
+        this.visionParams = params;
+        this.velocity = velocity;
+        this.acceleration = acceleration;
+        this.useStallDetection = true;
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+
     	Robot.drive.reset();
     	this.initialHeading = Robot.drive.getNavxHeading();
     	System.out.println("-----Autonomous Straight Started----");
     	System.out.println("Distance: "+ distance + "  Velocity: " + velocity + "  Acceleration: " + acceleration);
-
+    	if (visionParams != null) {
+    		
+    		System.out.println("visionParams.distance: " + visionParams.distance);
+    		distance = visionParams.distance;
+    	}
     	
       	motionParams = MotionMagicLibrary.getDriveParameters(RobotMap.WHEEL_RADIUS_INCHES, distance, velocity, false, acceleration);
     	Robot.drive.motionDriveInit(motionParams);
