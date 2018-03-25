@@ -72,7 +72,7 @@ public class FarRightAutonomousSequences {
 		output.addSequential(new AutonomousStraightCommand(-215, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION),3.0);
 		output.addSequential(new PauseCommand(0.5));
 		output.addParallel(new ElevatorCommand(Height.SWITCH));
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -45, RobotMap.AUTO_TURN_ACCELERATION));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -50, RobotMap.AUTO_TURN_ACCELERATION));
 		output.addSequential(new AutonomousStraightCommand(42, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION, 2.0));
 		MotionMagicLibrary.DeliverCubeAndBackup(output);
 
@@ -102,14 +102,15 @@ public class FarRightAutonomousSequences {
 
 	public static CommandGroup FarRightToRightScale(boolean deliverCube) {
 		CommandGroup output = new CommandGroup(); 
-		output.addSequential(new AutonomousStraightCommand(-249.25, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(-247.25, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new PauseCommand(0.5));
 		if (deliverCube) {
 			output.addParallel(new ElevatorCommand(Height.CLIMB));
 			output.addSequential(new PauseCommand(0.5));
 		}
-		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -150, RobotMap.AUTO_TURN_ACCELERATION));//Should be 4.9" away
-		output.addSequential(new AutonomousStraightCommand(24.75, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 1.5));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -160, RobotMap.AUTO_TURN_ACCELERATION));//Should be 4.9" away
+		output.addSequential(new AutonomousStraightCommand(20.75, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 1.5));
+		//output.addSequential(new AutonomousStraightCommand(24.75, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 1.5));
 		if (deliverCube) {
 			MotionMagicLibrary.DeliverCubeAndBackup(output);
 		}

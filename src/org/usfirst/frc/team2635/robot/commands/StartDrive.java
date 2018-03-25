@@ -1,43 +1,39 @@
 package org.usfirst.frc.team2635.robot.commands;
 
 import org.usfirst.frc.team2635.robot.Robot;
-import org.usfirst.frc.team2635.robot.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class VisionLightCommand extends Command {
+public class StartDrive extends Command {
 
-    public VisionLightCommand() {
+    public StartDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.vision.driveMode();
+    	Robot.driveCommand.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.vision.data();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.vision.driveMode();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.vision.driveMode();
     }
 }

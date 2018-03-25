@@ -4,6 +4,7 @@ import org.usfirst.frc.team2635.robot.Robot;
 import org.usfirst.frc.team2635.robot.RobotMap;
 import org.usfirst.frc.team2635.robot.model.MotionMagicLibrary;
 import org.usfirst.frc.team2635.robot.model.MotionParameters;
+import org.usfirst.frc.team2635.robot.model.SensorParams;
 
 import java.security.Timestamp;
 import java.util.Date;
@@ -29,6 +30,7 @@ public class AutonomousTurnCommand extends Command {
 	boolean encodersDone;
 	double initialAngle;
 	int retryCount = 0;
+	SensorParams params;
 	
 	
     public AutonomousTurnCommand(double rpm, double targetAngle, double acceleration) {
@@ -42,12 +44,26 @@ public class AutonomousTurnCommand extends Command {
     	this.targetAngle = targetAngle;
     	this.acceleration = acceleration;
     }
+    
+    public AutonomousTurnCommand(double rpm, SensorParams params, double acceleration) {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	requires(Robot.drive);
+    	//FHE: WARNING: HARD CODED TIME OUT
+    	
+    	this.setTimeout(3);
+    	this.rpm = rpm;
+    	this.params = params;
+    	this.acceleration = acceleration;
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.drive.reset();
 	   	encodersDone = false;
-
+	   	if(params != null){
+	   		targetAngle = -params.x;
+	   	}
     	//this.initialAngle = Robot.drive.getNavxAngle();
     	double currentAngle = Robot.drive.getNavxAngle(); 
     	double deltaAngle = 0.0; 

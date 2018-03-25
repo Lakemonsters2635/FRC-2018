@@ -15,7 +15,10 @@ public class Vision extends Subsystem {
 	NetworkTableEntry ty;
 	NetworkTableEntry ta;
 	NetworkTableEntry ts;
-	NetworkTableEntry camMode;
+	NetworkTableEntry tv;
+	NetworkTableEntry pipeline;
+	double x,y,area,skew,v;
+	public NetworkTableEntry camMode;
 	NetworkTableEntry ledMode;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -25,8 +28,17 @@ public class Vision extends Subsystem {
 		ty = table.getEntry("ty");
 		ta = table.getEntry("ta");
 		ts = table.getEntry("ts");
+		tv = table.getEntry("tv");
 		camMode = table.getEntry("camMode");
 		ledMode = table.getEntry("ledMode");
+		
+		pipeline = table.getEntry("pipeline");
+		if (pipeline != null)
+		{
+			System.out.println("pipeline:" + pipeline) ;
+			//pipeline.setNumber(0);
+		}
+		
 		
 		//Turn off LED
 		ledMode.setDouble(1);
@@ -34,7 +46,7 @@ public class Vision extends Subsystem {
 	
 	public void driveMode(){
 		//Turn off LED
-		ledMode.setDouble(1);
+		ledOff();
 		//Set cam to drive mode
 		camMode.setDouble(1);
 	}
@@ -51,14 +63,34 @@ public class Vision extends Subsystem {
 		//Set cam mode to vision processing
 		camMode.setDouble(0);
 		//Turn on LED
-		ledMode.setDouble(0);
+		ledOn();
 		//Get x and y angles
-		double x = tx.getDouble(0);
-		double y = ty.getDouble(0);
+		x = tx.getDouble(0);
+		y = ty.getDouble(0);
+		v = tv.getDouble(0);
 		//Get area of target
-		double area = ta.getDouble(0);
+		area = ta.getDouble(0);
 		//Get skew of target
-		double skew = ts.getDouble(0);
+		skew = ts.getDouble(0);
+	}
+	
+	public boolean targetExists() {
+		if(v == 1.0){
+			return true;
+		}
+		return false;
+	}
+	
+	public double getXAngle() {
+		return x;
+	}
+	
+	public double getYAngle() {
+		return x;
+	}
+	
+	public double getArea() {
+		return area;
 	}
 
     public void initDefaultCommand() {

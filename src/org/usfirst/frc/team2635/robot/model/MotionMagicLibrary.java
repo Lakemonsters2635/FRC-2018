@@ -9,9 +9,12 @@ import org.usfirst.frc.team2635.robot.commands.AutonomousNavxRotate;
 import org.usfirst.frc.team2635.robot.commands.AutonomousStraightCommand;
 import org.usfirst.frc.team2635.robot.commands.AutonomousTurnCommand;
 import org.usfirst.frc.team2635.robot.commands.ElevatorCommand;
+import org.usfirst.frc.team2635.robot.commands.GetTarget;
 import org.usfirst.frc.team2635.robot.commands.GrabberClosed;
 import org.usfirst.frc.team2635.robot.commands.GrabberCommand;
 import org.usfirst.frc.team2635.robot.commands.GrabberOpen;
+import org.usfirst.frc.team2635.robot.commands.PauseCommand;
+import org.usfirst.frc.team2635.robot.commands.StartDrive;
 import org.usfirst.frc.team2635.robot.commands.TiltCommand;
 import org.usfirst.frc.team2635.robot.commands.TiltDownCommand;
 import org.usfirst.frc.team2635.robot.commands.TiltUpCommand;
@@ -138,13 +141,15 @@ public class MotionMagicLibrary
 		CommandGroup output;
 		output = new CommandGroup();
 		
-		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD1, 400, 500));
+		output.addSequential(new PauseCommand(0.5));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
 		
-		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.OUTSIDE_OPPOSITE_AUTO_TRANSLATE_FWD, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addParallel(new ElevatorCommand(Height.SWITCH));
-		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2+15, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 4.0));
+		output.addParallel(new PauseCommand(0.5));
+		output.addSequential(new ElevatorCommand(Height.SWITCH));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_FWD2+5, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION, 4.0));
 		output.addSequential(new TiltDownCommand(1));
 		output.addSequential(new GrabberOpen(2));
 		output.addSequential(new TiltUpCommand(1));
@@ -162,7 +167,7 @@ public class MotionMagicLibrary
 		output = new CommandGroup(getMethodName());
 		
 		output.addParallel(new ElevatorCommand(Height.SWITCH));
-		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_WALL_TO_SWITCH, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION, 5.5));
+		output.addSequential(new AutonomousStraightCommand(RobotMap.AUTO_WALL_TO_SWITCH, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION, 3.5));
 		DeliverCube(output);
 		
 		
@@ -200,6 +205,21 @@ public class MotionMagicLibrary
 		return fmsInfo;
 	}
 
+	public static CommandGroup autoGrabSequence(){
+		SensorParams visionParams = new SensorParams();
+		CommandGroup output = new CommandGroup(getMethodName());
+		output.addParallel(new GrabberOpen(0.75));
+		output.addSequential(new TiltDownCommand(0.75));
+		output.addSequential(new GetTarget(visionParams));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, visionParams, RobotMap.AUTO_TURN_ACCELERATION));
+		//output.addSequential(new AutonomousStraightCommand(visionParams, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION, 4));
+		output.addSequential(new AutonomousStraightCommand(26.0, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION, 1.5));
+		output.addSequential(new GrabberClosed(1.0));
+		output.addSequential(new TiltUpCommand(0.75));
+		output.addSequential(new StartDrive());
+		
+		return output;
+	}
 	
 	public static void DeliverCubeAndBackup(CommandGroup cmdGroup) {
 		
@@ -210,6 +230,8 @@ public class MotionMagicLibrary
 		cmdGroup.addSequential(new ElevatorCommand(Height.GROUND));
 
 	}
+	
+	
 	
 	public static void DeliverCube(CommandGroup cmdGroup) {
 		
@@ -282,6 +304,8 @@ public class MotionMagicLibrary
 		return output;
 	}
 
+
+	
 	public static String getMethodName()
 	{
 		String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();

@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
 	public static Bling bling;
 	public static LimitSwitch limitSwitch;
 	public java.util.Date startDateTime;
-	DriveCommand driveCommand;
+	public static DriveCommand driveCommand;
 	AutonomousCommand autoCommand;
 	VisionLightCommand visionCommand;
 	ToggleDriveModeCommand toggleDriveModeCommand;
@@ -164,6 +164,7 @@ public class Robot extends TimedRobot {
 		oi.expressElevatorUpButton.whenPressed(new ExpressElevatorUpCommand());
 		oi.expressElevatorDownButton.whenPressed(new ExpressElevatorDownCommand());
 		oi.elevatorResetButton.whileHeld(new ElevatorReset());
+		oi.autoGrabButton.whenPressed(MotionMagicLibrary.autoGrabSequence());
 		//oi.elevatorTestButton.whenPressed(new ElevatorCommand(Height.SWITCH));
 		//oi.closeGrabberTestButton.whenPressed(new GrabberClosed(1));
 		//oi.openGrabberTestButton.whenPressed(new GrabberOpen(1));
@@ -366,6 +367,8 @@ public class Robot extends TimedRobot {
 		}
 		vision.driveMode();
 		
+		grabber.setOpen();
+		
 		elevator.encoderStart();
 		elevatorControl.start();
 		
@@ -387,6 +390,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("ActualHeading" ,drive.getNavxHeading());
 		SmartDashboard.putNumber("Get Angle" ,drive.getNavxAngle());
 		
+		//System.out.println(vision.camMode.getDouble(0));
 	}
 
 	/**

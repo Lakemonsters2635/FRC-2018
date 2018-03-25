@@ -25,6 +25,17 @@ public class Grabber extends Subsystem {
    
     }
     
+    public boolean IsOpen()
+    {
+    	if (solenoid.get() == Value.kReverse) {
+    		return true;
+    	} else
+    	{
+    		return false;
+    	}
+    	
+    }
+    
     public void setOpen() {
     	//solenoid.set(Value.kReverse);
     	solenoid.set(Value.kForward);
@@ -33,6 +44,7 @@ public class Grabber extends Subsystem {
     public void setClosed() {
     	//solenoid.set(Value.kForward);
     	solenoid.set(Value.kReverse);
+
     }
 }
 

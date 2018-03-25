@@ -32,6 +32,7 @@ public class RobotMap {
 	public static final int TILT_BUTTON = 1;
 	public static final int RETURN_BUTTON = 10;
 	public static final int ELEVATOR_RESET_BUTTON = 8;
+	public static final int AUTO_GRAB_BUTTON = 6;
 
 	public static final int NAVX_ROTATE_BUTTON = 7;
 	public static final int ELEVATOR_TEST_BUTTON = 8;
@@ -142,7 +143,7 @@ public class RobotMap {
 	public static final int AUTO_TURN_ACCELERATION = 400;
 	
 	//FAST
- 	public static final double AUTO_DRIVE_VELOCITY = 700;
+ 	public static final double AUTO_DRIVE_VELOCITY = 600;
  	public static final int AUTO_DRIVE_ACCELERATION = 700;
 	//SLOW
 //	public static final double AUTO_DRIVE_VELOCITY = 600;
