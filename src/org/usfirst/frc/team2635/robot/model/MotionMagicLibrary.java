@@ -208,16 +208,16 @@ public class MotionMagicLibrary
 	public static CommandGroup autoGrabSequence(){
 		SensorParams visionParams = new SensorParams();
 		CommandGroup output = new CommandGroup(getMethodName());
-		output.addParallel(new GrabberOpen(0.75));
-		output.addSequential(new TiltDownCommand(0.75));
+		output.addParallel(new GrabberOpen(0.25));
+		output.addSequential(new TiltDownCommand(0.25));
 		output.addSequential(new GetTarget(visionParams));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, visionParams, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(visionParams, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION, 4));
+		output.addSequential(new AutonomousStraightCommand(visionParams, 500, 500, 4));
 		//output.addSequential(new AutonomousStraightCommand(26.0, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION, 1.5));
-		output.addSequential(new GrabberClosed(0.75));
-		output.addSequential(new TiltUpCommand(0.75));
+		output.addSequential(new GrabberClosed(0.5));
+		output.addSequential(new TiltUpCommand(0.5));
 		//output.addSequential(new StartDrive());
-		output.addSequential(new PauseCommand(999));
+		output.addSequential(new PauseCommand(8));
 	
 		
 		return output;

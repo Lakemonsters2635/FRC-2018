@@ -15,7 +15,7 @@ public class GetTarget extends Command {
         // Use requires() here to declare subsystem dependencies
         //requires(Robot.drive);
         this.visionParams = params;
-        this.setTimeout(0.25);
+        this.setTimeout(0.15);
     }
 
     // Called just before this Command runs the first time
