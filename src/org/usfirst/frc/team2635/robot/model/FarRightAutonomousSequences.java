@@ -28,6 +28,23 @@ import java.util.ArrayList;
 
 public class FarRightAutonomousSequences {
 
+	public static CommandGroup FarRightToScale(boolean deliverCube) {
+	
+		CommandGroup output = new CommandGroup();
+		FMSInfo fmsInfo = MotionMagicLibrary.getFMSInfo();
+		
+		if (fmsInfo.scaleLocation == 'R') {
+			output = FarRightToRightScale(deliverCube);
+		}
+		else if (fmsInfo.scaleLocation == 'L'){
+			output = FarRightToLeftScale(false);
+		} else {
+			output = MotionMagicLibrary.CrossLineCommandBackward();
+		}
+		output.setName(MotionMagicLibrary.getMethodName());
+		return output;
+	}
+
 	public static CommandGroup FarRightToSwitch(){
 		CommandGroup output = new CommandGroup();
 		FMSInfo fmsInfo = MotionMagicLibrary.getFMSInfo();
@@ -48,6 +65,31 @@ public class FarRightAutonomousSequences {
 		return output;
 	}
 	
+	public static CommandGroup FarRightToBestTarget() {
+		CommandGroup output = new CommandGroup();
+		FMSInfo fmsInfo = MotionMagicLibrary.getFMSInfo();
+		
+		//If Scale is on Right, go to scale.
+		//If Switch is on right, go to switch.
+		//if Far scale and wait.
+		
+		if(fmsInfo.scaleLocation == 'R'){
+			output = FarRightToRightScale(true);
+		}
+		else if(fmsInfo.switchLocation == 'R'){
+			output = FarRightToRightSwitch();
+		}
+		else if(fmsInfo.scaleLocation == 'L'){
+			output = FarRightToLeftScale(false);
+		}
+		else{
+			output = MotionMagicLibrary.CrossLineCommand();
+		}
+		
+		return output;
+		
+	}
+	
 	private static CommandGroup FarRightToRightSwitch() {
 		// TODO Auto-generated method stub, implement this thingie.
 		CommandGroup output = new CommandGroup();
@@ -66,10 +108,10 @@ public class FarRightAutonomousSequences {
 
 	private static CommandGroup FarRightToLeftSwitch() {
 		CommandGroup output = new CommandGroup();
-		output.addSequential(new AutonomousStraightCommand(-210, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION, 5.0));
+		output.addSequential(new AutonomousStraightCommand(-210, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION, 4.0));
 		output.addSequential(new PauseCommand(0.5));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(-215, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION),3.0);
+		output.addSequential(new AutonomousStraightCommand(-225, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION,3.0));
 		output.addSequential(new PauseCommand(0.5));
 		output.addParallel(new ElevatorCommand(Height.SWITCH));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -50, RobotMap.AUTO_TURN_ACCELERATION));
@@ -82,21 +124,7 @@ public class FarRightAutonomousSequences {
 	
 	
 	
-	public static CommandGroup FarRightToScale(boolean deliverCube) {
-		CommandGroup output = new CommandGroup();
-		FMSInfo fmsInfo = MotionMagicLibrary.getFMSInfo();
-		
-		if (fmsInfo.scaleLocation == 'R') {
-			output = FarRightToRightScale(deliverCube);
-		}
-		else if (fmsInfo.scaleLocation == 'L'){
-			output = FarRightToLeftScale(deliverCube);
-		} else {
-			output = MotionMagicLibrary.CrossLineCommandBackward();
-		}
-		output.setName(MotionMagicLibrary.getMethodName());
-		return output;
-	}
+
 	
 
 
@@ -109,8 +137,7 @@ public class FarRightAutonomousSequences {
 			output.addSequential(new PauseCommand(0.5));
 		}
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -160, RobotMap.AUTO_TURN_ACCELERATION));//Should be 4.9" away
-		output.addSequential(new AutonomousStraightCommand(20.75, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 1.5));
-		//output.addSequential(new AutonomousStraightCommand(24.75, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 1.5));
+		output.addSequential(new AutonomousStraightCommand(26.75, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 1.5));
 		if (deliverCube) {
 			MotionMagicLibrary.DeliverCubeAndBackup(output);
 		}

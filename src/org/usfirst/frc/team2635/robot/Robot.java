@@ -38,6 +38,7 @@ import org.usfirst.frc.team2635.robot.commands.GearShiftCommand;
 import org.usfirst.frc.team2635.robot.commands.GrabberClosed;
 import org.usfirst.frc.team2635.robot.commands.GrabberCommand;
 import org.usfirst.frc.team2635.robot.commands.GrabberOpen;
+import org.usfirst.frc.team2635.robot.commands.StartDrive;
 import org.usfirst.frc.team2635.robot.commands.TiltCommand;
 import org.usfirst.frc.team2635.robot.commands.ToggleDriveModeCommand;
 import org.usfirst.frc.team2635.robot.commands.VisionLightCommand;
@@ -164,7 +165,8 @@ public class Robot extends TimedRobot {
 		oi.expressElevatorUpButton.whenPressed(new ExpressElevatorUpCommand());
 		oi.expressElevatorDownButton.whenPressed(new ExpressElevatorDownCommand());
 		oi.elevatorResetButton.whileHeld(new ElevatorReset());
-		oi.autoGrabButton.whenPressed(MotionMagicLibrary.autoGrabSequence());
+		oi.autoGrabButton.whileHeld(MotionMagicLibrary.autoGrabSequence());
+		oi.autoGrabButton.whenReleased(new StartDrive());
 		//oi.elevatorTestButton.whenPressed(new ElevatorCommand(Height.SWITCH));
 		//oi.closeGrabberTestButton.whenPressed(new GrabberClosed(1));
 		//oi.openGrabberTestButton.whenPressed(new GrabberOpen(1));
@@ -246,7 +248,7 @@ public class Robot extends TimedRobot {
 		drive.autoInit();
 		
 		String selectedCommandName = (String) m_chooser.getSelected();
-		
+		System.out.println("selectedCommandName:" + selectedCommandName);
 		switch(selectedCommandName) { 
 	    case "RightStationToSwitch": 
 	    	m_autonomousCommand = MotionMagicLibrary.RightStationToSwitch(); 
@@ -277,6 +279,12 @@ public class Robot extends TimedRobot {
 	    	break;
 	    case "DriveStraightTest":
 	    	m_autonomousCommand = MotionMagicLibrary.DriveStraightTest();
+	    	break;
+	    case "FarRightToBestTarget":
+	    	m_autonomousCommand = FarRightAutonomousSequences.FarRightToBestTarget();
+	    	break;
+	    case "FarLeftToBestTarget":
+	    	m_autonomousCommand = FarLeftAutonomousSequences.FarLeftToBestTarget();
 	    	break;
 	    default:
 	    	m_autonomousCommand = MotionMagicLibrary.DoNothingCommand();
@@ -367,7 +375,7 @@ public class Robot extends TimedRobot {
 		}
 		vision.driveMode();
 		
-		grabber.setOpen();
+		//grabber.setOpen();
 		
 		elevator.encoderStart();
 		elevatorControl.start();
@@ -379,6 +387,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		
 		Scheduler.getInstance().run();
 		
 		SmartDashboard.putNumber("Front Left Position", (double) drive.getFrontLeftPos());
@@ -416,10 +425,15 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("---- Scale ----", "");
 		m_chooser.addObject("Far Left to Scale", "FarLeftToScale");
 		m_chooser.addObject("Far Right to Scale", "FarRightToScale");
+		
+		
 		m_chooser.addObject("Far Left to Scale (wait)", "FarLeftToScaleAndWait");
 		m_chooser.addObject("Far Right to Scale (wait)", "FarRightToScaleAndWait");
+
 		
-		
+		m_chooser.addObject("---- Best Choice ----", "");
+		m_chooser.addObject("Far Right to Best Choice", "FarRightToBestTarget");
+		m_chooser.addObject("Far Left to Best Choice", "FarLeftToBestTarget");
 		
 		m_chooser.addObject("Rotate Test", "RotateTest");
 		m_chooser.addObject("Rotate Test Counterclockwise", "RotateTestCCW");
