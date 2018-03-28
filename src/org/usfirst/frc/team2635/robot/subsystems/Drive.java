@@ -257,7 +257,7 @@ public class Drive extends Subsystem {
     	//double delta = (Math.abs(frontRight) - Math.abs(frontLeft));
     	
     	//double delta = (frontLeft + frontRight) * 0.6;
-    	double delta = angleDelta * 11;
+    	double delta = angleDelta * 10;
     	if (motionParams.leftWheelRotations < 0) {
     		delta = -delta;
     	}

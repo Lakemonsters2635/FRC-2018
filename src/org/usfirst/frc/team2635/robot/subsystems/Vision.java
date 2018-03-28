@@ -86,7 +86,7 @@ public class Vision extends Subsystem {
 	}
 	
 	public double getYAngle() {
-		return x;
+		return y;
 	}
 	
 	public double getArea() {

@@ -15,7 +15,7 @@ public class GetTarget extends Command {
         // Use requires() here to declare subsystem dependencies
         //requires(Robot.drive);
         this.visionParams = params;
-        this.setTimeout(0.5);
+        this.setTimeout(0.25);
     }
 
     // Called just before this Command runs the first time
@@ -38,7 +38,7 @@ public class GetTarget extends Command {
     protected boolean isFinished() {
     	double x = Robot.vision.getXAngle();
         if(x == 0.0) {
-           	System.out.println("Target not acquired... ") ;
+           	//System.out.println("Target not acquired... ") ;
 
         	return false;
         }
@@ -53,9 +53,10 @@ public class GetTarget extends Command {
 //        	36in, 7, 7.35, -8.33, y
         	double yAngleWhenCubeIsAtBumper = -14.5;
         	double angleRatio =  yAngleWhenCubeIsAtBumper / visionParams.y;
-        	
-        	//visionParams.distance = 5.748 * visionParams.y + 86.50;
-        	visionParams.distance = Math.abs(5.748 * visionParams.y);
+        	//6.300*X + 116.0
+
+        	visionParams.distance = (6.300 * visionParams.y + 116.0)-14;
+        	//visionParams.distance = Math.abs(5.748 * visionParams.y);
         	//visionParams.distance= angleRatio * 7;
         	
         	if (visionParams.distance > 72)

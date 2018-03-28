@@ -212,19 +212,23 @@ public class MotionMagicLibrary
 		output.addSequential(new TiltDownCommand(0.75));
 		output.addSequential(new GetTarget(visionParams));
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, visionParams, RobotMap.AUTO_TURN_ACCELERATION));
-		//output.addSequential(new AutonomousStraightCommand(visionParams, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION, 4));
-		output.addSequential(new AutonomousStraightCommand(26.0, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION, 1.5));
-		output.addSequential(new GrabberClosed(1.0));
+		output.addSequential(new AutonomousStraightCommand(visionParams, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION, 4));
+		//output.addSequential(new AutonomousStraightCommand(26.0, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION, 1.5));
+		output.addSequential(new GrabberClosed(0.75));
 		output.addSequential(new TiltUpCommand(0.75));
-		output.addSequential(new StartDrive());
+		//output.addSequential(new StartDrive());
+		output.addSequential(new PauseCommand(999));
+	
 		
 		return output;
 	}
 	
+
+	
 	public static void DeliverCubeAndBackup(CommandGroup cmdGroup) {
 		
-		cmdGroup.addSequential(new TiltDownCommand(0.25));
-		cmdGroup.addSequential(new GrabberOpen(1.25));
+		cmdGroup.addSequential(new TiltDownCommand(0.5));
+		cmdGroup.addSequential(new GrabberOpen(1.00));
 		cmdGroup.addParallel(new AutonomousStraightCommand(-20, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION));
 		cmdGroup.addSequential(new TiltUpCommand(0.75));
 		cmdGroup.addSequential(new ElevatorCommand(Height.GROUND));
