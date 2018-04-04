@@ -33,7 +33,7 @@ public class FarLeftAutonomousSequences {
 		FMSInfo fmsInfo = MotionMagicLibrary.getFMSInfo();
 		
 		if (fmsInfo.scaleLocation == 'R') {
-			output = FarLeftToRightScale(false);
+			output = FarLeftToRightScale(deliverCube);
 		} else if (fmsInfo.scaleLocation == 'L') {
 			output = FarLeftToLeftScale(deliverCube);
 		} else {
@@ -112,14 +112,14 @@ public class FarLeftAutonomousSequences {
 			output.addSequential(new PauseCommand(0.5));
 		}
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 160, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(26.75, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 1.5));
+		output.addSequential(new AutonomousStraightCommand(37.75, RobotMap.APPROACH_SCALE_VELOCITY, RobotMap.APPROACH_SCALE_ACCELERATION, 1.5));
 		if (deliverCube) {
 			MotionMagicLibrary.DeliverCubeAndBackup(output);
 		}
 		return output;
 	}
 	
-	public static CommandGroup FarLeftToRightScale(boolean deliverCube) {
+	public static CommandGroup FarLeftToRightScaleOld(boolean deliverCube) {
 		CommandGroup output = new CommandGroup(MotionMagicLibrary.getMethodName());
 		output.addSequential(new AutonomousStraightCommand(-217.125, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
 		output.addSequential(new PauseCommand(0.5));
@@ -138,6 +138,31 @@ public class FarLeftAutonomousSequences {
 
 		return output;
 	}
+	
+	public static CommandGroup FarLeftToRightScale(boolean deliverCube) {
+		CommandGroup output = new CommandGroup(MotionMagicLibrary.getMethodName());
+		output.addSequential(new AutonomousStraightCommand(-217.125, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new PauseCommand(0.4));
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(-210, RobotMap.AUTO_DRIVE_VELOCITY, RobotMap.AUTO_DRIVE_ACCELERATION));
+		output.addSequential(new PauseCommand(0.4));
+		if (deliverCube) {
+			output.addParallel(new ElevatorCommand(Height.CLIMB));
+			output.addSequential(new PauseCommand(0.25));
+		}
+		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
+		output.addSequential(new AutonomousStraightCommand(40, 400, 500));
+		if (deliverCube) {
+			output.addSequential(new TiltDownCommand(0.5));
+			output.addParallel(new GrabberOpen(0.5));
+			output.addSequential(new TiltUpCommand(0.5));
+			output.addParallel(new AutonomousStraightCommand(-20, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION));		
+			output.addSequential(new ElevatorCommand(Height.GROUND));
+
+		}
+		return output;
+	}
+	
 	
 	public static CommandGroup FarLeftToBestTarget() {
 		System.out.println("FarLeftToBestTarget");
