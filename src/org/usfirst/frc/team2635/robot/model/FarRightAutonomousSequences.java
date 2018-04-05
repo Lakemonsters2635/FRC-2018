@@ -8,6 +8,7 @@ import org.usfirst.frc.team2635.robot.commands.AutonomousNavxRotate;
 import org.usfirst.frc.team2635.robot.commands.AutonomousStraightCommand;
 import org.usfirst.frc.team2635.robot.commands.AutonomousTurnCommand;
 import org.usfirst.frc.team2635.robot.commands.ElevatorCommand;
+import org.usfirst.frc.team2635.robot.commands.GrabberClosed;
 import org.usfirst.frc.team2635.robot.commands.GrabberCommand;
 import org.usfirst.frc.team2635.robot.commands.GrabberOpen;
 import org.usfirst.frc.team2635.robot.commands.PauseCommand;
@@ -38,6 +39,7 @@ public class FarRightAutonomousSequences {
 		}
 		else if (fmsInfo.scaleLocation == 'L'){
 			output = FarRightToLeftScale(deliverCube);
+			//output = FarRightToLeftScaleOld(false); //To wait, uncomment out this line, and comment out the line above
 		} else {
 			output = MotionMagicLibrary.CrossLineCommandBackward();
 		}
@@ -141,7 +143,20 @@ public class FarRightAutonomousSequences {
 		if (deliverCube) {
 			MotionMagicLibrary.DeliverCubeAndBackup(output);
 		}
+		//GetAnotherCube(output);
 		return output;
+	}
+	
+	public static void GetAnotherCube(CommandGroup cmdGroup) {
+		
+		cmdGroup.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 140, RobotMap.AUTO_TURN_ACCELERATION));
+		cmdGroup.addParallel(new AutonomousStraightCommand(50, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION));
+		cmdGroup.addSequential(new TiltDownCommand(0.75));
+		cmdGroup.addSequential(new GrabberClosed(1.00));
+		//cmdGroup.addSequential(new TiltUpCommand(0.75));
+		cmdGroup.addParallel(new AutonomousStraightCommand(-20, RobotMap.SHORT_DRIVE_AUTONOMOUS_VELOCITY, RobotMap.SHORT_DRIVE_AUTONOMOUS_ACCELERATION));
+
+
 	}
 	
 	public static CommandGroup FarRightToLeftScaleOld(boolean deliverCube) {
@@ -176,7 +191,7 @@ public class FarRightAutonomousSequences {
 			output.addSequential(new PauseCommand(0.25));
 		}
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, 90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(40, 400, 500));
+		output.addSequential(new AutonomousStraightCommand(40, 400, 500, 1.75));
 		if (deliverCube) {
 			output.addSequential(new TiltDownCommand(0.5));
 			output.addParallel(new GrabberOpen(0.5));
