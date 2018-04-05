@@ -34,6 +34,7 @@ public class FarLeftAutonomousSequences {
 		
 		if (fmsInfo.scaleLocation == 'R') {
 			output = FarLeftToRightScale(deliverCube);
+			//output = FarLeftToRightScaleOld(false); //To wait, uncomment out this line, and comment out the line above
 		} else if (fmsInfo.scaleLocation == 'L') {
 			output = FarLeftToLeftScale(deliverCube);
 		} else {
@@ -151,7 +152,7 @@ public class FarLeftAutonomousSequences {
 			output.addSequential(new PauseCommand(0.25));
 		}
 		output.addSequential(new AutonomousTurnCommand(RobotMap.AUTO_TURN_VELOCITY, -90, RobotMap.AUTO_TURN_ACCELERATION));
-		output.addSequential(new AutonomousStraightCommand(40, 400, 500));
+		output.addSequential(new AutonomousStraightCommand(40, 400, 500, 1.75));
 		if (deliverCube) {
 			output.addSequential(new TiltDownCommand(0.5));
 			output.addParallel(new GrabberOpen(0.5));
